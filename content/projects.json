@@ -1,0 +1,42 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "AI Diabetes Detection System",
+      "description": "Built a deep learning CNN model for diabetes detection. The system uses advanced image classification techniques to detect diabetic retinopathy from retinal images with high accuracy.",
+      "longDescription": "A comprehensive deep learning solution for diabetes detection using Convolutional Neural Networks. The project involved data preprocessing, model architecture design, training, and validation. Achieved remarkable results in the Kufr El-Sheikh Olympics Competition.",
+      "image": "/projects/diabetes-detection.png",
+      "technologies": ["Python", "TensorFlow", "Keras", "CNN", "Transfer Learning", "Image Classification"],
+      "github": "https://github.com/elmezo/diabetes-detection",
+      "demo": null,
+      "featured": true,
+      "achievement": "2nd Place in Kufr El-Sheikh Olympics Competition",
+      "year": "2022"
+    },
+    {
+      "id": 2,
+      "title": "Data Governance Platform",
+      "description": "Enterprise-scale data governance and metadata management platform built at Bussma Company. Features include automated documentation, logging systems, and bulk data operations.",
+      "longDescription": "A comprehensive enterprise solution for managing data assets, metadata, and governance policies. Built with modern Java technologies and designed for scalability and performance.",
+      "image": "/projects/data-governance.png",
+      "technologies": ["Java", "Spring Boot", "REST APIs", "MySQL", "Docker"],
+      "github": null,
+      "demo": null,
+      "featured": true,
+      "achievement": "Enterprise Production System",
+      "year": "2024"
+    },
+    {
+      "id": 3,
+      "title": "ML Analytics Pipeline",
+      "description": "Scalable machine learning analytics pipeline for data processing and model deployment. Integrates with cloud platforms for efficient data handling.",
+      "longDescription": "A robust analytics pipeline designed to handle large-scale data processing and machine learning model deployment. Features automated data validation, model training, and deployment workflows.",
+      "image": "/projects/ml-pipeline.png",
+      "technologies": ["Python", "AWS", "Azure", "Scikit-learn", "Data Pipelines"],
+      "github": "https://github.com/elmezo/ml-analytics",
+      "demo": null,
+      "featured": false,
+      "year": "2024"
+    }
+  ]
+}

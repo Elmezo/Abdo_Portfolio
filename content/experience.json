@@ -1,0 +1,34 @@
+{
+  "experiences": [
+    {
+      "id": 1,
+      "title": "Software Engineer",
+      "company": "Bussma Company (Jadara Solutions)",
+      "location": "Remote",
+      "period": "2024 - Present",
+      "type": "Full-time",
+      "description": "Developing enterprise-scale data governance and metadata management platform.",
+      "achievements": [
+        "Developed enterprise-scale data governance and metadata management platform",
+        "Built REST APIs using Java and Spring Boot",
+        "Implemented logging, bulk data operations and documentation automation"
+      ],
+      "technologies": ["Java", "Spring Boot", "REST APIs", "SQL", "Data Pipelines"]
+    },
+    {
+      "id": 2,
+      "title": "Programmer Intern",
+      "company": "Gomla Market",
+      "location": "Egypt",
+      "period": "Jun 2020 - Oct 2020",
+      "type": "Internship",
+      "description": "Gained hands-on experience in software development and programming.",
+      "achievements": [
+        "Developed programming skills in real-world applications",
+        "Collaborated with team members on various projects",
+        "Learned software development best practices"
+      ],
+      "technologies": ["Programming", "Problem Solving", "Team Collaboration"]
+    }
+  ]
+}

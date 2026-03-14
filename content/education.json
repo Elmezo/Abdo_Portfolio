@@ -1,0 +1,42 @@
+{
+  "education": [
+    {
+      "degree": "Bachelor of Computer Science",
+      "institution": "Alexandria University",
+      "location": "Alexandria, Egypt",
+      "period": "2019 - 2023",
+      "gpa": "Very Good (B+)",
+      "description": "Comprehensive computer science education covering software development, algorithms, data structures, and computer systems."
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Machine Learning Pipelines with Azure ML Studio",
+      "issuer": "Microsoft",
+      "date": "2023",
+      "credentialUrl": null
+    },
+    {
+      "name": "Spatial Data Science",
+      "issuer": "ESRI",
+      "date": "2023",
+      "credentialUrl": null
+    },
+    {
+      "name": "Data Science Orientation",
+      "issuer": "IBM",
+      "date": "2023",
+      "credentialUrl": null
+    },
+    {
+      "name": "Microsoft Excel Basics",
+      "issuer": "Microsoft",
+      "date": "2023",
+      "credentialUrl": null
+    }
+  ],
+  "languages": [
+    { "name": "Arabic", "level": "Native" },
+    { "name": "English", "level": "Fluent" }
+  ]
+}
