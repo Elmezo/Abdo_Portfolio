@@ -1,0 +1,64 @@
+{
+  "categories": [
+    {
+      "name": "Programming Languages",
+      "icon": "Code",
+      "skills": [
+        { "name": "Python", "level": 90 },
+        { "name": "Java", "level": 85 },
+        { "name": "JavaScript", "level": 75 },
+        { "name": "SQL", "level": 85 }
+      ]
+    },
+    {
+      "name": "Machine Learning & Data",
+      "icon": "Brain",
+      "skills": [
+        { "name": "Scikit-learn", "level": 85 },
+        { "name": "TensorFlow", "level": 80 },
+        { "name": "Keras", "level": 80 },
+        { "name": "CNNs", "level": 75 },
+        { "name": "Transfer Learning", "level": 70 },
+        { "name": "Image Classification", "level": 75 }
+      ]
+    },
+    {
+      "name": "Data Visualization",
+      "icon": "BarChart3",
+      "skills": [
+        { "name": "Power BI", "level": 80 },
+        { "name": "Tableau", "level": 75 },
+        { "name": "Matplotlib", "level": 85 },
+        { "name": "Seaborn", "level": 80 }
+      ]
+    },
+    {
+      "name": "Cloud Platforms",
+      "icon": "Cloud",
+      "skills": [
+        { "name": "AWS", "level": 70 },
+        { "name": "Azure", "level": 75 }
+      ]
+    },
+    {
+      "name": "Databases",
+      "icon": "Database",
+      "skills": [
+        { "name": "MySQL", "level": 85 },
+        { "name": "SQL Server", "level": 80 }
+      ]
+    },
+    {
+      "name": "Tools & Technologies",
+      "icon": "Wrench",
+      "skills": [
+        { "name": "Git", "level": 85 },
+        { "name": "Maven", "level": 75 },
+        { "name": "REST APIs", "level": 85 },
+        { "name": "Spring Boot", "level": 80 },
+        { "name": "Data Pipelines", "level": 75 },
+        { "name": "Excel", "level": 85 }
+      ]
+    }
+  ]
+}

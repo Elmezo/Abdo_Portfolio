@@ -1,0 +1,23 @@
+{
+  "name": "Abdelrahman Alaa Eldeen",
+  "fullName": "Abdelrahman Alaa Eldeen Ezz Eldeen",
+  "title": "Data Scientist & Software Engineer",
+  "roles": [
+    "Software Engineer",
+    "Data Scientist",
+    "ML Engineer",
+    "Full-Stack Developer"
+  ],
+  "location": "Egypt",
+  "phone": "+201114493323",
+  "email": "abdelrahman.ae.de@gmail.com",
+  "social": {
+    "linkedin": "https://linkedin.com/in/elmezo",
+    "github": "https://github.com/elmezo",
+    "kaggle": "https://kaggle.com/abdoalaaeldeen"
+  },
+  "bio": "Junior Software Engineer and Data Scientist with over 1 year of experience in Python, SQL, Java, and cloud platforms (AWS, Azure). Hands-on experience in building scalable data-driven systems, analytics pipelines, and enterprise-level applications. Strong background in machine learning, data modeling, logging systems, and automation with a passion for transforming data into business value.",
+  "shortBio": "Passionate about transforming data into business value through innovative software solutions and machine learning.",
+  "avatar": "/avatar.png",
+  "resume": "/Abdelrahman_Alaa_CV_UAE.pdf"
+}
