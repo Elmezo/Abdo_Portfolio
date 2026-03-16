@@ -85,10 +85,7 @@ export function HeroSection() {
         <FadeIn delay={0.7}>
           {/* Strong Tagline */}
           <p className="text-gray-300 text-xl md:text-2xl max-w-3xl mx-auto mb-4 leading-relaxed font-light">
-            I design{' '}
-            <span className="text-purple-400 font-semibold">intelligent systems</span>,{' '}
-            <span className="text-cyan-400 font-semibold">data platforms</span>, and{' '}
-            <span className="text-purple-400 font-semibold">real-world automation tools</span>.
+            Bridging the gap between <span className="text-purple-400 font-semibold">Software Engineering</span> and <span className="text-cyan-400 font-semibold">Data Science</span>. I build intelligent, scalable data platforms that transform complex challenges into <span className="text-amber-400 font-semibold">real business impact</span>.
           </p>
         </FadeIn>
 

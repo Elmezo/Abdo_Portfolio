@@ -11,7 +11,10 @@
       "demo": null,
       "featured": true,
       "achievement": "2nd Place in Kufr El-Sheikh Olympics Competition",
-      "year": "2022"
+      "year": "2022",
+      "role": "Lead Data Scientist",
+      "challenge": "Diabetic retinopathy is a leading cause of blindness, but early detection through manual examination is time-consuming and requires specialized expertise not always available.",
+      "solution": "Developed a robust CNN using Transfer Learning (ResNet50) with heavy data augmentation to address class imbalance. Achieved 94%+ accuracy, providing a quick, accessible screening tool."
     },
     {
       "id": 2,
@@ -24,7 +27,10 @@
       "demo": null,
       "featured": true,
       "achievement": "Enterprise Production System",
-      "year": "2024"
+      "year": "2024",
+      "role": "Backend Software Engineer",
+      "challenge": "Enterprise data was fragmented across multiple systems with no unified metadata management, causing compliance issues, data duplication, and operational inefficiencies.",
+      "solution": "Architected a scalable Spring Boot microservices ecosystem with a meticulously optimized MySQL schema. Implemented comprehensive REST APIs and automated documentation, unifying data access and resolving compliance bottlenecks."
     },
     {
       "id": 3,
@@ -36,7 +42,10 @@
       "github": "https://github.com/elmezo/ml-analytics",
       "demo": null,
       "featured": false,
-      "year": "2024"
+      "year": "2024",
+      "role": "Machine Learning Engineer",
+      "challenge": "Data scientists lacked a unified, scalable pipeline for processing large datasets and deploying ML models, leading to inconsistent results and slow time-to-production.",
+      "solution": "Built a Python-based ETL orchestration pipeline interacting with AWS S3 and Azure Blob. Automated data validation and model deployment workflows, cutting deployment time by 60%."
     }
   ]
 }

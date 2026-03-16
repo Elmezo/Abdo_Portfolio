@@ -10,6 +10,7 @@ import { ProjectsSection } from '@/components/sections/projects-section';
 import { CaseStudiesSection } from '@/components/sections/case-studies-section';
 import { GitHubSection } from '@/components/sections/github-section';
 import { ContactSection } from '@/components/sections/contact-section';
+import { TestimonialsSection } from '@/components/sections/testimonials-section';
 import { Footer } from '@/components/sections/footer';
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
       <SkillsSection />
       <ExperienceSection />
       <ProjectsSection />
+      <TestimonialsSection />
       <CaseStudiesSection />
       <GitHubSection />
       <ContactSection />

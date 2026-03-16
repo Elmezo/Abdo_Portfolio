@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Trophy, Calendar, X, ArrowRight, Layers, Target, Lightbulb, Code2, Image as ImageIcon } from 'lucide-react';
+import { ExternalLink, Github, Trophy, Calendar, X, ArrowRight, Layers, Target, Lightbulb, Code2, Image as ImageIcon, User, Briefcase } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import projects from '../../../content/projects.json';
@@ -87,18 +87,25 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
               </div>
             </div>
 
+            {/* Role */}
+            <div>
+              <div className="flex items-center gap-2 mb-3">
+                <Briefcase size={18} className="text-purple-400" />
+                <h3 className="text-sm font-semibold text-purple-400 uppercase tracking-wider">My Role</h3>
+              </div>
+              <p className="text-gray-300 leading-relaxed font-medium">
+                {project.role}
+              </p>
+            </div>
+
             {/* Problem */}
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <Target size={18} className="text-red-400" />
-                <h3 className="text-sm font-semibold text-red-400 uppercase tracking-wider">The Problem</h3>
+                <h3 className="text-sm font-semibold text-red-400 uppercase tracking-wider">The Challenge</h3>
               </div>
               <p className="text-gray-300 leading-relaxed">
-                {project.title.includes('Diabetes')
-                  ? 'Diabetic retinopathy is a leading cause of blindness, but early detection through manual examination is time-consuming and requires specialized expertise not always available.'
-                  : project.title.includes('Governance')
-                  ? 'Enterprise data was fragmented across multiple systems with no unified metadata management, causing compliance issues, data duplication, and operational inefficiencies.'
-                  : 'Data scientists lacked a unified, scalable pipeline for processing large datasets and deploying ML models, leading to inconsistent results and slow time-to-production.'}
+                {project.challenge}
               </p>
             </div>
 
@@ -109,7 +116,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                 <h3 className="text-sm font-semibold text-yellow-400 uppercase tracking-wider">The Solution</h3>
               </div>
               <p className="text-gray-300 leading-relaxed">
-                {project.longDescription || project.description}
+                {project.solution}
               </p>
             </div>
 
@@ -236,9 +243,13 @@ export function ProjectsSection() {
                       </div>
                     </div>
 
-                    {/* Hover overlay with "View Case Study" */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4">
-                      <span className="text-white text-sm font-semibold flex items-center gap-2">
+                    {/* Hover overlay with more info */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/80 to-slate-950/20 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out flex flex-col justify-end p-6 translate-y-4 group-hover:translate-y-0">
+                      <p className="text-cyan-300 font-medium text-sm mb-2">{project.role}</p>
+                      <p className="text-gray-300 text-sm line-clamp-2 mb-4">
+                        {project.challenge}
+                      </p>
+                      <span className="text-white text-sm font-semibold flex items-center gap-2 self-start bg-white/10 px-4 py-2 rounded-lg border border-white/20 hover:bg-white/20 transition-colors">
                         <ImageIcon size={16} className="text-cyan-400" />
                         View Case Study
                       </span>
