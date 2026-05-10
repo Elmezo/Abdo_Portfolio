@@ -6,6 +6,46 @@ import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import profile from '../../../content/profile.json';
 
+/** Public Vercel instance is often overloaded; mirror first, official as backup. */
+const GITHUB_README_STATS_PRIMARY = 'https://github-readme-stats.shion.dev';
+const GITHUB_README_STATS_FALLBACK = 'https://github-readme-stats.vercel.app';
+
+function githubUsernameFromProfileUrl(githubProfileUrl: string): string {
+  try {
+    const segments = new URL(githubProfileUrl).pathname.split('/').filter(Boolean);
+    return segments[0] || 'elmezo';
+  } catch {
+    return 'elmezo';
+  }
+}
+
+function githubStatsCardUrl(host: string, username: string): string {
+  const q = new URLSearchParams({
+    username,
+    show_icons: 'true',
+    theme: 'dark',
+    hide_border: 'true',
+    title_color: 'a855f7',
+    icon_color: '06b6d4',
+    text_color: '9ca3af',
+    bg_color: '0f172a',
+  });
+  return `${host}/api?${q}`;
+}
+
+function githubTopLangsCardUrl(host: string, username: string): string {
+  const q = new URLSearchParams({
+    username,
+    layout: 'compact',
+    theme: 'dark',
+    hide_border: 'true',
+    title_color: 'a855f7',
+    text_color: '9ca3af',
+    bg_color: '0f172a',
+  });
+  return `${host}/api/top-langs/?${q}`;
+}
+
 // Real stats — update these as needed
 const githubStats = [
   { label: 'Total Commits', value: '150+', icon: GitCommit, color: 'text-purple-400', bg: 'bg-purple-500/20' },
@@ -51,7 +91,11 @@ const getContributionColor = (level: number) => {
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export function GitHubSection() {
-  const githubUsername = 'elmezo';
+  const githubUsername = githubUsernameFromProfileUrl(profile.social.github);
+  const statsPrimary = githubStatsCardUrl(GITHUB_README_STATS_PRIMARY, githubUsername);
+  const statsFallback = githubStatsCardUrl(GITHUB_README_STATS_FALLBACK, githubUsername);
+  const langsPrimary = githubTopLangsCardUrl(GITHUB_README_STATS_PRIMARY, githubUsername);
+  const langsFallback = githubTopLangsCardUrl(GITHUB_README_STATS_FALLBACK, githubUsername);
 
   return (
     <section id="github" className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
@@ -157,26 +201,39 @@ export function GitHubSection() {
           </GlassCard>
         </FadeIn>
 
-        {/* GitHub Stats Images */}
+        {/* GitHub Stats Images (SVG) — primary mirror; Vercel as backup */}
         <FadeIn delay={0.4}>
           <div className="grid md:grid-cols-2 gap-4 mt-6">
             <GlassCard className="p-4 flex items-center justify-center overflow-hidden" hover={false}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`https://github-readme-stats.vercel.app/api?username=${githubUsername}&show_icons=true&theme=transparent&hide_border=true&title_color=a855f7&icon_color=06b6d4&text_color=9ca3af&bg_color=00000000`}
+                src={statsPrimary}
                 alt="GitHub Stats"
-                className="w-full h-auto rounded-lg opacity-90 hover:opacity-100 transition-opacity"
+                className="w-full h-auto max-w-full rounded-lg opacity-90 hover:opacity-100 transition-opacity"
+                loading="lazy"
+                decoding="async"
+                referrerPolicy="no-referrer"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).closest('.glass-card-fallback')?.classList.add('hidden');
+                  const img = e.currentTarget;
+                  if (img.dataset.fallbackApplied === '1') return;
+                  img.dataset.fallbackApplied = '1';
+                  img.src = statsFallback;
                 }}
               />
             </GlassCard>
             <GlassCard className="p-4 flex items-center justify-center overflow-hidden" hover={false}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`https://github-readme-stats.vercel.app/api/top-langs/?username=${githubUsername}&layout=compact&theme=transparent&hide_border=true&title_color=a855f7&text_color=9ca3af&bg_color=00000000`}
+                src={langsPrimary}
                 alt="Top Languages"
-                className="w-full h-auto rounded-lg opacity-90 hover:opacity-100 transition-opacity"
+                className="w-full h-auto max-w-full rounded-lg opacity-90 hover:opacity-100 transition-opacity"
+                loading="lazy"
+                decoding="async"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  const img = e.currentTarget;
+                  if (img.dataset.fallbackApplied === '1') return;
+                  img.dataset.fallbackApplied = '1';
+                  img.src = langsFallback;
+                }}
               />
             </GlassCard>
           </div>
