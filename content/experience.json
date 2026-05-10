@@ -2,21 +2,47 @@
   "experiences": [
     {
       "id": 1,
-      "title": "Software Engineer",
-      "company": "Bussma Company (Jadara Solutions)",
+      "title": "AI Developer",
+      "company": "Bussma (Jadara Solutions)",
       "location": "Remote",
-      "period": "2024 - Present",
+      "period": "2025 - Present",
       "type": "Full-time",
-      "description": "Developing enterprise-scale data governance and metadata management platform.",
+      "description": "Building an LLM-powered chatbot on top of an ERP system: users ask business questions in natural language and get answers grounded in live database content via a Python backend and modern model integrations.",
       "achievements": [
-        "Developed enterprise-scale data governance and metadata management platform",
-        "Built REST APIs using Java and Spring Boot",
-        "Implemented logging, bulk data operations and documentation automation"
+        "Designed and shipped conversational flows over ERP data with database-grounded responses",
+        "Python services for retrieval, orchestration, and integration with LLM providers",
+        "Partnered with business stakeholders to tune prompts, guardrails, and evaluation for production Q&A"
       ],
-      "technologies": ["Java", "Spring Boot", "REST APIs", "SQL", "Data Pipelines"]
+      "technologies": ["Python", "LLMs", "SQL", "REST APIs", "ERP", "RAG"]
     },
     {
       "id": 2,
+      "title": "Software Engineer",
+      "company": "Bussma (Jadara Solutions)",
+      "location": "Remote",
+      "period": "2024 - 2025",
+      "type": "Full-time",
+      "description": "Software engineering on BUDG, a proprietary (closed-source) data governance platform: role-based access, metadata management, and supporting services for enterprise data policies.",
+      "achievements": [
+        "Shipped features on BUDG — closed-source data governance application used in production environments",
+        "Java 17 WAR on Tomcat 11 with Jakarta Servlets (no Spring), Elasticsearch Java API client for search and indexing",
+        "MySQL with HikariCP, JWT and LDAP-backed authentication, OpenAPI-described REST endpoints, WebSockets where needed",
+        "Bulk exports and reporting (Apache POI / Excel, iText PDF), transactional email (Jakarta Mail), structured logging (SLF4J / Logback)"
+      ],
+      "technologies": [
+        "Java 17",
+        "Jakarta Servlet",
+        "Elasticsearch",
+        "MySQL",
+        "Tomcat",
+        "JWT",
+        "OpenAPI",
+        "LDAP",
+        "WebSocket"
+      ]
+    },
+    {
+      "id": 3,
       "title": "Programmer Intern",
       "company": "Gomla Market",
       "location": "Egypt",

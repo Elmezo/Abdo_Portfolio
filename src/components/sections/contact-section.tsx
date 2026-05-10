@@ -6,8 +6,10 @@ import { Mail, Phone, MapPin, Send, Linkedin, Github, Kaggle } from 'lucide-reac
 import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
 import { GlassCard, GradientText, GlassButton } from '../ui-custom/glass-card';
 import profile from '../../../content/profile.json';
+import { getProfilePhoneList } from '@/lib/utils';
 
 export function ContactSection() {
+  const phones = getProfilePhoneList(profile);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -77,18 +79,25 @@ export function ContactSection() {
                   </StaggerItem>
 
                   <StaggerItem>
-                    <a
-                      href={`tel:${profile.phone}`}
-                      className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/50 transition-colors group"
-                    >
+                    <div className="flex items-center gap-4 p-4 rounded-xl bg-white/5 border border-white/10 hover:border-cyan-500/50 transition-colors group">
                       <div className="p-3 rounded-xl bg-cyan-500/20 group-hover:bg-cyan-500/30 transition-colors">
                         <Phone className="text-cyan-400" size={24} />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <p className="text-gray-400 text-sm">Phone</p>
-                        <p className="text-white">{profile.phone}</p>
+                        <div className="flex flex-col gap-1 mt-1">
+                          {phones.map((num) => (
+                            <a
+                              key={num}
+                              href={`tel:${num}`}
+                              className="text-white break-all hover:text-cyan-300 transition-colors"
+                            >
+                              {num}
+                            </a>
+                          ))}
+                        </div>
                       </div>
-                    </a>
+                    </div>
                   </StaggerItem>
 
                   <StaggerItem>
