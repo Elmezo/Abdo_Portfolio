@@ -7,6 +7,7 @@ import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import profile from '../../../content/profile.json';
 import education from '../../../content/education.json';
+import { getProfilePhoneList } from '@/lib/utils';
 
 // Animated counter hook
 function useCounter(end: number, duration = 1500, start = false) {
@@ -59,6 +60,8 @@ function StatCounter({ value, label, icon: Icon, color, suffix = '+' }: {
 }
 
 export function AboutSection() {
+  const phones = getProfilePhoneList(profile);
+
   return (
     <section id="about" className="relative py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-4">
@@ -88,9 +91,19 @@ export function AboutSection() {
                   <Mail className="text-cyan-400 shrink-0" size={20} />
                   <span className="break-all">{profile.email}</span>
                 </div>
-                <div className="flex items-center gap-3 text-gray-300">
-                  <Phone className="text-purple-400 shrink-0" size={20} />
-                  <span>{profile.phone}</span>
+                <div className="flex items-start gap-3 text-gray-300">
+                  <Phone className="text-purple-400 shrink-0 mt-0.5" size={20} />
+                  <div className="flex flex-col gap-1">
+                    {phones.map((num) => (
+                      <a
+                        key={num}
+                        href={`tel:${num}`}
+                        className="break-all hover:text-white transition-colors"
+                      >
+                        {num}
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
             </GlassCard>
@@ -138,9 +151,9 @@ export function AboutSection() {
                     </div>
                     <div>
                       <h4 className="text-lg font-semibold text-white">2 Years Experience</h4>
-                      <p className="text-gray-400">Software engineering (Bussma / BUDG) & data science</p>
+                      <p className="text-gray-400">AI / ERP chatbots, data governance (BUDG), data science</p>
                       <div className="flex flex-wrap gap-2 mt-3">
-                        {['Python', 'Java', 'Elasticsearch', 'SQL', 'AWS', 'Azure'].map((tech) => (
+                        {['Python', 'LLMs', 'Java', 'Elasticsearch', 'SQL', 'AWS', 'Azure'].map((tech) => (
                           <motion.span
                             key={tech}
                             whileHover={{ scale: 1.05 }}
