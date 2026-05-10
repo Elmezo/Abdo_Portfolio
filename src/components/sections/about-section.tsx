@@ -98,7 +98,7 @@ export function AboutSection() {
             {/* Animated Stats */}
             <GlassCard className="mt-6 p-2">
               <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-y divide-white/5">
-                <StatCounter value={1} label="Year Experience" icon={Briefcase} color="bg-purple-500/40" suffix="+" />
+                <StatCounter value={2} label="Years Experience" icon={Briefcase} color="bg-purple-500/40" suffix="" />
                 <StatCounter value={5} label="Projects Built" icon={Code2} color="bg-cyan-500/40" suffix="+" />
                 <StatCounter value={3} label="Tech Stacks" icon={Database} color="bg-green-500/40" suffix="+" />
                 <StatCounter value={1} label="Award Won" icon={Trophy} color="bg-amber-500/40" suffix="" />
@@ -137,10 +137,10 @@ export function AboutSection() {
                       <Briefcase className="text-cyan-400" size={24} />
                     </div>
                     <div>
-                      <h4 className="text-lg font-semibold text-white">1+ Years Experience</h4>
-                      <p className="text-gray-400">Software Engineering & Data Science</p>
+                      <h4 className="text-lg font-semibold text-white">2 Years Experience</h4>
+                      <p className="text-gray-400">Software engineering (Bussma / BUDG) & data science</p>
                       <div className="flex flex-wrap gap-2 mt-3">
-                        {['Python', 'Java', 'SQL', 'AWS', 'Azure', 'ML'].map((tech) => (
+                        {['Python', 'Java', 'Elasticsearch', 'SQL', 'AWS', 'Azure'].map((tech) => (
                           <motion.span
                             key={tech}
                             whileHover={{ scale: 1.05 }}
