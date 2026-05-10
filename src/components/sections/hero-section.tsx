@@ -118,6 +118,7 @@ export function HeroSection() {
             </motion.a>
             <GlassButton
               variant="outline"
+              hoverShapeMorph
               onClick={() => window.open(profile.resume, '_blank')}
             >
               <Download className="inline-block mr-2 h-4 w-4" />
