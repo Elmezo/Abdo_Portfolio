@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { ArrowRight, Clock, Tag, BookOpen } from 'lucide-react';
-import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
+import { StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import Image from 'next/image';
 
@@ -49,21 +49,24 @@ export function CaseStudiesSection() {
   return (
     <section id="case-studies" className="relative py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-4">
-        <FadeIn>
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-sm font-medium mb-6">
+        <SectionHeading
+          eyebrow={
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300">
               <BookOpen size={14} />
               Deep Dives & Learnings
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          }
+          title={
+            <>
               Case <GradientText>Studies</GradientText>
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            </>
+          }
+          description={
+            <p className="text-base text-gray-300 sm:text-lg">
               Behind-the-scenes stories of how I approach complex engineering challenges
             </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto rounded-full mt-4" />
-          </div>
-        </FadeIn>
+          }
+        />
 
         <StaggerContainer staggerDelay={0.15} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {caseStudies.map((study) => (

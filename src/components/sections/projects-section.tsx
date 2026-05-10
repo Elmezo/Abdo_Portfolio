@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Trophy, Calendar, X, ArrowRight, Layers, Target, Lightbulb, Code2, Image as ImageIcon, Briefcase, TrendingUp } from 'lucide-react';
-import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
+import { FadeIn, StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import projects from '../../../content/projects.json';
 import Image from 'next/image';
@@ -206,17 +206,18 @@ export function ProjectsSection() {
   return (
     <section id="projects" className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
       <div className="max-w-7xl mx-auto px-4 sm:px-5">
-        <FadeIn>
-          <div className="text-center mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 md:mb-4 text-white">
+        <SectionHeading
+          title={
+            <>
               Work & <GradientText>Case Studies</GradientText>
-            </h2>
-            <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+            </>
+          }
+          description={
+            <p className="text-base text-gray-300 sm:text-lg max-w-2xl mx-auto leading-relaxed">
               Problem → solution → impact, with the stack and links that are safe to share publicly.
             </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto rounded-full mt-4" />
-          </div>
-        </FadeIn>
+          }
+        />
 
         <StaggerContainer staggerDelay={0.15} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.projects.map((project) => (

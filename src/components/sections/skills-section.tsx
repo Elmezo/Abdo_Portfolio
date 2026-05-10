@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Code, Brain, BarChart3, Cloud, Database, Wrench } from 'lucide-react';
-import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
+import { StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GradientText } from '../ui-custom/glass-card';
 import skills from '../../../content/skills.json';
 
@@ -74,19 +74,20 @@ export function SkillsSection() {
       className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent"
     >
       <div className="max-w-7xl mx-auto px-4">
-        <FadeIn>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <SectionHeading
+          title={
+            <>
               My <GradientText>Skills</GradientText>
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            </>
+          }
+          description={
+            <p className="text-base text-gray-300 sm:text-lg">
               A comprehensive toolkit spanning software engineering, data science, and cloud technologies
             </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto rounded-full mt-4" />
-          </div>
-        </FadeIn>
+          }
+        />
 
-        <StaggerContainer staggerDelay={0.1} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <StaggerContainer staggerDelay={0.08} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skills.categories.map((category) => {
             const IconComponent = iconMap[category.icon] || Code;
 

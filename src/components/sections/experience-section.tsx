@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Briefcase, Calendar, MapPin, ChevronRight } from 'lucide-react';
-import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
+import { StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import experience from '../../../content/experience.json';
 
@@ -10,17 +10,18 @@ export function ExperienceSection() {
   return (
     <section id="experience" className="relative py-24 md:py-32">
       <div className="max-w-5xl mx-auto px-4">
-        <FadeIn>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <SectionHeading
+          title={
+            <>
               Work <GradientText>Experience</GradientText>
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            </>
+          }
+          description={
+            <p className="text-base text-gray-300 sm:text-lg">
               My professional journey in software engineering and data science
             </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto rounded-full mt-4" />
-          </div>
-        </FadeIn>
+          }
+        />
 
         {/* Timeline */}
         <div className="relative">

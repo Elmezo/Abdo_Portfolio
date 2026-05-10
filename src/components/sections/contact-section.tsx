@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Phone, MapPin, Send, Linkedin, Github, Kaggle } from 'lucide-react';
-import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
+import { FadeIn, StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GlassCard, GradientText, GlassButton } from '../ui-custom/glass-card';
 import profile from '../../../content/profile.json';
 import { getProfilePhoneList } from '@/lib/utils';
@@ -69,17 +69,18 @@ export function ContactSection() {
   return (
     <section id="contact" className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
       <div className="max-w-6xl mx-auto px-4">
-        <FadeIn>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <SectionHeading
+          title={
+            <>
               Get In <GradientText>Touch</GradientText>
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            </>
+          }
+          description={
+            <p className="text-base text-gray-300 sm:text-lg">
               Have a project in mind or want to collaborate? Feel free to reach out!
             </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto rounded-full mt-4" />
-          </div>
-        </FadeIn>
+          }
+        />
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Info */}

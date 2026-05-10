@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
+import { StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import { Quote, User } from 'lucide-react';
 import testimonialsData from '../../../content/testimonials.json';
@@ -15,17 +15,18 @@ export function TestimonialsSection() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4">
-        <FadeIn>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <SectionHeading
+          title={
+            <>
               Praise & <GradientText>Testimonials</GradientText>
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            </>
+          }
+          description={
+            <p className="text-base text-gray-300 sm:text-lg">
               What others have to say about my work, dedication, and technical expertise.
             </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto rounded-full mt-4" />
-          </div>
-        </FadeIn>
+          }
+        />
 
         <StaggerContainer staggerDelay={0.2} className="grid md:grid-cols-2 gap-8">
           {testimonialsData.testimonials.map((testimonial) => (

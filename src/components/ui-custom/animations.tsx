@@ -153,6 +153,63 @@ export function HoverScale({
   );
 }
 
+/** Staggered reveal for section headers and short lists */
+export const sectionRevealParent: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.09, delayChildren: 0.02 },
+  },
+};
+
+export const sectionRevealChild: Variants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { type: 'spring', stiffness: 300, damping: 26 },
+  },
+};
+
+interface SectionHeadingProps {
+  eyebrow?: ReactNode;
+  title: ReactNode;
+  description?: ReactNode;
+  className?: string;
+}
+
+export function SectionHeading({ eyebrow, title, description, className = '' }: SectionHeadingProps) {
+  return (
+    <motion.div
+      className={`text-center mb-12 md:mb-16 ${className}`}
+      variants={sectionRevealParent}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-100px' }}
+    >
+      {eyebrow ? (
+        <motion.div variants={sectionRevealChild} className="mb-5 flex justify-center">
+          {eyebrow}
+        </motion.div>
+      ) : null}
+      <motion.h2
+        variants={sectionRevealChild}
+        className="mb-3 text-3xl font-bold text-white sm:text-4xl md:mb-4 md:text-5xl"
+      >
+        {title}
+      </motion.h2>
+      {description ? (
+        <motion.div variants={sectionRevealChild} className="mx-auto mb-2 max-w-2xl px-2">
+          {description}
+        </motion.div>
+      ) : null}
+      <motion.div
+        variants={sectionRevealChild}
+        className="mx-auto mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500"
+      />
+    </motion.div>
+  );
+}
+
 interface TypewriterEffectProps {
   words: string[];
   className?: string;

@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Mail, Phone, GraduationCap, Briefcase, Code2, Database, Trophy } from 'lucide-react';
-import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
+import { FadeIn, StaggerContainer, StaggerItem, SectionHeading, sectionRevealParent, sectionRevealChild } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import profile from '../../../content/profile.json';
 import education from '../../../content/education.json';
@@ -65,14 +65,13 @@ export function AboutSection() {
   return (
     <section id="about" className="relative py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-4">
-        <FadeIn>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+        <SectionHeading
+          title={
+            <>
               About <GradientText>Me</GradientText>
-            </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto rounded-full" />
-          </div>
-        </FadeIn>
+            </>
+          }
+        />
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Left side - Bio */}
@@ -80,18 +79,24 @@ export function AboutSection() {
             <GlassCard className="p-8">
               <h3 className="text-2xl font-bold text-white mb-6">Who I Am</h3>
               <p className="text-gray-300 leading-relaxed mb-6">{profile.bio}</p>
-              
+
               {/* Quick facts */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-3 text-gray-300">
+              <motion.div
+                variants={sectionRevealParent}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-40px' }}
+                className="space-y-4"
+              >
+                <motion.div variants={sectionRevealChild} className="flex items-center gap-3 text-gray-300">
                   <MapPin className="text-purple-400 shrink-0" size={20} />
                   <span>{profile.location}</span>
-                </div>
-                <div className="flex items-center gap-3 text-gray-300">
+                </motion.div>
+                <motion.div variants={sectionRevealChild} className="flex items-center gap-3 text-gray-300">
                   <Mail className="text-cyan-400 shrink-0" size={20} />
                   <span className="break-all">{profile.email}</span>
-                </div>
-                <div className="flex items-start gap-3 text-gray-300">
+                </motion.div>
+                <motion.div variants={sectionRevealChild} className="flex items-start gap-3 text-gray-300">
                   <Phone className="text-purple-400 shrink-0 mt-0.5" size={20} />
                   <div className="flex flex-col gap-1">
                     {phones.map((num) => (
@@ -104,8 +109,8 @@ export function AboutSection() {
                       </a>
                     ))}
                   </div>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
             </GlassCard>
 
             {/* Animated Stats */}
