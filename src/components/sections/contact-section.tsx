@@ -8,7 +8,10 @@ import { GlassCard, GradientText, GlassButton } from '../ui-custom/glass-card';
 import profile from '../../../content/profile.json';
 import { getProfilePhoneList } from '@/lib/utils';
 
-const CONTACT_FORM_ACTION = process.env.NEXT_PUBLIC_CONTACT_FORM_ACTION?.trim();
+/** Formspree form — override with NEXT_PUBLIC_CONTACT_FORM_ACTION in .env or Vercel. */
+const DEFAULT_FORMSPREE_ACTION = 'https://formspree.io/f/xojrpknn';
+const CONTACT_FORM_ACTION =
+  process.env.NEXT_PUBLIC_CONTACT_FORM_ACTION?.trim() || DEFAULT_FORMSPREE_ACTION;
 
 export function ContactSection() {
   const phones = getProfilePhoneList(profile);
@@ -28,27 +31,22 @@ export function ContactSection() {
     setIsSubmitting(true);
 
     try {
-      if (CONTACT_FORM_ACTION) {
-        const fd = new FormData();
-        fd.append('name', formData.name);
-        fd.append('email', formData.email);
-        fd.append('subject', formData.subject);
-        fd.append('message', formData.message);
-        const res = await fetch(CONTACT_FORM_ACTION, {
-          method: 'POST',
-          body: fd,
-          headers: { Accept: 'application/json' },
-        });
-        const data = (await res.json().catch(() => null)) as { error?: string } | null;
-        if (!res.ok) {
-          throw new Error(data?.error || `Request failed (${res.status})`);
-        }
-      } else {
-        const subject = encodeURIComponent(`[Portfolio] ${formData.subject}`);
-        const body = encodeURIComponent(
-          `From: ${formData.name} <${formData.email}>\n\n${formData.message}`
-        );
-        window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+      const fd = new FormData();
+      fd.append('name', formData.name);
+      fd.append('email', formData.email);
+      fd.append('subject', formData.subject);
+      fd.append('message', formData.message);
+      fd.append('_replyto', formData.email);
+      fd.append('_subject', `[Portfolio] ${formData.subject}`);
+
+      const res = await fetch(CONTACT_FORM_ACTION, {
+        method: 'POST',
+        body: fd,
+        headers: { Accept: 'application/json' },
+      });
+      const data = (await res.json().catch(() => null)) as { error?: string } | null;
+      if (!res.ok) {
+        throw new Error(data?.error || `Request failed (${res.status})`);
       }
 
       setSubmitted(true);
@@ -192,9 +190,7 @@ export function ContactSection() {
             <GlassCard className="p-8">
               <h3 className="text-2xl font-bold text-white mb-2">Send a Message</h3>
               <p className="text-gray-500 text-sm mb-6">
-                {CONTACT_FORM_ACTION
-                  ? 'Delivered securely via Formspree.'
-                  : 'Opens your email client with a pre-filled message — or connect on LinkedIn.'}
+                Messages are sent securely via Formspree. Replies use the email you enter below.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-6" noValidate>
