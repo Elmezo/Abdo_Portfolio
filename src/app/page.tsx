@@ -15,7 +15,7 @@ import { Footer } from '@/components/sections/footer';
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-slate-950 overflow-x-hidden">
+    <main id="main-content" className="relative min-h-screen bg-slate-950 overflow-x-hidden">
       {/* Particle Background */}
       <ParticleBackground />
       

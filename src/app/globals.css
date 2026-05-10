@@ -92,6 +92,34 @@
   }
 }
 
+@layer components {
+  .skip-link {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: 500;
+  }
+  .skip-link:focus {
+    left: 1rem;
+    top: 1rem;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background: oklch(0.98 0 0);
+    color: oklch(0.15 0.02 285);
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    outline: 2px solid oklch(0.7 0.18 285);
+    outline-offset: 2px;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

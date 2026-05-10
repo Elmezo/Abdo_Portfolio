@@ -8,6 +8,8 @@ import { GlassCard, GradientText, GlassButton } from '../ui-custom/glass-card';
 import profile from '../../../content/profile.json';
 import { getProfilePhoneList } from '@/lib/utils';
 
+const CONTACT_FORM_ACTION = process.env.NEXT_PUBLIC_CONTACT_FORM_ACTION?.trim();
+
 export function ContactSection() {
   const phones = getProfilePhoneList(profile);
   const [formData, setFormData] = useState({
@@ -18,19 +20,45 @@ export function ContactSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitError(null);
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    setIsSubmitting(false);
-    setSubmitted(true);
-    setFormData({ name: '', email: '', subject: '', message: '' });
-    
-    setTimeout(() => setSubmitted(false), 3000);
+
+    try {
+      if (CONTACT_FORM_ACTION) {
+        const fd = new FormData();
+        fd.append('name', formData.name);
+        fd.append('email', formData.email);
+        fd.append('subject', formData.subject);
+        fd.append('message', formData.message);
+        const res = await fetch(CONTACT_FORM_ACTION, {
+          method: 'POST',
+          body: fd,
+          headers: { Accept: 'application/json' },
+        });
+        const data = (await res.json().catch(() => null)) as { error?: string } | null;
+        if (!res.ok) {
+          throw new Error(data?.error || `Request failed (${res.status})`);
+        }
+      } else {
+        const subject = encodeURIComponent(`[Portfolio] ${formData.subject}`);
+        const body = encodeURIComponent(
+          `From: ${formData.name} <${formData.email}>\n\n${formData.message}`
+        );
+        window.location.href = `mailto:${profile.email}?subject=${subject}&body=${body}`;
+      }
+
+      setSubmitted(true);
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      setTimeout(() => setSubmitted(false), 4000);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Something went wrong. Try email or LinkedIn.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -121,6 +149,7 @@ export function ContactSection() {
                       href={profile.social.github}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="GitHub profile"
                       whileHover={{ scale: 1.1, y: -3 }}
                       className="p-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-purple-500/50 transition-colors"
                     >
@@ -130,6 +159,7 @@ export function ContactSection() {
                       href={profile.social.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="LinkedIn profile"
                       whileHover={{ scale: 1.1, y: -3 }}
                       className="p-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-cyan-500/50 transition-colors"
                     >
@@ -139,6 +169,7 @@ export function ContactSection() {
                       href={profile.social.kaggle}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label="Kaggle profile"
                       whileHover={{ scale: 1.1, y: -3 }}
                       className="p-3 rounded-xl bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-purple-500/50 transition-colors"
                     >
@@ -159,30 +190,43 @@ export function ContactSection() {
           {/* Contact Form */}
           <FadeIn direction="right" delay={0.4}>
             <GlassCard className="p-8">
-              <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
-              
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <h3 className="text-2xl font-bold text-white mb-2">Send a Message</h3>
+              <p className="text-gray-500 text-sm mb-6">
+                {CONTACT_FORM_ACTION
+                  ? 'Delivered securely via Formspree.'
+                  : 'Opens your email client with a pre-filled message — or connect on LinkedIn.'}
+              </p>
+
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2">Name</label>
+                    <label htmlFor="contact-name" className="block text-gray-400 text-sm mb-2">
+                      Name
+                    </label>
                     <input
+                      id="contact-name"
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
                       required
+                      autoComplete="name"
                       className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                       placeholder="Your name"
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-400 text-sm mb-2">Email</label>
+                    <label htmlFor="contact-email" className="block text-gray-400 text-sm mb-2">
+                      Email
+                    </label>
                     <input
+                      id="contact-email"
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
                       required
+                      autoComplete="email"
                       className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 transition-colors"
                       placeholder="your@email.com"
                     />
@@ -190,8 +234,11 @@ export function ContactSection() {
                 </div>
 
                 <div>
-                  <label className="block text-gray-400 text-sm mb-2">Subject</label>
+                  <label htmlFor="contact-subject" className="block text-gray-400 text-sm mb-2">
+                    Subject
+                  </label>
                   <input
+                    id="contact-subject"
                     type="text"
                     name="subject"
                     value={formData.subject}
@@ -203,8 +250,11 @@ export function ContactSection() {
                 </div>
 
                 <div>
-                  <label className="block text-gray-400 text-sm mb-2">Message</label>
+                  <label htmlFor="contact-message" className="block text-gray-400 text-sm mb-2">
+                    Message
+                  </label>
                   <textarea
+                    id="contact-message"
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
@@ -214,6 +264,12 @@ export function ContactSection() {
                     placeholder="Your message..."
                   />
                 </div>
+
+                {submitError ? (
+                  <p className="text-sm text-red-400" role="alert">
+                    {submitError}
+                  </p>
+                ) : null}
 
                 <GlassButton type="submit" className="w-full" variant="primary">
                   {isSubmitting ? (

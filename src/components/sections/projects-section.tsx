@@ -30,6 +30,8 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
         >
           {/* Close button */}
           <button
+            type="button"
+            aria-label="Close project details"
             onClick={onClose}
             className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
           >
@@ -41,7 +43,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             {project.image ? (
               <Image
                 src={project.image}
-                alt={project.title}
+                alt={`Project preview: ${project.title}`}
                 fill
                 className="object-cover"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
@@ -154,6 +156,14 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
               </ul>
             </div>
 
+            <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+              <p className="text-xs text-gray-400 leading-relaxed">
+                <span className="font-semibold text-gray-300">Engineering & data:</span> production systems rely on
+                environment-based config (.env / secret managers) — public repos never ship API keys or customer data.
+                Data quality checks and access control follow each deployment&apos;s requirements.
+              </p>
+            </div>
+
             {/* Links */}
             <div className="flex gap-4 pt-4 border-t border-white/10">
               {project.github && (
@@ -166,7 +176,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                   className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/10 border border-white/20 text-white hover:bg-white/15 transition-all font-medium"
                 >
                   <Github size={18} />
-                  View on GitHub
+                  View source code
                 </motion.a>
               )}
               {project.demo && (
@@ -221,7 +231,7 @@ export function ProjectsSection() {
                     {project.image ? (
                       <Image
                         src={project.image}
-                        alt={project.title}
+                        alt={`Project card image: ${project.title}`}
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                         onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
@@ -302,6 +312,7 @@ export function ProjectsSection() {
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
+                          aria-label={`View source code for ${project.title} on GitHub`}
                           whileHover={{ scale: 1.1 }}
                           onClick={(e) => e.stopPropagation()}
                           className="p-2 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-purple-500/50 transition-colors"
@@ -314,6 +325,7 @@ export function ProjectsSection() {
                           href={project.demo}
                           target="_blank"
                           rel="noopener noreferrer"
+                          aria-label={`Open live demo for ${project.title}`}
                           whileHover={{ scale: 1.1 }}
                           onClick={(e) => e.stopPropagation()}
                           className="p-2 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-cyan-500/50 transition-colors"
@@ -322,7 +334,8 @@ export function ProjectsSection() {
                         </motion.a>
                       )}
                       <motion.button
-                        whileHover={{ scale: 1.02 }}
+                        type="button"
+                        aria-label={`Open case study for ${project.title}`}
                         onClick={() => setSelectedProject(project)}
                         className="ml-auto inline-flex items-center gap-1.5 text-xs text-purple-400 hover:text-purple-300 transition-colors font-medium"
                       >
