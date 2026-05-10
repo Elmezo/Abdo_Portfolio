@@ -15,8 +15,23 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Abdelrahman Alaa | Software Engineer & Data Scientist",
-  description: "Junior Software Engineer and Data Scientist with 1+ year of experience in Python, SQL, Java, and cloud platforms (AWS, Azure). Building scalable data-driven systems and enterprise-level applications.",
-  keywords: ["Software Engineer", "Data Scientist", "Python", "Java", "Machine Learning", "AWS", "Azure", "Full-Stack Developer", "UAE"],
+  description:
+    "AI & software engineer building intelligent data systems, LLM assistants over enterprise data, and production backends with Next.js, Python, and Java.",
+  keywords: [
+    "AI Engineer",
+    "Software Engineer",
+    "Data Scientist",
+    "LLM",
+    "RAG",
+    "Python",
+    "Java",
+    "Next.js",
+    "React",
+    "Machine Learning",
+    "AWS",
+    "Azure",
+    "UAE",
+  ],
   authors: [{ name: "Abdelrahman Alaa" }],
   icons: {
     icon: "/logo.svg",

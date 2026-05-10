@@ -2,11 +2,17 @@
 
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, Download, ChevronDown, ExternalLink, Sparkles } from 'lucide-react';
-import { TypewriterEffect, FloatingElement, FadeIn } from '../ui-custom/animations';
+import { FloatingElement, FadeIn } from '../ui-custom/animations';
 import { GlassButton, GradientText } from '../ui-custom/glass-card';
 import profile from '../../../content/profile.json';
 
+type ProfileHero = typeof profile & { heroLead?: string; heroStack?: string };
+
 export function HeroSection() {
+  const p = profile as ProfileHero;
+  const heroLead = p.heroLead ?? p.shortBio;
+  const heroStack = p.heroStack ?? 'Next.js · React · Python · SQL · cloud';
+
   const scrollToAbout = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -44,7 +50,7 @@ export function HeroSection() {
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-sm font-medium mb-8"
           >
             <Sparkles size={14} className="text-purple-400" />
-            Available for new opportunities
+            Internships · remote roles · freelance
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
           </motion.div>
         </FadeIn>
@@ -68,31 +74,21 @@ export function HeroSection() {
           </h1>
         </FadeIn>
 
-        <FadeIn delay={0.6}>
-          {/* Typewriter */}
-          <div className="text-2xl md:text-3xl lg:text-4xl text-gray-300 mb-6 h-12">
-            <span className="text-gray-400">I&apos;m a </span>
-            <TypewriterEffect
-              words={profile.roles}
-              className="text-cyan-400 font-semibold"
-              typingSpeed={80}
-              deletingSpeed={40}
-              pauseDuration={2000}
-            />
+        <FadeIn delay={0.55}>
+          <div className="max-w-3xl mx-auto mb-8 space-y-4">
+            <p className="text-2xl md:text-3xl lg:text-4xl font-semibold text-white leading-snug">
+              {p.title}
+            </p>
+            <p className="text-lg md:text-xl text-gray-300 leading-relaxed">
+              {heroLead}
+            </p>
+            <p className="text-sm md:text-base text-gray-500 tracking-wide">{heroStack}</p>
           </div>
         </FadeIn>
 
-        <FadeIn delay={0.7}>
-          {/* Strong Tagline */}
-          <p className="text-gray-300 text-xl md:text-2xl max-w-3xl mx-auto mb-4 leading-relaxed font-light">
-            Bridging the gap between <span className="text-purple-400 font-semibold">Software Engineering</span> and <span className="text-cyan-400 font-semibold">Data Science</span>. I build intelligent, scalable data platforms that transform complex challenges into <span className="text-amber-400 font-semibold">real business impact</span>.
-          </p>
-        </FadeIn>
-
-        <FadeIn delay={0.8}>
-          {/* Short bio */}
+        <FadeIn delay={0.75}>
           <p className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
-            {profile.shortBio}
+            {p.shortBio}
           </p>
         </FadeIn>
 
@@ -103,7 +99,7 @@ export function HeroSection() {
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <ExternalLink className="inline-block mr-2 h-4 w-4" />
-              View Projects
+              View case studies
             </GlassButton>
             <motion.a
               href={profile.social.github}

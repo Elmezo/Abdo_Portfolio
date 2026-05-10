@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Trophy, Calendar, X, ArrowRight, Layers, Target, Lightbulb, Code2, Image as ImageIcon, User, Briefcase } from 'lucide-react';
+import { ExternalLink, Github, Trophy, Calendar, X, ArrowRight, Layers, Target, Lightbulb, Code2, Image as ImageIcon, Briefcase, TrendingUp } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import projects from '../../../content/projects.json';
@@ -120,6 +120,17 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
               </p>
             </div>
 
+            {/* Impact */}
+            {'impact' in project && typeof project.impact === 'string' && project.impact ? (
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <TrendingUp size={18} className="text-emerald-400" />
+                  <h3 className="text-sm font-semibold text-emerald-400 uppercase tracking-wider">Impact</h3>
+                </div>
+                <p className="text-gray-300 leading-relaxed">{project.impact}</p>
+              </div>
+            ) : null}
+
             {/* Architecture */}
             <div>
               <div className="flex items-center gap-2 mb-3">
@@ -127,11 +138,13 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                 <h3 className="text-sm font-semibold text-purple-400 uppercase tracking-wider">Architecture & Highlights</h3>
               </div>
               <ul className="space-y-2">
-                {(project.title.includes('Diabetes')
-                  ? ['CNN with Transfer Learning (ResNet50)', 'Data augmentation for class imbalance', '94%+ accuracy on test dataset', 'Awarded 2nd place in national competition']
-                  : project.title.includes('Governance')
-                  ? ['Java Spring Boot microservices architecture', 'MySQL with optimized metadata schema', 'Docker containerization for deployment', 'REST APIs with automated documentation']
-                  : ['Python-based ETL with Apache Airflow-style orchestration', 'AWS S3 + Azure Blob for scalable storage', 'Scikit-learn model training with cross-validation', 'CI/CD pipeline for model deployment']
+                {(Array.isArray(project.highlights) && project.highlights.length > 0
+                  ? project.highlights
+                  : project.title.includes('Diabetes')
+                    ? ['CNN with Transfer Learning (ResNet50)', 'Data augmentation for class imbalance', '94%+ accuracy on test dataset', 'Awarded 2nd place in national competition']
+                    : project.title.includes('Governance')
+                      ? ['Java services with Jakarta Servlet / Tomcat', 'Elasticsearch-backed discovery', 'MySQL + JWT/LDAP', 'REST APIs with OpenAPI documentation']
+                      : ['Python-based ETL with orchestration', 'AWS S3 + Azure Blob for scalable storage', 'Scikit-learn model training with cross-validation', 'CI/CD pipeline for model deployment']
                 ).map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-gray-300">
                     <ArrowRight size={16} className="text-cyan-400 mt-0.5 shrink-0" />
@@ -186,10 +199,10 @@ export function ProjectsSection() {
         <FadeIn>
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Featured <GradientText>Projects</GradientText>
+              Work & <GradientText>Case Studies</GradientText>
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              A showcase of my work in machine learning, software engineering, and data science
+              Problem → solution → impact, with the stack and links that are safe to share publicly.
             </p>
             <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto rounded-full mt-4" />
           </div>
