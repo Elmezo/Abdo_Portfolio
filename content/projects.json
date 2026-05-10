@@ -3,8 +3,8 @@
     {
       "id": 1,
       "title": "AI Diabetes Detection System",
-      "description": "Built a deep learning CNN model for diabetes detection. The system uses advanced image classification techniques to detect diabetic retinopathy from retinal images with high accuracy.",
-      "longDescription": "A comprehensive deep learning solution for diabetes detection using Convolutional Neural Networks. The project involved data preprocessing, model architecture design, training, and validation. Achieved remarkable results in the Kufr El-Sheikh Olympics Competition.",
+      "description": "Deep learning CNN for diabetic retinopathy screening — production-style training pipeline and competition-grade accuracy.",
+      "longDescription": "A comprehensive deep learning solution for diabetes detection using Convolutional Neural Networks. The project involved data preprocessing, model architecture design, training, and validation. Achieved strong results in the Kufr El-Sheikh Olympics Competition.",
       "image": "/projects/diabetes-detection.png",
       "technologies": ["Python", "TensorFlow", "Keras", "CNN", "Transfer Learning", "Image Classification"],
       "github": "https://github.com/elmezo/diabetes-detection",
@@ -14,29 +14,43 @@
       "year": "2022",
       "role": "Lead Data Scientist",
       "challenge": "Diabetic retinopathy is a leading cause of blindness, but early detection through manual examination is time-consuming and requires specialized expertise not always available.",
-      "solution": "Developed a robust CNN using Transfer Learning (ResNet50) with heavy data augmentation to address class imbalance. Achieved 94%+ accuracy, providing a quick, accessible screening tool."
+      "solution": "Developed a robust CNN using Transfer Learning (ResNet50) with heavy data augmentation to address class imbalance. Achieved 94%+ accuracy on the test set, providing a quick, accessible screening workflow.",
+      "impact": "Demonstrated a deployable screening path for clinics with limited specialists — model performance and documentation suitable for stakeholder review and further clinical validation.",
+      "highlights": [
+        "CNN with Transfer Learning (ResNet50)",
+        "Data augmentation for class imbalance",
+        "94%+ accuracy on test dataset",
+        "2nd place in national competition"
+      ]
     },
     {
       "id": 2,
-      "title": "Data Governance Platform",
-      "description": "Enterprise-scale data governance and metadata management platform built at Bussma Company. Features include automated documentation, logging systems, and bulk data operations.",
-      "longDescription": "A comprehensive enterprise solution for managing data assets, metadata, and governance policies. Built with modern Java technologies and designed for scalability and performance.",
+      "title": "Data Governance Platform (BUDG)",
+      "description": "Enterprise data governance and metadata management — closed-source production system for policy, lineage, and operational workflows.",
+      "longDescription": "Enterprise solution for managing data assets, metadata, and governance policies. Built for reliability and auditability with Java services, search-backed discovery, and integrations used by internal teams.",
       "image": "/projects/data-governance.png",
-      "technologies": ["Java", "Spring Boot", "REST APIs", "MySQL", "Docker"],
+      "technologies": ["Java 17", "Jakarta Servlet", "Elasticsearch", "MySQL", "Tomcat", "JWT", "OpenAPI"],
       "github": null,
       "demo": null,
       "featured": true,
-      "achievement": "Enterprise Production System",
+      "achievement": "Enterprise production system",
       "year": "2024",
       "role": "Backend Software Engineer",
-      "challenge": "Enterprise data was fragmented across multiple systems with no unified metadata management, causing compliance issues, data duplication, and operational inefficiencies.",
-      "solution": "Architected a scalable Spring Boot microservices ecosystem with a meticulously optimized MySQL schema. Implemented comprehensive REST APIs and automated documentation, unifying data access and resolving compliance bottlenecks."
+      "challenge": "Enterprise data was fragmented across systems with weak metadata and inconsistent policy enforcement, driving compliance risk and duplicated engineering effort.",
+      "solution": "Implemented governed metadata services, REST APIs, and search (Elasticsearch) over a normalized MySQL model; JWT/LDAP authentication, exports (Excel/PDF), and structured logging for operability.",
+      "impact": "Reduced time-to-answer for data stewards on lineage and ownership questions and tightened audit trails for sensitive domains — measured via fewer ad-hoc tickets and faster onboarding of new datasets.",
+      "highlights": [
+        "Java 17 WAR on Tomcat with Jakarta Servlets",
+        "Elasticsearch for discovery and governance search",
+        "MySQL + HikariCP with JWT/LDAP security model",
+        "OpenAPI-described APIs, reporting exports, transactional email"
+      ]
     },
     {
       "id": 3,
       "title": "ML Analytics Pipeline",
-      "description": "Scalable machine learning analytics pipeline for data processing and model deployment. Integrates with cloud platforms for efficient data handling.",
-      "longDescription": "A robust analytics pipeline designed to handle large-scale data processing and machine learning model deployment. Features automated data validation, model training, and deployment workflows.",
+      "description": "End-to-end ML analytics pipeline for validation, training hooks, and cloud-backed storage — built for repeatable deployments.",
+      "longDescription": "Analytics pipeline for large-scale processing and ML workflows with automated validation and deployment hooks across AWS and Azure.",
       "image": "/projects/ml-pipeline.png",
       "technologies": ["Python", "AWS", "Azure", "Scikit-learn", "Data Pipelines"],
       "github": "https://github.com/elmezo/ml-analytics",
@@ -44,8 +58,15 @@
       "featured": false,
       "year": "2024",
       "role": "Machine Learning Engineer",
-      "challenge": "Data scientists lacked a unified, scalable pipeline for processing large datasets and deploying ML models, leading to inconsistent results and slow time-to-production.",
-      "solution": "Built a Python-based ETL orchestration pipeline interacting with AWS S3 and Azure Blob. Automated data validation and model deployment workflows, cutting deployment time by 60%."
+      "challenge": "Teams lacked a repeatable path from validated datasets to deployed models, causing inconsistent metrics and slow releases.",
+      "solution": "Built Python ETL/orchestration with object storage on AWS S3 and Azure Blob, automated validation, and deployment scripts so models could be promoted with checks instead of manual handoffs.",
+      "impact": "Cut model promotion friction: deployment cycles shortened substantially and regressions were caught earlier via automated validation gates.",
+      "highlights": [
+        "Python ETL with cloud object storage (S3 / Azure Blob)",
+        "Scikit-learn training with cross-validation and versioning",
+        "Automated validation before promotion",
+        "Deployment workflow tuned for faster iteration"
+      ]
     }
   ]
 }

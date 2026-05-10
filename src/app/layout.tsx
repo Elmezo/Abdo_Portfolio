@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
@@ -14,17 +15,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Abdelrahman Alaa | Software Engineer & Data Scientist",
+  title: "Abdelrahman Alaa | AI & Software Engineer",
   description:
-    "Software engineer and data scientist with 2 years of experience: ERP LLM chatbots (Python), data governance (BUDG / Java, Elasticsearch), and ML. AWS, Azure, SQL.",
+    "AI and software engineer with 2 years building ERP LLM assistants (Python), enterprise data governance (BUDG / Java, Elasticsearch), and modern frontends with Next.js and React. AWS, Azure, SQL.",
   keywords: [
+    "AI Engineer",
     "Software Engineer",
     "Data Scientist",
     "AI Developer",
     "Python",
     "LLM",
+    "RAG",
     "ERP",
     "Java",
+    "Next.js",
+    "React",
     "Elasticsearch",
     "Data Governance",
     "Machine Learning",
@@ -38,8 +43,8 @@ export const metadata: Metadata = {
     icon: "/logo.svg",
   },
   openGraph: {
-    title: "Abdelrahman Alaa | Software Engineer & Data Scientist",
-    description: "Building scalable data-driven systems and transforming data into business value",
+    title: "Abdelrahman Alaa | AI & Software Engineer",
+    description: "Intelligent data systems, LLM assistants, and production backends.",
     url: "https://abdelrahman-alaa.dev",
     siteName: "Abdelrahman Alaa Portfolio",
     type: "website",
@@ -47,8 +52,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Abdelrahman Alaa | Software Engineer & Data Scientist",
-    description: "Building scalable data-driven systems and transforming data into business value",
+    title: "Abdelrahman Alaa | AI & Software Engineer",
+    description: "Intelligent data systems, LLM assistants, and production backends.",
   },
   robots: {
     index: true,
@@ -59,7 +64,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
