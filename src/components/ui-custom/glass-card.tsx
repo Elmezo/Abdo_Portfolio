@@ -77,7 +77,7 @@ export function GlassButton({
       onClick={onClick}
       {...shapeMorphMotion}
       className={`
-        px-6 py-3 font-medium
+        cursor-pointer px-6 py-3 font-medium
         ${hoverShapeMorph ? '' : 'rounded-xl'}
         backdrop-blur-md border
         transition-colors duration-300

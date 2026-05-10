@@ -111,7 +111,7 @@ export function HeroSection() {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center px-6 py-3 rounded-xl font-medium bg-white/10 border border-white/20 text-white hover:bg-white/15 transition-all duration-300"
+              className="cursor-pointer inline-flex items-center px-6 py-3 rounded-xl font-medium bg-white/10 border border-white/20 text-white hover:bg-white/15 transition-all duration-300"
             >
               <Github className="inline-block mr-2 h-4 w-4" />
               GitHub Profile
