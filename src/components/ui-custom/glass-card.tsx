@@ -41,6 +41,8 @@ interface GlassButtonProps {
   onClick?: () => void;
   variant?: 'primary' | 'secondary' | 'outline';
   type?: 'button' | 'submit' | 'reset';
+  /** Animate border from rounded rect to pill on hover */
+  hoverShapeMorph?: boolean;
 }
 
 export function GlassButton({
@@ -49,6 +51,7 @@ export function GlassButton({
   onClick,
   variant = 'primary',
   type = 'button',
+  hoverShapeMorph = false,
 }: GlassButtonProps) {
   const variants = {
     primary: 'bg-gradient-to-r from-purple-600 to-cyan-600 text-white',
@@ -56,16 +59,28 @@ export function GlassButton({
     outline: 'bg-transparent border-white/30 text-white hover:bg-white/10',
   };
 
+  const shapeMorphMotion = hoverShapeMorph
+    ? {
+        initial: { borderRadius: '0.75rem' },
+        whileHover: { borderRadius: '9999px', scale: 1.05 },
+        whileTap: { scale: 0.95 },
+        transition: { type: 'spring' as const, stiffness: 380, damping: 24 },
+      }
+    : {
+        whileHover: { scale: 1.05 },
+        whileTap: { scale: 0.95 },
+      };
+
   return (
     <motion.button
       type={type}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
       onClick={onClick}
+      {...shapeMorphMotion}
       className={`
-        px-6 py-3 rounded-xl font-medium
+        px-6 py-3 font-medium
+        ${hoverShapeMorph ? '' : 'rounded-xl'}
         backdrop-blur-md border
-        transition-all duration-300
+        transition-colors duration-300
         ${variants[variant]}
         ${className}
       `}
