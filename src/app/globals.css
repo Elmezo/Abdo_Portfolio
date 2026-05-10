@@ -87,6 +87,8 @@
   }
   html {
     scroll-behavior: smooth;
+    /* Fixed nav (~4rem) + breathing room for in-page anchors */
+    scroll-padding-top: 5.5rem;
   }
 }
 
