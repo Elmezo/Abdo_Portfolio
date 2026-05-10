@@ -95,7 +95,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                 <Briefcase size={18} className="text-purple-400" />
                 <h3 className="text-sm font-semibold text-purple-400 uppercase tracking-wider">My Role</h3>
               </div>
-              <p className="text-gray-300 leading-relaxed font-medium">
+              <p className="text-gray-200 leading-relaxed font-medium">
                 {project.role}
               </p>
             </div>
@@ -106,7 +106,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                 <Target size={18} className="text-red-400" />
                 <h3 className="text-sm font-semibold text-red-400 uppercase tracking-wider">The Challenge</h3>
               </div>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-gray-200 leading-relaxed">
                 {project.challenge}
               </p>
             </div>
@@ -117,7 +117,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                 <Lightbulb size={18} className="text-yellow-400" />
                 <h3 className="text-sm font-semibold text-yellow-400 uppercase tracking-wider">The Solution</h3>
               </div>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-gray-200 leading-relaxed">
                 {project.solution}
               </p>
             </div>
@@ -129,7 +129,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                   <TrendingUp size={18} className="text-emerald-400" />
                   <h3 className="text-sm font-semibold text-emerald-400 uppercase tracking-wider">Impact</h3>
                 </div>
-                <p className="text-gray-300 leading-relaxed">{project.impact}</p>
+                <p className="text-gray-200 leading-relaxed">{project.impact}</p>
               </div>
             ) : null}
 
@@ -148,7 +148,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
                       ? ['Java services with Jakarta Servlet / Tomcat', 'Elasticsearch-backed discovery', 'MySQL + JWT/LDAP', 'REST APIs with OpenAPI documentation']
                       : ['Python-based ETL with orchestration', 'AWS S3 + Azure Blob for scalable storage', 'Scikit-learn model training with cross-validation', 'CI/CD pipeline for model deployment']
                 ).map((item, i) => (
-                  <li key={i} className="flex items-start gap-3 text-gray-300">
+                  <li key={i} className="flex items-start gap-3 text-gray-200">
                     <ArrowRight size={16} className="text-cyan-400 mt-0.5 shrink-0" />
                     <span>{item}</span>
                   </li>
@@ -157,8 +157,8 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             </div>
 
             <div className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
-              <p className="text-xs text-gray-400 leading-relaxed">
-                <span className="font-semibold text-gray-300">Engineering & data:</span> production systems rely on
+              <p className="text-sm text-gray-300 leading-relaxed">
+                <span className="font-semibold text-gray-200">Engineering & data:</span> production systems rely on
                 environment-based config (.env / secret managers) — public repos never ship API keys or customer data.
                 Data quality checks and access control follow each deployment&apos;s requirements.
               </p>
@@ -205,13 +205,13 @@ export function ProjectsSection() {
 
   return (
     <section id="projects" className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-5">
         <FadeIn>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 md:mb-4 text-white">
               Work & <GradientText>Case Studies</GradientText>
             </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
               Problem → solution → impact, with the stack and links that are safe to share publicly.
             </p>
             <div className="w-24 h-1 bg-gradient-to-r from-purple-500 to-cyan-500 mx-auto rounded-full mt-4" />
@@ -222,10 +222,18 @@ export function ProjectsSection() {
           {projects.projects.map((project) => (
             <StaggerItem key={project.id}>
               <motion.div
-                whileHover={{ y: -10 }}
-                transition={{ type: 'spring', stiffness: 300 }}
+                whileHover={{ y: -12 }}
+                transition={{ type: 'spring', stiffness: 320, damping: 22 }}
+                className="rounded-2xl transition-shadow duration-300 hover:shadow-2xl hover:shadow-purple-500/25"
               >
-                <GlassCard className="h-full overflow-hidden group cursor-pointer" hover={false}>
+                <GlassCard
+                  className={`h-full overflow-hidden group cursor-pointer ${
+                    project.featured
+                      ? 'ring-2 ring-purple-400/40 ring-offset-2 ring-offset-slate-950'
+                      : ''
+                  }`}
+                  hover={false}
+                >
                   {/* Project Image */}
                   <div className="relative h-52 overflow-hidden">
                     {project.image ? (
@@ -268,8 +276,8 @@ export function ProjectsSection() {
 
                     {/* Hover overlay with more info */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/80 to-slate-950/20 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out flex flex-col justify-end p-6 translate-y-4 group-hover:translate-y-0">
-                      <p className="text-cyan-300 font-medium text-sm mb-2">{project.role}</p>
-                      <p className="text-gray-300 text-sm line-clamp-2 mb-4">
+                      <p className="text-cyan-300 font-semibold text-sm mb-2">{project.role}</p>
+                      <p className="text-gray-200 text-sm line-clamp-2 mb-4">
                         {project.challenge}
                       </p>
                       <span className="text-white text-sm font-semibold flex items-center gap-2 self-start bg-white/10 px-4 py-2 rounded-lg border border-white/20 hover:bg-white/20 transition-colors">
@@ -284,22 +292,27 @@ export function ProjectsSection() {
                     <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                    <p className="text-gray-200 text-sm mb-2 line-clamp-3 leading-relaxed">
                       {project.description}
                     </p>
+                    {'impact' in project && typeof project.impact === 'string' && project.impact ? (
+                      <p className="text-xs text-emerald-400/95 font-medium line-clamp-2 mb-3 leading-snug">
+                        Impact: {project.impact}
+                      </p>
+                    ) : null}
 
                     {/* Technologies */}
                     <div className="flex flex-wrap gap-2 mb-4">
                       {project.technologies.slice(0, 4).map((tech) => (
                         <span
                           key={tech}
-                          className="px-2 py-1 text-xs rounded-md bg-white/5 border border-white/10 text-gray-300"
+                          className="px-2 py-1 text-xs rounded-md bg-white/5 border border-white/15 text-gray-200"
                         >
                           {tech}
                         </span>
                       ))}
                       {project.technologies.length > 4 && (
-                        <span className="px-2 py-1 text-xs rounded-md bg-white/5 border border-white/10 text-gray-400">
+                        <span className="px-2 py-1 text-xs rounded-md bg-white/5 border border-white/15 text-gray-300">
                           +{project.technologies.length - 4}
                         </span>
                       )}
@@ -315,7 +328,7 @@ export function ProjectsSection() {
                           aria-label={`View source code for ${project.title} on GitHub`}
                           whileHover={{ scale: 1.1 }}
                           onClick={(e) => e.stopPropagation()}
-                          className="p-2 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-purple-500/50 transition-colors"
+                          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-white/5 border border-white/15 text-gray-300 hover:text-white hover:border-purple-500/50 transition-colors"
                         >
                           <Github size={18} />
                         </motion.a>
@@ -328,7 +341,7 @@ export function ProjectsSection() {
                           aria-label={`Open live demo for ${project.title}`}
                           whileHover={{ scale: 1.1 }}
                           onClick={(e) => e.stopPropagation()}
-                          className="p-2 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-cyan-500/50 transition-colors"
+                          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-white/5 border border-white/15 text-gray-300 hover:text-white hover:border-cyan-500/50 transition-colors"
                         >
                           <ExternalLink size={18} />
                         </motion.a>
