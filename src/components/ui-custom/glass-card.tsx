@@ -63,7 +63,7 @@ export function GlassButton({
       whileTap={{ scale: 0.95 }}
       onClick={onClick}
       className={`
-        px-6 py-3 rounded-xl font-medium
+        cursor-pointer px-6 py-3 rounded-xl font-medium
         backdrop-blur-md border
         transition-all duration-300
         ${variants[variant]}
