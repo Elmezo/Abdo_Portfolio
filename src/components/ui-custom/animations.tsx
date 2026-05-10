@@ -34,7 +34,12 @@ export function FadeIn({
       ref={ref}
       initial={{ opacity: 0, ...directions[direction] }}
       animate={isInView ? { opacity: 1, x: 0, y: 0 } : {}}
-      transition={{ duration, delay, ease: 'easeOut' }}
+      transition={{
+        type: 'spring',
+        stiffness: 260,
+        damping: 26,
+        delay,
+      }}
       className={className}
     >
       {children}
@@ -86,11 +91,12 @@ interface StaggerItemProps {
 
 export function StaggerItem({ children, className = '' }: StaggerItemProps) {
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 28, scale: 0.98 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: 'easeOut' },
+      scale: 1,
+      transition: { type: 'spring', stiffness: 320, damping: 26 },
     },
   };
 
@@ -116,7 +122,7 @@ export function ScaleIn({ children, delay = 0, className = '' }: ScaleInProps) {
       ref={ref}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={isInView ? { opacity: 1, scale: 1 } : {}}
-      transition={{ duration: 0.5, delay, ease: 'easeOut' }}
+      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
       {children}
