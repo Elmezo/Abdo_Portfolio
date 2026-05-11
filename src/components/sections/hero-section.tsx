@@ -1,9 +1,10 @@
 'use client';
 
 import { motion, type Variants } from 'framer-motion';
+import { useMemo } from 'react';
 import { Github, Linkedin, Mail, Download, ChevronDown, ExternalLink, Sparkles, Send } from 'lucide-react';
-import { FloatingElement, FadeIn } from '../ui-custom/animations';
-import { GlassButton, GradientText } from '../ui-custom/glass-card';
+import { FloatingElement, FadeIn, JsxTagTypewriter, TypewriterEffect } from '../ui-custom/animations';
+import { GlassButton } from '../ui-custom/glass-card';
 import profile from '../../../content/profile.json';
 
 type ProfileHero = typeof profile & { heroLead?: string; heroStack?: string };
@@ -52,6 +53,12 @@ export function HeroSection() {
   const p = profile as ProfileHero;
   const heroLead = p.heroLead ?? p.shortBio;
   const heroStack = p.heroStack ?? 'Next.js · React · Python · SQL · cloud';
+
+  const nameTypewriterWords = useMemo(() => {
+    const full = p.fullName ?? p.name;
+    const first = p.name.trim().split(/\s+/)[0] ?? p.name;
+    return first === full ? [full] : [first, full];
+  }, [p.fullName, p.name]);
 
   const scrollToAbout = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
@@ -114,9 +121,12 @@ export function HeroSection() {
         </FadeIn>
 
         <FadeIn delay={0.4}>
-          {/* Name */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-5 md:mb-6 tracking-tight">
-            <GradientText>{profile.name}</GradientText>
+          {/* Name — JSX-style tag + typewriter */}
+          <h1
+            className="mb-5 md:mb-6 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight"
+            aria-label={p.fullName ?? p.name}
+          >
+            <JsxTagTypewriter words={nameTypewriterWords} />
           </h1>
         </FadeIn>
 
@@ -128,6 +138,19 @@ export function HeroSection() {
         >
           <motion.p variants={fadeUp} className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-white leading-snug tracking-tight">
             {p.title}
+          </motion.p>
+          <motion.p
+            variants={fadeUp}
+            className="text-lg sm:text-xl md:text-2xl font-medium leading-snug text-gray-100 min-h-[1.75rem] sm:min-h-[2rem]"
+          >
+            <span className="text-gray-400 font-normal">I build as </span>
+            <TypewriterEffect
+              words={p.roles}
+              typingSpeed={72}
+              deletingSpeed={38}
+              pauseDuration={1900}
+              className="font-semibold text-cyan-300"
+            />
           </motion.p>
           <motion.p variants={fadeUp} className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed">
             {heroLead}
