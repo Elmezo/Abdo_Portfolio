@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ArrowRight, Clock, Tag, BookOpen } from 'lucide-react';
+import { ArrowRight, Clock, Tag, BookOpen, Github, ExternalLink } from 'lucide-react';
 import { StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import Image from 'next/image';
@@ -9,39 +9,78 @@ import Image from 'next/image';
 const caseStudies = [
   {
     id: 1,
-    title: 'How I Built a Car Maintenance Analytics System',
-    category: 'Data Engineering',
-    readTime: '8 min read',
-    excerpt: 'A deep dive into designing a real-time analytics platform for tracking vehicle maintenance events, predicting failure risks, and generating automated reports using Python, SQL, and cloud services.',
-    image: '/projects/ml-pipeline.png',
-    tags: ['Python', 'SQL', 'Analytics', 'Cloud'],
+    title: 'BUDG - Business Data Governance Platform',
+    category: 'Enterprise Engineering',
+    readTime: '10 screenshots',
+    excerpt: 'React bulk upload wizard, job dashboard, Jakarta servlet bulk APIs, WebSocket progress, FastAPI validation, MySQL, Elasticsearch, and migration/export endpoints.',
+    image: '/projects/BUDG_Project/1.png',
+    href: '/projects/budg-business-data-governance-platform',
+    external: false,
+    action: 'Read BUDG Summary',
+    tags: ['React', 'Java 17', 'Tomcat', 'FastAPI'],
     color: 'from-purple-500/20 to-cyan-500/20',
     accent: 'text-purple-400',
     border: 'border-purple-500/30',
   },
   {
     id: 2,
-    title: 'Building an AI Diabetes Detection System from Scratch',
-    category: 'Machine Learning',
-    readTime: '12 min read',
-    excerpt: 'From raw retinal image data to a production-ready CNN model — how I designed the architecture, handled class imbalance, applied transfer learning, and achieved 94%+ accuracy.',
-    image: '/projects/diabetes-detection.png',
-    tags: ['CNN', 'TensorFlow', 'Transfer Learning', 'Image Classification'],
+    title: 'Smart Car Maintenance Analytics System',
+    category: 'Open Source',
+    readTime: 'GitHub repo',
+    excerpt: 'Car maintenance management system with Spring Boot APIs, MySQL, JWT security, Python analytics, failure records, and maintenance prediction workflows.',
+    image: '/projects/ml-pipeline.png',
+    href: 'https://github.com/Elmezo/car-maintenance-system',
+    external: true,
+    action: 'Open GitHub',
+    tags: ['Spring Boot', 'MySQL', 'Python', 'Analytics'],
     color: 'from-cyan-500/20 to-purple-500/20',
     accent: 'text-cyan-400',
     border: 'border-cyan-500/30',
   },
   {
     id: 3,
-    title: 'Scaling Enterprise Data Governance at Bussma',
-    category: 'Enterprise Engineering',
-    readTime: '10 min read',
-    excerpt: 'The challenges and solutions behind building a metadata management platform for enterprise data assets — including automated lineage tracking, bulk operations, and compliance reporting.',
+    title: 'Tailor Management System',
+    category: 'Open Source',
+    readTime: 'GitHub repo',
+    excerpt: 'Business workflow system for tailoring shops to manage customers, body measurements, garment orders, statuses, partial payments, and useful reports.',
     image: '/projects/data-governance.png',
-    tags: ['Java', 'Spring Boot', 'Docker', 'MySQL'],
+    href: 'https://github.com/Elmezo/Tailor-Management-System',
+    external: true,
+    action: 'Open GitHub',
+    tags: ['Java', 'Spring Boot', 'React', 'MySQL'],
     color: 'from-amber-500/20 to-purple-500/20',
     accent: 'text-amber-400',
     border: 'border-amber-500/30',
+  },
+  {
+    id: 4,
+    title: 'DFU Model for Graduation Project',
+    category: 'Machine Learning',
+    readTime: 'Kaggle notebook',
+    excerpt: 'Computer vision notebook for diabetic foot ulcer / diabetes-related screening, built as a graduation project with a reproducible machine-learning workflow.',
+    image: '/projects/diabetes-detection.png',
+    href: 'https://www.kaggle.com/code/abdoalaaeldeen/dfu-model-for-graduation-project',
+    external: true,
+    action: 'Open Kaggle Notebook',
+    tags: ['Python', 'CNN', 'Kaggle', 'Medical AI'],
+    color: 'from-red-500/20 to-cyan-500/20',
+    accent: 'text-red-300',
+    border: 'border-red-500/30',
+  },
+  {
+    id: 5,
+    title: 'Smart Data Explorer - AI Data Analysis Tool',
+    category: 'Open Source',
+    readTime: 'GitHub repo',
+    excerpt: 'AI-powered CSV/Excel analysis app with drag-and-drop upload, automatic cleaning, generated insights, dashboards, forecasting, and natural-language data questions.',
+    image: '/projects/Smart%20Data%20Explorer/1.png',
+    href: 'https://github.com/Elmezo/Smart-Data-Explorer-AI-Data-Analysis-Tool-',
+    external: true,
+    action: 'Open GitHub',
+    tags: ['FastAPI', 'React', 'Pandas', 'OpenAI'],
+    color: 'from-emerald-500/20 to-cyan-500/20',
+    accent: 'text-emerald-300',
+    border: 'border-emerald-500/30',
   },
 ];
 
@@ -71,7 +110,15 @@ export function CaseStudiesSection() {
         <StaggerContainer staggerDelay={0.15} className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {caseStudies.map((study) => (
             <StaggerItem key={study.id}>
-              <motion.div whileHover={{ y: -8 }} transition={{ type: 'spring', stiffness: 300 }}>
+              <motion.a
+                href={study.href}
+                target={study.external ? '_blank' : undefined}
+                rel={study.external ? 'noopener noreferrer' : undefined}
+                aria-label={`${study.action}: ${study.title}`}
+                whileHover={{ y: -8 }}
+                transition={{ type: 'spring', stiffness: 300 }}
+                className="block h-full"
+              >
                 <GlassCard className="h-full overflow-hidden group cursor-pointer" hover={false}>
                   {/* Image */}
                   <div className={`relative h-48 bg-gradient-to-br ${study.color} overflow-hidden`}>
@@ -100,6 +147,12 @@ export function CaseStudiesSection() {
                         <Clock size={12} />
                         {study.readTime}
                       </span>
+                      {study.external ? (
+                        <span className="flex items-center gap-1">
+                          {study.href.includes('github.com') ? <Github size={12} /> : <ExternalLink size={12} />}
+                          Public link
+                        </span>
+                      ) : null}
                     </div>
 
                     <h3 className="text-lg font-bold text-white mb-3 leading-snug group-hover:text-purple-300 transition-colors">
@@ -126,12 +179,12 @@ export function CaseStudiesSection() {
                     <motion.div
                       className={`flex items-center gap-2 text-sm font-medium ${study.accent} group-hover:gap-3 transition-all duration-200`}
                     >
-                      Read Case Study
+                      {study.action}
                       <ArrowRight size={16} />
                     </motion.div>
                   </div>
                 </GlassCard>
-              </motion.div>
+              </motion.a>
             </StaggerItem>
           ))}
         </StaggerContainer>

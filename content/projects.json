@@ -2,56 +2,167 @@
   "projects": [
     {
       "id": 1,
+      "slug": "ai-diabetes-detection-system",
       "title": "AI Diabetes Detection System",
-      "description": "Deep learning CNN for diabetic retinopathy screening — production-style training pipeline and competition-grade accuracy.",
-      "longDescription": "A comprehensive deep learning solution for diabetes detection using Convolutional Neural Networks. The project involved data preprocessing, model architecture design, training, and validation. Achieved strong results in the Kufr El-Sheikh Olympics Competition.",
+      "description": "Deep learning CNN for diabetic retinopathy screening - production-style training pipeline and competition-grade accuracy.",
+      "longDescription": "A comprehensive deep learning solution for diabetes detection using Convolutional Neural Networks. The project involved data preprocessing, model architecture design, training, validation, and a portfolio-ready Kaggle notebook walkthrough.",
+      "oneLinePitch": "Computer vision workflow for diabetic retinopathy screening with transfer learning, augmentation, and explainable model evaluation.",
       "image": "/projects/diabetes-detection.png",
+      "screenshots": ["/projects/diabetes-detection.png"],
       "technologies": ["Python", "TensorFlow", "Keras", "CNN", "Transfer Learning", "Image Classification"],
-      "github": "https://github.com/elmezo/diabetes-detection",
-      "demo": null,
+      "github": null,
+      "demo": "https://www.kaggle.com/code/abdoalaaeldeen/dfu-model-for-graduation-project",
       "featured": true,
       "achievement": "2nd Place in Kufr El-Sheikh Olympics Competition",
       "year": "2022",
       "role": "Lead Data Scientist",
       "challenge": "Diabetic retinopathy is a leading cause of blindness, but early detection through manual examination is time-consuming and requires specialized expertise not always available.",
       "solution": "Developed a robust CNN using Transfer Learning (ResNet50) with heavy data augmentation to address class imbalance. Achieved 94%+ accuracy on the test set, providing a quick, accessible screening workflow.",
-      "impact": "Demonstrated a deployable screening path for clinics with limited specialists — model performance and documentation suitable for stakeholder review and further clinical validation.",
+      "impact": "Demonstrated a deployable screening path for clinics with limited specialists - model performance and documentation suitable for stakeholder review and further clinical validation.",
       "highlights": [
         "CNN with Transfer Learning (ResNet50)",
         "Data augmentation for class imbalance",
         "94%+ accuracy on test dataset",
         "2nd place in national competition"
+      ],
+      "detailSections": [
+        {
+          "title": "Model workflow",
+          "items": [
+            "Prepared retinal image data for supervised classification.",
+            "Used transfer learning to accelerate model quality with a compact training workflow.",
+            "Documented the notebook so the data preparation, training, and evaluation path can be reviewed end to end."
+          ]
+        }
       ]
     },
     {
       "id": 2,
-      "title": "Data Governance Platform (BUDG)",
-      "description": "Enterprise data governance and metadata management — closed-source production system for policy, lineage, and operational workflows.",
-      "longDescription": "Enterprise solution for managing data assets, metadata, and governance policies. Built for reliability and auditability with Java services, search-backed discovery, and integrations used by internal teams.",
-      "image": "/projects/data-governance.png",
-      "technologies": ["Java 17", "Jakarta Servlet", "Elasticsearch", "MySQL", "Tomcat", "JWT", "OpenAPI"],
+      "slug": "budg-business-data-governance-platform",
+      "title": "BUDG - Business Data Governance Platform",
+      "description": "Enterprise data governance, bulk Excel ingestion, job tracking, migration APIs, and optional FastAPI pre-validation.",
+      "longDescription": "BUDG is a full-stack governance platform focused on bulk data and migration workflows. It combines a React/Vite bulk upload wizard, a jobs dashboard, entity-specific Jakarta servlets, WebSocket job progress, optional FastAPI Excel validation, MySQL persistence, Elasticsearch search, and export/migration APIs.",
+      "oneLinePitch": "Full-stack bulk data pipeline for a Java/Tomcat governance platform with React column mapping, live job progress, validation, and migration/export endpoints.",
+      "image": "/projects/BUDG_Project/1.png",
+      "screenshots": [
+        "/projects/BUDG_Project/1.png",
+        "/projects/BUDG_Project/2.png",
+        "/projects/BUDG_Project/3.png",
+        "/projects/BUDG_Project/4.png",
+        "/projects/BUDG_Project/5.png",
+        "/projects/BUDG_Project/6.png",
+        "/projects/BUDG_Project/7.png",
+        "/projects/BUDG_Project/8.png",
+        "/projects/BUDG_Project/9.png",
+        "/projects/BUDG_Project/10.png"
+      ],
+      "technologies": ["React", "Vite", "Java 17", "Jakarta Servlet", "Tomcat", "MySQL", "Elasticsearch", "FastAPI", "WebSocket"],
       "github": null,
       "demo": null,
       "featured": true,
       "achievement": "Enterprise production system",
-      "year": "2024",
-      "role": "Backend Software Engineer",
-      "challenge": "Enterprise data was fragmented across systems with weak metadata and inconsistent policy enforcement, driving compliance risk and duplicated engineering effort.",
-      "solution": "Implemented governed metadata services, REST APIs, and search (Elasticsearch) over a normalized MySQL model; JWT/LDAP authentication, exports (Excel/PDF), and structured logging for operability.",
-      "impact": "Reduced time-to-answer for data stewards on lineage and ownership questions and tightened audit trails for sensitive domains — measured via fewer ad-hoc tickets and faster onboarding of new datasets.",
+      "year": "2026",
+      "role": "Full-Stack Software Engineer",
+      "challenge": "Enterprise governance teams needed safe bulk create/update/delete flows across many governed object types while preserving permissions, segmentation rules, auditability, and downloadable job evidence.",
+      "solution": "Built a three-step React upload wizard, per-user bulk jobs dashboard, entity-specific backend upload/status/report servlets, WebSocket-first job tracking with polling fallback, optional Python pre-validation, and migration/export endpoints for BUDG-compatible packages.",
+      "impact": "Turned spreadsheet-driven governance changes into tracked, permission-aware jobs with validation feedback, downloadable reports, and repeatable migration paths for stewards and platform operators.",
       "highlights": [
-        "Java 17 WAR on Tomcat with Jakarta Servlets",
-        "Elasticsearch for discovery and governance search",
-        "MySQL + HikariCP with JWT/LDAP security model",
-        "OpenAPI-described APIs, reporting exports, transactional email"
+        "Three-step React wizard: choose context, map Excel columns, upload and monitor completion",
+        "Bulk jobs dashboard with status badges, history, report downloads, and original file downloads",
+        "Dozens of Jakarta servlet endpoints for object, relationship, and role bulk operations",
+        "WebSocket progress broadcasting with polling fallback and row-level job statistics",
+        "FastAPI validation service for Excel pre-checks before Java processing"
+      ],
+      "detailSections": [
+        {
+          "title": "React SPA - bulk upload and jobs dashboard",
+          "items": [
+            "Permission-aware upload type/entity/operation selection with segmentation support.",
+            "Browser-side .xlsx parsing with SheetJS and required-field validation before upload.",
+            "Multipart upload with cookie-based authentication, WebSocket-first progress, polling fallback, and downloadable reports."
+          ]
+        },
+        {
+          "title": "Java bulk and migration APIs",
+          "items": [
+            "Entity-specific upload, status, report, template, and download endpoints for governed objects.",
+            "Relationship and role bulk endpoints with dynamic templates and delete safeguards.",
+            "Bulk migration and export flows for metadata, relationships, roles, and governance packages."
+          ]
+        },
+        {
+          "title": "Python validation service",
+          "items": [
+            "FastAPI service that validates Excel files before insert/update/delete processing.",
+            "Per-entity processors for objects, relationships, and roles with reusable validators.",
+            "Shared checks for custom fields, parent hierarchy, segmentation, and database references."
+          ]
+        }
       ]
     },
     {
       "id": 3,
+      "slug": "smart-data-explorer-ai-data-analysis-tool",
+      "title": "Smart Data Explorer - AI Data Analysis Tool",
+      "description": "AI-powered web app for CSV/Excel analysis, instant insights, interactive dashboards, natural-language queries, and forecasting.",
+      "longDescription": "Smart Data Explorer automatically analyzes uploaded CSV and Excel files, cleans data, detects column types, generates business insights, renders interactive dashboards, and lets users ask plain-English questions about their data.",
+      "oneLinePitch": "AI-assisted data analysis tool that turns spreadsheets into insights, charts, forecasts, and natural-language answers.",
+      "image": "/projects/Smart%20Data%20Explorer/1.png",
+      "screenshots": [
+        "/projects/Smart%20Data%20Explorer/1.png",
+        "/projects/Smart%20Data%20Explorer/2.png",
+        "/projects/Smart%20Data%20Explorer/4.png",
+        "/projects/Smart%20Data%20Explorer/5.png",
+        "/projects/Smart%20Data%20Explorer/6.png",
+        "/projects/Smart%20Data%20Explorer/7.png",
+        "/projects/Smart%20Data%20Explorer/8.png",
+        "/projects/Smart%20Data%20Explorer/9.png"
+      ],
+      "technologies": ["FastAPI", "React", "Python", "Pandas", "OpenAI API", "Chart.js", "CSV", "Excel"],
+      "github": "https://github.com/Elmezo/Smart-Data-Explorer-AI-Data-Analysis-Tool-",
+      "demo": null,
+      "featured": true,
+      "achievement": "Open-source AI analytics app",
+      "year": "2026",
+      "role": "Full-Stack AI Engineer",
+      "challenge": "Small teams often need quick spreadsheet analysis but do not have time to build dashboards, clean data manually, or write SQL/Python for every business question.",
+      "solution": "Built a FastAPI and React application with drag-and-drop upload, automatic cleaning, generated insights, dashboard tabs, basic forecasting, and natural-language AI queries over uploaded datasets.",
+      "impact": "Makes exploratory data analysis accessible to non-technical users while giving developers a clear full-stack example of file ingestion, analytics APIs, and AI-assisted querying.",
+      "highlights": [
+        "CSV/Excel upload with file validation and data type detection",
+        "Automatic insights for products, revenue trends, customer segments, regions, and summary statistics",
+        "Interactive responsive dashboards with chart visualizations",
+        "Natural-language question answering over uploaded data",
+        "FastAPI backend with documented upload, insights, query, forecast, and data preview endpoints"
+      ],
+      "detailSections": [
+        {
+          "title": "Analysis workflow",
+          "items": [
+            "Upload structured CSV or Excel files through a responsive web interface.",
+            "Clean missing values, infer column types, and generate first-pass business insights.",
+            "Explore overview, products, customers, forecast, and region tabs from the dashboard."
+          ]
+        },
+        {
+          "title": "AI query experience",
+          "items": [
+            "Ask questions such as best-selling product, monthly revenue, and top customers in natural language.",
+            "Route query requests through the backend so analysis logic stays centralized.",
+            "Keep OpenAI integration optional so the app can run with or without advanced AI features."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "slug": "ml-analytics-pipeline",
       "title": "ML Analytics Pipeline",
-      "description": "End-to-end ML analytics pipeline for validation, training hooks, and cloud-backed storage — built for repeatable deployments.",
+      "description": "End-to-end ML analytics pipeline for validation, training hooks, and cloud-backed storage - built for repeatable deployments.",
       "longDescription": "Analytics pipeline for large-scale processing and ML workflows with automated validation and deployment hooks across AWS and Azure.",
+      "oneLinePitch": "Repeatable ML pipeline pattern for dataset validation, cloud storage, model training hooks, and safer deployment handoffs.",
       "image": "/projects/ml-pipeline.png",
+      "screenshots": ["/projects/ml-pipeline.png"],
       "technologies": ["Python", "AWS", "Azure", "Scikit-learn", "Data Pipelines"],
       "github": "https://github.com/elmezo/ml-analytics",
       "demo": null,
@@ -66,6 +177,16 @@
         "Scikit-learn training with cross-validation and versioning",
         "Automated validation before promotion",
         "Deployment workflow tuned for faster iteration"
+      ],
+      "detailSections": [
+        {
+          "title": "Pipeline strengths",
+          "items": [
+            "Standardized data validation before model promotion.",
+            "Object-storage-friendly workflow for cloud deployments.",
+            "Deployment checks that reduce manual release mistakes."
+          ]
+        }
       ]
     }
   ]
