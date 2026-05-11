@@ -12,10 +12,18 @@ interface GlassCardProps {
 export function GlassCard({ children, className = '', hover = true }: GlassCardProps) {
   return (
     <motion.div
-      whileHover={hover ? { y: -5, scale: 1.02 } : {}}
-      transition={{ type: 'spring', stiffness: 300 }}
+      whileHover={
+        hover
+          ? {
+              y: -7,
+              scale: 1.025,
+              boxShadow: '0 24px 70px rgba(139, 92, 246, 0.22)',
+            }
+          : {}
+      }
+      transition={{ type: 'spring', stiffness: 320, damping: 22 }}
       className={`
-        relative overflow-hidden rounded-2xl
+        group/glass relative isolate overflow-hidden rounded-2xl
         bg-gradient-to-br from-white/10 to-white/5
         backdrop-blur-xl
         border border-white/20
@@ -25,12 +33,23 @@ export function GlassCard({ children, className = '', hover = true }: GlassCardP
     >
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-cyan-500/10 opacity-50" />
+      <motion.div
+        aria-hidden="true"
+        animate={{ rotate: [0, 360] }}
+        transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
+        className="absolute -inset-24 bg-[conic-gradient(from_180deg,transparent,rgba(168,85,247,0.16),rgba(34,211,238,0.14),transparent_35%)] opacity-0 blur-2xl transition-opacity duration-500 group-hover/glass:opacity-100"
+      />
       
       {/* Content */}
       <div className="relative z-10">{children}</div>
       
       {/* Shine effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000" />
+      <motion.div
+        aria-hidden="true"
+        animate={{ x: ['-120%', '120%'] }}
+        transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut', repeatDelay: 1.8 }}
+        className="absolute inset-y-0 w-1/2 bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 transition-opacity duration-500 group-hover/glass:opacity-100"
+      />
     </motion.div>
   );
 }
