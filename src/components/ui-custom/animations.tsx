@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useInView, Variants } from 'framer-motion';
-import { useRef, ReactNode } from 'react';
+import { useEffect, useRef, ReactNode, useState } from 'react';
 
 interface FadeInProps {
   children: ReactNode;
@@ -216,6 +216,8 @@ interface TypewriterEffectProps {
   typingSpeed?: number;
   deletingSpeed?: number;
   pauseDuration?: number;
+  /** Cursor bar; default uses currentColor (fine for solid text). Use a gradient-friendly cursor when text is `bg-clip-text`. */
+  cursorClassName?: string;
 }
 
 export function TypewriterEffect({
@@ -224,13 +226,16 @@ export function TypewriterEffect({
   typingSpeed = 100,
   deletingSpeed = 50,
   pauseDuration = 2000,
+  cursorClassName,
 }: TypewriterEffectProps) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const currentWord = words[currentWordIndex];
+    if (!words.length) return;
+
+    const currentWord = words[currentWordIndex] ?? '';
 
     const timeout = setTimeout(
       () => {
@@ -263,19 +268,65 @@ export function TypewriterEffect({
     pauseDuration,
   ]);
 
+  const cursor =
+    cursorClassName ??
+    'inline-block w-[3px] h-[1em] bg-current ml-1 align-middle rounded-sm';
+
+  if (!words.length) {
+    return null;
+  }
+
   return (
     <span className={className}>
       {currentText}
       <motion.span
         animate={{ opacity: [1, 0] }}
         transition={{ duration: 0.5, repeat: Infinity }}
-        className="inline-block w-[3px] h-[1em] bg-current ml-1 align-middle"
+        className={cursor}
       />
     </span>
   );
 }
 
-import { useEffect, useState } from 'react';
+interface JsxTagTypewriterProps {
+  /** Strings cycled by the typewriter (e.g. first name, full name). */
+  words: string[];
+  bracketClassName?: string;
+  nameClassName?: string;
+  typingSpeed?: number;
+  deletingSpeed?: number;
+  pauseDuration?: number;
+}
+
+/** Hero-style `<Name />` with monospace brackets and a typing cursor on the identifier only. */
+export function JsxTagTypewriter({
+  words,
+  bracketClassName = 'font-mono font-normal text-purple-400/85 md:text-[0.92em] tracking-tight select-none',
+  nameClassName =
+    'bg-gradient-to-r from-purple-400 via-cyan-400 to-purple-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-bold min-w-[0.5ch]',
+  typingSpeed = 95,
+  deletingSpeed = 48,
+  pauseDuration = 2200,
+}: JsxTagTypewriterProps) {
+  return (
+    <span className="inline-flex max-w-full flex-wrap items-baseline justify-center gap-x-[0.15em] gap-y-1">
+      <span className={bracketClassName} aria-hidden>
+        {'<'}
+      </span>
+      <TypewriterEffect
+        words={words}
+        className={nameClassName}
+        typingSpeed={typingSpeed}
+        deletingSpeed={deletingSpeed}
+        pauseDuration={pauseDuration}
+        cursorClassName="inline-block w-[3px] h-[1em] ml-1 align-middle rounded-sm bg-gradient-to-b from-purple-400 to-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.45)]"
+      />
+      <span className={bracketClassName} aria-hidden>
+        {'/>'}
+      </span>
+    </span>
+  );
+}
 
 interface FloatingElementProps {
   children: ReactNode;
