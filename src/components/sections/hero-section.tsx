@@ -1,9 +1,9 @@
 'use client';
 
-import { motion, type Variants } from 'framer-motion';
+import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { Github, Linkedin, Mail, Download, ChevronDown, ExternalLink, Sparkles, Send } from 'lucide-react';
-import { FloatingElement, FadeIn } from '../ui-custom/animations';
-import { GlassButton, GradientText } from '../ui-custom/glass-card';
+import { FloatingElement, FadeIn, TypewriterEffect } from '../ui-custom/animations';
+import { GlassButton } from '../ui-custom/glass-card';
 import profile from '../../../content/profile.json';
 
 type ProfileHero = typeof profile & { heroLead?: string; heroStack?: string };
@@ -38,6 +38,29 @@ const socialStagger: Variants = {
   },
 };
 
+const nameContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.045, delayChildren: 0.18 },
+  },
+};
+
+const nameLetter: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 44,
+    rotateX: -80,
+    filter: 'blur(10px)',
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    rotateX: 0,
+    filter: 'blur(0px)',
+    transition: { type: 'spring', stiffness: 420, damping: 24 },
+  },
+};
+
 const ctaItem: Variants = {
   hidden: { opacity: 0, y: 18, scale: 0.96 },
   visible: {
@@ -48,8 +71,70 @@ const ctaItem: Variants = {
   },
 };
 
+const floatingBadges = [
+  { label: 'AI', className: 'left-[4%] top-[24%]', duration: 6.5, delay: 0.1 },
+  { label: 'Python', className: 'left-[12%] bottom-[28%]', duration: 7.5, delay: 0.8 },
+  { label: 'Next.js', className: 'right-[7%] top-[26%]', duration: 8, delay: 0.35 },
+  { label: 'SQL', className: 'right-[13%] bottom-[30%]', duration: 6.8, delay: 1.1 },
+  { label: 'Cloud', className: 'left-[22%] top-[14%]', duration: 8.8, delay: 0.55 },
+  { label: 'LLMs', className: 'right-[24%] top-[15%]', duration: 7.2, delay: 1.35 },
+];
+
+function AnimatedName({ name }: { name: string }) {
+  const prefersReducedMotion = useReducedMotion();
+
+  return (
+    <motion.h1
+      variants={nameContainer}
+      initial="hidden"
+      animate="visible"
+      className="relative mx-auto mb-5 inline-flex max-w-5xl flex-wrap justify-center gap-x-2 text-5xl font-bold tracking-tight sm:text-6xl md:mb-6 md:text-7xl lg:text-8xl"
+    >
+      <span className="sr-only">{name}</span>
+      <motion.span
+        aria-hidden="true"
+        animate={prefersReducedMotion ? undefined : { scale: [1, 1.035, 1], opacity: [0.35, 0.8, 0.35] }}
+        transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute -inset-x-6 top-1/2 h-20 -translate-y-1/2 rounded-full bg-gradient-to-r from-purple-500/20 via-cyan-400/20 to-fuchsia-500/20 blur-3xl"
+      />
+      <span aria-hidden="true" className="relative inline-flex flex-wrap justify-center gap-x-1.5 [perspective:900px]">
+        {name.split('').map((letter, index) => {
+          const isSpace = letter === ' ';
+
+          return (
+            <motion.span
+              key={`${letter}-${index}`}
+              variants={nameLetter}
+              whileHover={prefersReducedMotion ? undefined : { y: -12, rotate: [-2, 2, 0], scale: 1.08 }}
+              className={`inline-block ${isSpace ? 'w-4 sm:w-5 md:w-7' : ''}`}
+            >
+              {isSpace ? (
+                '\u00A0'
+              ) : (
+                <motion.span
+                  animate={prefersReducedMotion ? undefined : { y: [0, -5, 0] }}
+                  transition={{
+                    duration: 2.4 + (index % 5) * 0.18,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                    delay: index * 0.04,
+                  }}
+                  className="inline-block bg-gradient-to-r from-purple-300 via-cyan-300 to-fuchsia-300 bg-[length:220%_auto] bg-clip-text text-transparent animate-gradient text-glow drop-shadow-[0_0_18px_rgba(34,211,238,0.2)]"
+                >
+                  {letter}
+                </motion.span>
+              )}
+            </motion.span>
+          );
+        })}
+      </span>
+    </motion.h1>
+  );
+}
+
 export function HeroSection() {
   const p = profile as ProfileHero;
+  const prefersReducedMotion = useReducedMotion();
   const heroLead = p.heroLead ?? p.shortBio;
   const heroStack = p.heroStack ?? 'Next.js · React · Python · SQL · cloud';
 
@@ -79,6 +164,27 @@ export function HeroSection() {
         transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
         className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-cyan-600/10 blur-3xl pointer-events-none"
       />
+
+      <div aria-hidden="true" className="absolute inset-0 hidden md:block">
+        {floatingBadges.map((badge) => (
+          <motion.div
+            key={badge.label}
+            animate={
+              prefersReducedMotion
+                ? undefined
+                : {
+                    y: [0, -18, 0],
+                    x: [0, badge.label.length % 2 ? 10 : -10, 0],
+                    rotate: [0, badge.label.length % 2 ? 4 : -4, 0],
+                  }
+            }
+            transition={{ duration: badge.duration, repeat: Infinity, ease: 'easeInOut', delay: badge.delay }}
+            className={`absolute rounded-full border border-white/15 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-cyan-100 shadow-[0_0_30px_rgba(34,211,238,0.16)] backdrop-blur-md ${badge.className}`}
+          >
+            {badge.label}
+          </motion.div>
+        ))}
+      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 text-center">
         <FadeIn delay={0.1}>
@@ -113,12 +219,8 @@ export function HeroSection() {
           </motion.p>
         </FadeIn>
 
-        <FadeIn delay={0.4}>
-          {/* Name */}
-          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-5 md:mb-6 tracking-tight">
-            <GradientText>{profile.name}</GradientText>
-          </h1>
-        </FadeIn>
+        {/* Name */}
+        <AnimatedName name={profile.name} />
 
         <motion.div
           className="max-w-3xl mx-auto mb-8 md:mb-10 space-y-3 md:space-y-4"
@@ -135,6 +237,20 @@ export function HeroSection() {
           <motion.p variants={fadeUp} className="text-xs sm:text-sm md:text-base text-gray-300 tracking-wide">
             {heroStack}
           </motion.p>
+          <motion.div
+            variants={fadeUp}
+            className="mx-auto inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-100 shadow-[0_0_28px_rgba(34,211,238,0.12)]"
+          >
+            <span className="h-2 w-2 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.9)]" />
+            <span className="shrink-0 text-gray-300">I build</span>
+            <TypewriterEffect
+              words={['AI products', 'ERP chatbots', 'data dashboards', 'cloud-ready apps']}
+              typingSpeed={75}
+              deletingSpeed={36}
+              pauseDuration={1300}
+              className="font-semibold text-white"
+            />
+          </motion.div>
         </motion.div>
 
         <FadeIn delay={0.7}>

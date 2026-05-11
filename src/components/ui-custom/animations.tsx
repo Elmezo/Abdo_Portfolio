@@ -193,6 +193,9 @@ export function SectionHeading({ eyebrow, title, description, className = '' }: 
       ) : null}
       <motion.h2
         variants={sectionRevealChild}
+        whileInView={{ textShadow: ['0 0 0 rgba(34,211,238,0)', '0 0 28px rgba(34,211,238,0.24)', '0 0 0 rgba(34,211,238,0)'] }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+        viewport={{ once: true }}
         className="mb-3 text-3xl font-bold text-white sm:text-4xl md:mb-4 md:text-5xl"
       >
         {title}
@@ -204,7 +207,10 @@ export function SectionHeading({ eyebrow, title, description, className = '' }: 
       ) : null}
       <motion.div
         variants={sectionRevealChild}
-        className="mx-auto mt-4 h-1 w-24 rounded-full bg-gradient-to-r from-purple-500 to-cyan-500"
+        whileInView={{ width: ['4rem', '8rem', '6rem'], opacity: [0.7, 1, 0.85] }}
+        transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }}
+        viewport={{ once: true }}
+        className="mx-auto mt-4 h-1 rounded-full bg-gradient-to-r from-purple-500 via-cyan-400 to-fuchsia-500 shadow-[0_0_18px_rgba(34,211,238,0.35)]"
       />
     </motion.div>
   );

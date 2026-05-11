@@ -2,6 +2,7 @@
 
 import { Navigation } from '@/components/ui-custom/navigation';
 import { ParticleBackground } from '@/components/ui-custom/particle-background';
+import { AmbientMotion } from '@/components/ui-custom/ambient-motion';
 import { HeroSection } from '@/components/sections/hero-section';
 import { AboutSection } from '@/components/sections/about-section';
 import { SkillsSection } from '@/components/sections/skills-section';
@@ -18,6 +19,7 @@ export default function Home() {
     <main id="main-content" className="relative min-h-screen bg-slate-950 overflow-x-hidden">
       {/* Particle Background */}
       <ParticleBackground />
+      <AmbientMotion />
       
       {/* Navigation */}
       <Navigation />
