@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { GradientText } from '../ui-custom/glass-card';
+import { TypewriterEffect } from '../ui-custom/animations';
 
 const navItems = [
   { name: 'Home', href: '#home' },
@@ -116,10 +116,18 @@ export function Navigation() {
         <motion.button
           type="button"
           onClick={() => scrollToSection('#home')}
+          aria-label="Go to home"
           whileHover={{ scale: 1.05 }}
           className="relative z-30 text-2xl font-bold touch-manipulation"
         >
-          <GradientText>&lt;Abdelrahman /&gt;</GradientText>
+          <TypewriterEffect
+            words={['<Abdelrahman />']}
+            typingSpeed={90}
+            deletingSpeed={45}
+            pauseDuration={900}
+            className="inline-block min-w-[13ch] bg-gradient-to-r from-purple-400 via-cyan-400 to-purple-400 bg-[length:200%_auto] bg-clip-text text-left text-transparent animate-gradient"
+            cursorClassName="bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.85)]"
+          />
         </motion.button>
 
         <div className="hidden md:flex items-center gap-8">

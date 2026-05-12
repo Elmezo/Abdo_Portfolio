@@ -219,6 +219,7 @@ export function SectionHeading({ eyebrow, title, description, className = '' }: 
 interface TypewriterEffectProps {
   words: string[];
   className?: string;
+  cursorClassName?: string;
   typingSpeed?: number;
   deletingSpeed?: number;
   pauseDuration?: number;
@@ -227,6 +228,7 @@ interface TypewriterEffectProps {
 export function TypewriterEffect({
   words,
   className = '',
+  cursorClassName = 'bg-current',
   typingSpeed = 100,
   deletingSpeed = 50,
   pauseDuration = 2000,
@@ -275,7 +277,7 @@ export function TypewriterEffect({
       <motion.span
         animate={{ opacity: [1, 0] }}
         transition={{ duration: 0.5, repeat: Infinity }}
-        className="inline-block w-[3px] h-[1em] bg-current ml-1 align-middle"
+        className={`inline-block w-[3px] h-[1em] ml-1 align-middle ${cursorClassName}`}
       />
     </span>
   );
