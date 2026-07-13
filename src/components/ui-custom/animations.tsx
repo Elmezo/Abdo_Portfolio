@@ -238,6 +238,15 @@ export function TypewriterEffect({
   const wordsKey = words.join('\0');
 
   useEffect(() => {
+    // Chrome Translate rewrites text nodes; pause while Google's classes are present.
+    const root = document.documentElement;
+    if (
+      root.classList.contains('translated-ltr') ||
+      root.classList.contains('translated-rtl')
+    ) {
+      return;
+    }
+
     const step = getNextTypewriterStep(
       { words, currentWordIndex, currentText, isDeleting },
       { typingSpeed, deletingSpeed, pauseDuration }
@@ -266,9 +275,10 @@ export function TypewriterEffect({
     return <span className={className} />;
   }
 
+  // Keyed span forces a clean text node instead of patching Translate-wrapped children.
   return (
     <span className={className}>
-      {currentText}
+      <span key={currentText}>{currentText}</span>
       <motion.span
         animate={{ opacity: [1, 0] }}
         transition={{ duration: 0.5, repeat: Infinity }}

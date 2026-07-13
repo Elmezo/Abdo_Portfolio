@@ -13,6 +13,7 @@ import { getDictionary, type UiDictionary } from './dictionaries';
 import {
   applyDocumentLocale,
   detectBrowserLocale,
+  isLocale,
   LOCALE_STORAGE_KEY,
   localeDirection,
   type Locale,
@@ -38,17 +39,25 @@ function profileForLocale(locale: Locale): ProfileContent {
   return locale === 'ar' ? (profileAr as ProfileContent) : profileEn;
 }
 
+/** Prefer locale stamped by the beforeInteractive boot script. */
+function readBootLocale(): Locale {
+  if (typeof document === 'undefined') return 'en';
+  const fromDom = document.documentElement.dataset.locale;
+  if (isLocale(fromDom)) return fromDom;
+  return detectBrowserLocale();
+}
+
 export function LocaleProvider({ children }: { children: ReactNode }) {
+  // Match SSR ('en') on first paint to avoid hydration mismatch; sync after mount.
   const [locale, setLocaleState] = useState<Locale>('en');
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const uninstall = installReactTranslateGuard();
-    const initial = detectBrowserLocale();
+    installReactTranslateGuard();
+    const initial = readBootLocale();
     setLocaleState(initial);
     applyDocumentLocale(initial);
     setReady(true);
-    return uninstall;
   }, []);
 
   useEffect(() => {
@@ -81,7 +90,14 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     [locale, setLocale, toggleLocale]
   );
 
-  return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
+  return (
+    <LocaleContext.Provider value={value}>
+      {/* Remount on locale change so React does not surgically patch Translate-mutated text nodes. */}
+      <div key={ready ? locale : 'boot'} lang={locale} dir={localeDirection(locale)}>
+        {children}
+      </div>
+    </LocaleContext.Provider>
+  );
 }
 
 export function useLocale(): LocaleContextValue {

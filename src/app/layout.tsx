@@ -5,6 +5,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { LocaleProvider } from "@/lib/i18n/locale-provider";
 import { SkipLink } from "@/components/ui-custom/skip-link";
+import { TRANSLATE_GUARD_INLINE_SCRIPT } from "@/lib/i18n/react-translate-guard";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -81,7 +82,13 @@ export default function RootLayout({
     <html lang="en" dir="ltr" suppressHydrationWarning className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${notoArabic.variable} antialiased bg-slate-950 text-white`}
+        suppressHydrationWarning
       >
+        {/* First body node: blocking inline patch before any React tree. */}
+        <script
+          id="portfolio-translate-guard"
+          dangerouslySetInnerHTML={{ __html: TRANSLATE_GUARD_INLINE_SCRIPT }}
+        />
         <LocaleProvider>
           <SkipLink />
           {children}
