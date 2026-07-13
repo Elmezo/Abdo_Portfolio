@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Github, GitCommit, GitBranch, GitPullRequest, Star, Users, ExternalLink } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
-import profile from '../../../content/profile.json';
+import { useLocale } from '@/lib/i18n/locale-provider';
 
 /** Public Vercel instance is often overloaded; mirror first, official as backup. */
 const GITHUB_README_STATS_PRIMARY = 'https://github-readme-stats.shion.dev';
@@ -91,6 +91,7 @@ const getContributionColor = (level: number) => {
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export function GitHubSection() {
+  const { dictionary, profile } = useLocale();
   const githubUsername = githubUsernameFromProfileUrl(profile.social.github);
   const statsPrimary = githubStatsCardUrl(GITHUB_README_STATS_PRIMARY, githubUsername);
   const statsFallback = githubStatsCardUrl(GITHUB_README_STATS_FALLBACK, githubUsername);
@@ -101,14 +102,10 @@ export function GitHubSection() {
     <section id="github" className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
       <div className="max-w-5xl mx-auto px-4">
         <SectionHeading
-          title={
-            <>
-              GitHub <GradientText>Activity</GradientText>
-            </>
-          }
+          title={<GradientText>{dictionary.sections.github}</GradientText>}
           description={
             <p className="text-base text-gray-300 sm:text-lg">
-              My open source contributions and coding statistics
+              {dictionary.sections.githubDesc}
             </p>
           }
         />

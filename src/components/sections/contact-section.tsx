@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Linkedin, Github, Kaggle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Linkedin, Github } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GlassCard, GradientText, GlassButton } from '../ui-custom/glass-card';
-import profile from '../../../content/profile.json';
 import { getProfilePhoneList } from '@/lib/utils';
+import { useLocale } from '@/lib/i18n/locale-provider';
 
 /** Formspree form — override with NEXT_PUBLIC_CONTACT_FORM_ACTION in .env or Vercel. */
 const DEFAULT_FORMSPREE_ACTION = 'https://formspree.io/f/xojrpknn';
@@ -14,6 +14,7 @@ const CONTACT_FORM_ACTION =
   process.env.NEXT_PUBLIC_CONTACT_FORM_ACTION?.trim() || DEFAULT_FORMSPREE_ACTION;
 
 export function ContactSection() {
+  const { dictionary, profile } = useLocale();
   const phones = getProfilePhoneList(profile);
   const [formData, setFormData] = useState({
     name: '',
@@ -70,14 +71,10 @@ export function ContactSection() {
     <section id="contact" className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
       <div className="max-w-6xl mx-auto px-4">
         <SectionHeading
-          title={
-            <>
-              Get In <GradientText>Touch</GradientText>
-            </>
-          }
+          title={<GradientText>{dictionary.sections.contact}</GradientText>}
           description={
             <p className="text-base text-gray-300 sm:text-lg">
-              Have a project in mind or want to collaborate? Feel free to reach out!
+              {dictionary.sections.contactDesc}
             </p>
           }
         />

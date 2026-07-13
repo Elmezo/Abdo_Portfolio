@@ -90,6 +90,10 @@
     /* Fixed nav (~4rem) + breathing room for in-page anchors */
     scroll-padding-top: 5.5rem;
   }
+
+  html[lang='ar'] body {
+    font-family: var(--font-arabic), var(--font-geist-sans), sans-serif;
+  }
 }
 
 @layer components {

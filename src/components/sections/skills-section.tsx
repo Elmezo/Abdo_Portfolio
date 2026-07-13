@@ -6,6 +6,7 @@ import { Code, Brain, BarChart3, Cloud, Database, Wrench } from 'lucide-react';
 import { StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GradientText } from '../ui-custom/glass-card';
 import skills from '../../../content/skills.json';
+import { useLocale } from '@/lib/i18n/locale-provider';
 
 const iconMap: Record<string, React.ComponentType<{ className?: string; size?: number }>> = {
   Code,
@@ -68,6 +69,8 @@ function TiltCard({ children, className = '' }: { children: React.ReactNode; cla
 }
 
 export function SkillsSection() {
+  const { dictionary } = useLocale();
+
   return (
     <section
       id="skills"
@@ -75,14 +78,10 @@ export function SkillsSection() {
     >
       <div className="max-w-7xl mx-auto px-4">
         <SectionHeading
-          title={
-            <>
-              My <GradientText>Skills</GradientText>
-            </>
-          }
+          title={<GradientText>{dictionary.sections.skills}</GradientText>}
           description={
             <p className="text-base text-gray-300 sm:text-lg">
-              A comprehensive toolkit spanning software engineering, data science, and cloud technologies
+              {dictionary.sections.skillsDesc}
             </p>
           }
         />

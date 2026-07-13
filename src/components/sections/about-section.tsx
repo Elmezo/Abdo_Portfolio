@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 import { MapPin, Mail, Phone, GraduationCap, Briefcase, Code2, Database, Trophy } from 'lucide-react';
 import { FadeIn, StaggerContainer, StaggerItem, SectionHeading, sectionRevealParent, sectionRevealChild } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
-import profile from '../../../content/profile.json';
 import education from '../../../content/education.json';
 import { getProfilePhoneList } from '@/lib/utils';
+import { useLocale } from '@/lib/i18n/locale-provider';
 
 // Animated counter hook
 function useCounter(end: number, duration = 1500, start = false) {
@@ -60,6 +60,7 @@ function StatCounter({ value, label, icon: Icon, color, suffix = '+' }: {
 }
 
 export function AboutSection() {
+  const { dictionary, profile } = useLocale();
   const phones = getProfilePhoneList(profile);
 
   return (
@@ -68,7 +69,8 @@ export function AboutSection() {
         <SectionHeading
           title={
             <>
-              About <GradientText>Me</GradientText>
+              {dictionary.sections.about}{' '}
+              <GradientText>{dictionary.sections.aboutMeHighlight}</GradientText>
             </>
           }
         />
@@ -77,7 +79,7 @@ export function AboutSection() {
           {/* Left side - Bio */}
           <FadeIn direction="left" delay={0.2}>
             <GlassCard className="p-8">
-              <h3 className="text-2xl font-bold text-white mb-6">Who I Am</h3>
+              <h3 className="text-2xl font-bold text-white mb-6">{dictionary.sections.whoIAm}</h3>
               <p className="text-gray-300 leading-relaxed mb-6">{profile.bio}</p>
 
               {/* Quick facts */}
