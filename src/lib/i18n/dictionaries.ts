@@ -136,7 +136,7 @@ export const dictionaries: Record<Locale, UiDictionary> = {
     error: {
       eyebrow: 'Something went wrong',
       title: 'Could not load this page',
-      body: 'Please try again. You can also switch language from the top bar.',
+      body: 'Please try again. Use the EN | ع language switch — do not use Chrome auto-translate on this site.',
       retry: 'Try again',
     },
     closeMenu: 'Close menu',
@@ -207,7 +207,7 @@ export const dictionaries: Record<Locale, UiDictionary> = {
     error: {
       eyebrow: 'حدث خطأ',
       title: 'تعذر تحميل هذه الصفحة',
-      body: 'حاول مرة أخرى. يمكنك أيضاً تبديل اللغة من الشريط العلوي.',
+      body: 'حاول مرة أخرى. استخدم زر اللغة EN | ع من الشريط — لا تستخدم ترجمة كروم التلقائية على هذا الموقع.',
       retry: 'إعادة المحاولة',
     },
     closeMenu: 'إغلاق القائمة',

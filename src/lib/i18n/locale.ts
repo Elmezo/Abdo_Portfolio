@@ -41,4 +41,7 @@ export function applyDocumentLocale(locale: Locale): void {
   root.lang = locale;
   root.dir = localeDirection(locale);
   root.dataset.locale = locale;
+  // Keep Chrome Translate off — in-app Arabic replaces it.
+  root.setAttribute('translate', 'no');
+  root.classList.add('notranslate');
 }

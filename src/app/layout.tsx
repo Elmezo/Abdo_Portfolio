@@ -51,7 +51,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Abdelrahman Alaa" }],
   icons: {
-    icon: "/logo.svg",
+    icon: [{ url: "/logo.svg", type: "image/svg+xml" }],
+    shortcut: ["/logo.svg"],
+    apple: [{ url: "/logo.svg" }],
   },
   openGraph: {
     title: "Abdelrahman Alaa | AI & Software Engineer",
@@ -71,6 +73,11 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  // Prevent Chrome auto-translate from rewriting React DOM (causes removeChild crash).
+  // Arabic is available via the in-app EN | ع toggle and auto-detect.
+  other: {
+    google: "notranslate",
+  },
 };
 
 export default function RootLayout({
@@ -79,12 +86,17 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" dir="ltr" suppressHydrationWarning className="dark">
+    <html
+      lang="en"
+      dir="ltr"
+      translate="no"
+      suppressHydrationWarning
+      className="dark notranslate"
+    >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${notoArabic.variable} antialiased bg-slate-950 text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoArabic.variable} notranslate antialiased bg-slate-950 text-white`}
         suppressHydrationWarning
       >
-        {/* First body node: blocking inline patch before any React tree. */}
         <script
           id="portfolio-translate-guard"
           dangerouslySetInnerHTML={{ __html: TRANSLATE_GUARD_INLINE_SCRIPT }}

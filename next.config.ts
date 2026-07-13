@@ -6,6 +6,9 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
+  async rewrites() {
+    return [{ source: "/favicon.ico", destination: "/logo.svg" }];
+  },
   images: {
     remotePatterns: [
       {

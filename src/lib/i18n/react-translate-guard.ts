@@ -1,8 +1,9 @@
 /**
- * Chrome / Google Translate mutates text nodes (wraps them in <font> etc.).
- * React then crashes on removeChild/insertBefore during the next update.
+ * Chrome Translate mutates React text nodes and triggers:
+ * NotFoundError: Failed to execute 'removeChild' on 'Node'
  *
- * This must also run from an inline beforeInteractive script — useEffect is too late.
+ * Browser auto-translate is disabled on <html>. Arabic is served via the
+ * in-app locale toggle / auto-detect instead.
  */
 
 const GUARD_MARKER = '__portfolioTranslateGuardInstalled';
@@ -19,7 +20,7 @@ function safeCall<T>(fn: () => T, fallback: T): T {
   }
 }
 
-/** Patch Node DOM methods so Translate-mutated trees do not crash React. */
+/** Last-resort DOM patches if anything still mutates the tree. */
 export function installReactTranslateGuard(): () => void {
   if (typeof Node === 'undefined' || !Node.prototype) {
     return () => undefined;
@@ -27,7 +28,6 @@ export function installReactTranslateGuard(): () => void {
 
   const proto = Node.prototype as GuardedNodePrototype;
   if (proto[GUARD_MARKER]) {
-    // Never uninstall — restoring natives re-opens the crash window.
     return () => undefined;
   }
 
@@ -69,57 +69,47 @@ export function installReactTranslateGuard(): () => void {
   };
 
   proto[GUARD_MARKER] = true;
-
   return () => undefined;
 }
 
-// Install as soon as this module is evaluated in the browser (before React effects).
 if (typeof window !== 'undefined') {
   installReactTranslateGuard();
 }
 
 /**
- * Inline script source for a blocking <script> in layout.
- * Kept as a string so it runs while HTML is parsing — before React hydrates.
+ * Blocking boot script: patch DOM + stamp preferred locale before React runs.
+ * Also forces translate=no so Chrome does not rewrite the tree.
  */
 export const TRANSLATE_GUARD_INLINE_SCRIPT = `"use strict";
 (function () {
-  if (typeof Node === "undefined" || !Node.prototype) return;
-  var marker = ${JSON.stringify(GUARD_MARKER)};
-  if (Node.prototype[marker]) return;
+  try {
+    var root = document.documentElement;
+    root.setAttribute("translate", "no");
+    root.classList.add("notranslate");
+  } catch (e) {}
 
-  var removeChild = Node.prototype.removeChild;
-  var insertBefore = Node.prototype.insertBefore;
-  var replaceChild = Node.prototype.replaceChild;
+  if (typeof Node !== "undefined" && Node.prototype) {
+    var marker = ${JSON.stringify(GUARD_MARKER)};
+    if (!Node.prototype[marker]) {
+      var removeChild = Node.prototype.removeChild;
+      var insertBefore = Node.prototype.insertBefore;
+      var replaceChild = Node.prototype.replaceChild;
 
-  Node.prototype.removeChild = function (child) {
-    if (child && child.parentNode !== this) return child;
-    try {
-      return removeChild.call(this, child);
-    } catch (e) {
-      return child;
+      Node.prototype.removeChild = function (child) {
+        if (child && child.parentNode !== this) return child;
+        try { return removeChild.call(this, child); } catch (e) { return child; }
+      };
+      Node.prototype.insertBefore = function (newNode, referenceNode) {
+        if (referenceNode && referenceNode.parentNode !== this) return newNode;
+        try { return insertBefore.call(this, newNode, referenceNode); } catch (e) { return newNode; }
+      };
+      Node.prototype.replaceChild = function (newChild, oldChild) {
+        if (oldChild && oldChild.parentNode !== this) return oldChild;
+        try { return replaceChild.call(this, newChild, oldChild); } catch (e) { return oldChild; }
+      };
+      Node.prototype[marker] = true;
     }
-  };
-
-  Node.prototype.insertBefore = function (newNode, referenceNode) {
-    if (referenceNode && referenceNode.parentNode !== this) return newNode;
-    try {
-      return insertBefore.call(this, newNode, referenceNode);
-    } catch (e) {
-      return newNode;
-    }
-  };
-
-  Node.prototype.replaceChild = function (newChild, oldChild) {
-    if (oldChild && oldChild.parentNode !== this) return oldChild;
-    try {
-      return replaceChild.call(this, newChild, oldChild);
-    } catch (e) {
-      return oldChild;
-    }
-  };
-
-  Node.prototype[marker] = true;
+  }
 
   try {
     var key = "portfolio-locale";
