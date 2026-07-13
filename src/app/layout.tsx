@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { LocaleProvider } from "@/lib/i18n/locale-provider";
+import { SkipLink } from "@/components/ui-custom/skip-link";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,6 +14,12 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+const notoArabic = Noto_Sans_Arabic({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -37,6 +45,8 @@ export const metadata: Metadata = {
     "Azure",
     "Full-Stack Developer",
     "UAE",
+    "عبدالرحمن",
+    "مهندس ذكاء اصطناعي",
   ],
   authors: [{ name: "Abdelrahman Alaa" }],
   icons: {
@@ -49,6 +59,7 @@ export const metadata: Metadata = {
     siteName: "Abdelrahman Alaa Portfolio",
     type: "website",
     locale: "en_US",
+    alternateLocale: ["ar_SA"],
   },
   twitter: {
     card: "summary_large_image",
@@ -59,11 +70,6 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  // Keep the English portfolio literal — Chrome auto-translate (common on
-  // Arabic-locale phones) rewrites React text nodes and crashes the client.
-  other: {
-    google: "notranslate",
-  },
 };
 
 export default function RootLayout({
@@ -72,22 +78,15 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      dir="ltr"
-      translate="no"
-      suppressHydrationWarning
-      className="dark notranslate"
-    >
+    <html lang="en" dir="ltr" suppressHydrationWarning className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} notranslate antialiased bg-slate-950 text-white`}
-        style={{ direction: "ltr", unicodeBidi: "isolate" }}
+        className={`${geistSans.variable} ${geistMono.variable} ${notoArabic.variable} antialiased bg-slate-950 text-white`}
       >
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
-        {children}
-        <Toaster />
+        <LocaleProvider>
+          <SkipLink />
+          {children}
+          <Toaster />
+        </LocaleProvider>
       </body>
     </html>
   );

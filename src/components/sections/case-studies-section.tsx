@@ -5,6 +5,7 @@ import { ArrowRight, Clock, Tag, BookOpen, Github, ExternalLink } from 'lucide-r
 import { StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import Image from 'next/image';
+import { useLocale } from '@/lib/i18n/locale-provider';
 
 const caseStudies = [
   {
@@ -85,6 +86,8 @@ const caseStudies = [
 ];
 
 export function CaseStudiesSection() {
+  const { dictionary } = useLocale();
+
   return (
     <section id="case-studies" className="relative py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-4">
@@ -92,17 +95,13 @@ export function CaseStudiesSection() {
           eyebrow={
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-2 text-sm font-medium text-cyan-300">
               <BookOpen size={14} />
-              Deep Dives & Learnings
+              {dictionary.sections.caseStudies}
             </div>
           }
-          title={
-            <>
-              Case <GradientText>Studies</GradientText>
-            </>
-          }
+          title={<GradientText>{dictionary.sections.caseStudies}</GradientText>}
           description={
             <p className="text-base text-gray-300 sm:text-lg">
-              Behind-the-scenes stories of how I approach complex engineering challenges
+              {dictionary.sections.caseStudiesDesc}
             </p>
           }
         />

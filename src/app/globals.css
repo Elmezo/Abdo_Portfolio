@@ -89,13 +89,10 @@
     scroll-behavior: smooth;
     /* Fixed nav (~4rem) + breathing room for in-page anchors */
     scroll-padding-top: 5.5rem;
-    direction: ltr;
-    unicode-bidi: isolate;
   }
 
-  /* Keep brand/name literals from being rewritten by browser translate */
-  .notranslate {
-    unicode-bidi: isolate;
+  html[lang='ar'] body {
+    font-family: var(--font-arabic), var(--font-geist-sans), sans-serif;
   }
 }
 

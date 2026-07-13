@@ -5,20 +5,19 @@ import { Briefcase, Calendar, MapPin, ChevronRight } from 'lucide-react';
 import { StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import experience from '../../../content/experience.json';
+import { useLocale } from '@/lib/i18n/locale-provider';
 
 export function ExperienceSection() {
+  const { dictionary } = useLocale();
+
   return (
     <section id="experience" className="relative py-24 md:py-32">
       <div className="max-w-5xl mx-auto px-4">
         <SectionHeading
-          title={
-            <>
-              Work <GradientText>Experience</GradientText>
-            </>
-          }
+          title={<GradientText>{dictionary.sections.experience}</GradientText>}
           description={
             <p className="text-base text-gray-300 sm:text-lg">
-              My professional journey in software engineering and data science
+              {dictionary.sections.experienceDesc}
             </p>
           }
         />

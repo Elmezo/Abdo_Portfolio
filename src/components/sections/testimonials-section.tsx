@@ -5,8 +5,11 @@ import { StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/anim
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
 import { Quote, User } from 'lucide-react';
 import testimonialsData from '../../../content/testimonials.json';
+import { useLocale } from '@/lib/i18n/locale-provider';
 
 export function TestimonialsSection() {
+  const { dictionary } = useLocale();
+
   return (
     <section id="testimonials" className="relative py-24 md:py-32 bg-slate-950">
       {/* Background decoration */}
@@ -16,14 +19,10 @@ export function TestimonialsSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4">
         <SectionHeading
-          title={
-            <>
-              Praise & <GradientText>Testimonials</GradientText>
-            </>
-          }
+          title={<GradientText>{dictionary.sections.testimonials}</GradientText>}
           description={
             <p className="text-base text-gray-300 sm:text-lg">
-              What others have to say about my work, dedication, and technical expertise.
+              {dictionary.sections.testimonialsDesc}
             </p>
           }
         />

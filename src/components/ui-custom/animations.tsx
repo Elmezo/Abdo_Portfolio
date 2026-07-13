@@ -267,7 +267,7 @@ export function TypewriterEffect({
   }
 
   return (
-    <span className={className} lang="en" translate="no">
+    <span className={className}>
       {currentText}
       <motion.span
         animate={{ opacity: [1, 0] }}

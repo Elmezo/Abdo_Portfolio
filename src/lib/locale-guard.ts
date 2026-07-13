@@ -1,24 +1,3 @@
-/**
- * Attributes that keep English brand/name copy from being rewritten by
- * browser auto-translate (Chrome on Arabic locales often translates names
- * like "Abdelrahman" → "عبدالرحمن" and then crashes React).
- */
-export const ENGLISH_LITERAL_ATTRS = {
-  lang: 'en',
-  dir: 'ltr' as const,
-  translate: 'no' as const,
-  className: 'notranslate',
-};
-
-export function englishLiteralClassName(extra = ''): string {
-  return ['notranslate', extra].filter(Boolean).join(' ').trim();
-}
-
-/** Split a display name into words and spaces while keeping Latin tokens whole. */
-export function tokenizeDisplayName(name: string): string[] {
-  return name.split(/(\s+)/).filter((token) => token.length > 0);
-}
-
 export type TypewriterPhase = 'typing' | 'pausing' | 'deleting' | 'advancing';
 
 export interface TypewriterStepInput {

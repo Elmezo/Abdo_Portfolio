@@ -1,32 +1,45 @@
 import { describe, expect, it } from 'vitest';
-import {
-  englishLiteralClassName,
-  getNextTypewriterStep,
-  tokenizeDisplayName,
-} from '../src/lib/locale-guard';
+import { getNextTypewriterStep } from '../src/lib/locale-guard';
+import { detectBrowserLocale, isLocale, localeDirection } from '../src/lib/i18n/locale';
+import { getDictionary } from '../src/lib/i18n/dictionaries';
 
-describe('tokenizeDisplayName', () => {
-  it('keeps Latin name words intact with spaces', () => {
-    expect(tokenizeDisplayName('Abdelrahman Alaa Eldeen')).toEqual([
-      'Abdelrahman',
-      ' ',
-      'Alaa',
-      ' ',
-      'Eldeen',
-    ]);
+describe('locale helpers', () => {
+  it('validates locales', () => {
+    expect(isLocale('ar')).toBe(true);
+    expect(isLocale('en')).toBe(true);
+    expect(isLocale('fr')).toBe(false);
   });
 
-  it('does not reverse or reshape Latin characters', () => {
-    const tokens = tokenizeDisplayName('Abdelrahman');
-    expect(tokens).toEqual(['Abdelrahman']);
-    expect(Array.from(tokens[0]!).join('')).toBe('Abdelrahman');
+  it('maps Arabic to RTL', () => {
+    expect(localeDirection('ar')).toBe('rtl');
+    expect(localeDirection('en')).toBe('ltr');
   });
-});
 
-describe('englishLiteralClassName', () => {
-  it('always includes notranslate', () => {
-    expect(englishLiteralClassName('text-2xl')).toBe('notranslate text-2xl');
-    expect(englishLiteralClassName()).toBe('notranslate');
+  it('returns Arabic brand name in Arabic dictionary', () => {
+    expect(getDictionary('ar').brand).toContain('عبدالرحمن');
+    expect(getDictionary('en').brand).toContain('Abdelrahman');
+  });
+
+  it('detects Arabic browser languages', () => {
+    const originalNavigator = globalThis.navigator;
+    Object.defineProperty(globalThis, 'navigator', {
+      configurable: true,
+      value: { language: 'ar-SA', languages: ['ar-SA', 'ar'] },
+    });
+    Object.defineProperty(globalThis, 'window', {
+      configurable: true,
+      value: {
+        localStorage: { getItem: () => null, setItem: () => undefined },
+        navigator: { language: 'ar-SA', languages: ['ar-SA', 'ar'] },
+      },
+    });
+
+    expect(detectBrowserLocale()).toBe('ar');
+
+    Object.defineProperty(globalThis, 'navigator', {
+      configurable: true,
+      value: originalNavigator,
+    });
   });
 });
 
@@ -42,66 +55,50 @@ describe('getNextTypewriterStep', () => {
     ).toBeNull();
   });
 
-  it('types the next character', () => {
-    const step = getNextTypewriterStep(
+  it('types Arabic and English phrases', () => {
+    const arabic = getNextTypewriterStep(
       {
-        words: ['AI', 'SQL'],
+        words: ['منتجات ذكاء اصطناعي'],
         currentWordIndex: 0,
-        currentText: 'A',
+        currentText: '',
         isDeleting: false,
       },
       timing
     );
-    expect(step).toMatchObject({
-      phase: 'typing',
-      nextText: 'AI',
-      nextIsDeleting: false,
-      delay: 50,
-    });
-  });
+    expect(arabic?.nextText).toBe('م');
 
-  it('pauses before deleting', () => {
-    const step = getNextTypewriterStep(
+    const english = getNextTypewriterStep(
       {
         words: ['AI'],
         currentWordIndex: 0,
-        currentText: 'AI',
+        currentText: 'A',
         isDeleting: false,
       },
       timing
     );
-    expect(step).toMatchObject({
-      phase: 'pausing',
-      nextIsDeleting: true,
-      delay: 1000,
-    });
+    expect(english).toMatchObject({ phase: 'typing', nextText: 'AI' });
   });
 
-  it('deletes characters then advances to the next word', () => {
-    const deleting = getNextTypewriterStep(
-      {
-        words: ['AI', 'SQL'],
-        currentWordIndex: 0,
-        currentText: 'A',
-        isDeleting: true,
-      },
-      timing
-    );
-    expect(deleting).toMatchObject({ phase: 'deleting', nextText: '' });
+  it('pauses then deletes then advances', () => {
+    expect(
+      getNextTypewriterStep(
+        { words: ['AI', 'SQL'], currentWordIndex: 0, currentText: 'AI', isDeleting: false },
+        timing
+      )
+    ).toMatchObject({ phase: 'pausing', nextIsDeleting: true });
 
-    const advancing = getNextTypewriterStep(
-      {
-        words: ['AI', 'SQL'],
-        currentWordIndex: 0,
-        currentText: '',
-        isDeleting: true,
-      },
-      timing
-    );
-    expect(advancing).toMatchObject({
-      phase: 'advancing',
-      nextWordIndex: 1,
-      nextIsDeleting: false,
-    });
+    expect(
+      getNextTypewriterStep(
+        { words: ['AI', 'SQL'], currentWordIndex: 0, currentText: 'A', isDeleting: true },
+        timing
+      )
+    ).toMatchObject({ phase: 'deleting', nextText: '' });
+
+    expect(
+      getNextTypewriterStep(
+        { words: ['AI', 'SQL'], currentWordIndex: 0, currentText: '', isDeleting: true },
+        timing
+      )
+    ).toMatchObject({ phase: 'advancing', nextWordIndex: 1 });
   });
 });

@@ -1,28 +1,34 @@
 'use client';
 
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Menu, X } from 'lucide-react';
 import { GradientText } from '../ui-custom/glass-card';
-
-const navItems = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Testimonials', href: '#testimonials' },
-  { name: 'Case Studies', href: '#case-studies' },
-  { name: 'GitHub', href: '#github' },
-  { name: 'Contact', href: '#contact' },
-];
+import { LanguageToggle } from './language-toggle';
+import { useLocale } from '@/lib/i18n/locale-provider';
 
 export function Navigation() {
+  const { dictionary, dir } = useLocale();
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const { scrollY } = useScroll();
   const backgroundOpacity = useTransform(scrollY, [0, 100], [0, 0.8]);
   const blur = useTransform(scrollY, [0, 100], [0, 20]);
+
+  const navItems = useMemo(
+    () => [
+      { name: dictionary.nav.home, href: '#home' },
+      { name: dictionary.nav.about, href: '#about' },
+      { name: dictionary.nav.skills, href: '#skills' },
+      { name: dictionary.nav.experience, href: '#experience' },
+      { name: dictionary.nav.projects, href: '#projects' },
+      { name: dictionary.nav.testimonials, href: '#testimonials' },
+      { name: dictionary.nav.caseStudies, href: '#case-studies' },
+      { name: dictionary.nav.github, href: '#github' },
+      { name: dictionary.nav.contact, href: '#contact' },
+    ],
+    [dictionary]
+  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,7 +48,7 @@ export function Navigation() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [navItems]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -81,7 +87,6 @@ export function Navigation() {
     };
 
     const isMobile = window.matchMedia('(max-width: 767px)').matches;
-    // Let the drawer close / layout settle (iOS Safari is picky here)
     if (isMobile) {
       window.setTimeout(scroll, 120);
     } else {
@@ -101,7 +106,7 @@ export function Navigation() {
       {isOpen && (
         <button
           type="button"
-          aria-label="Close menu"
+          aria-label={dictionary.closeMenu}
           onClick={() => setIsOpen(false)}
           className="fixed inset-0 z-[5] md:hidden bg-slate-950/70 backdrop-blur-sm"
         />
@@ -112,23 +117,20 @@ export function Navigation() {
         className="pointer-events-none absolute inset-0 z-0 bg-slate-950/80 border-b border-white/10"
       />
 
-      <div className="relative z-20 max-w-7xl mx-auto flex items-center justify-between">
+      <div className="relative z-20 max-w-7xl mx-auto flex items-center justify-between gap-3">
         <motion.button
           type="button"
           onClick={() => scrollToSection('#home')}
           whileHover={{ scale: 1.05 }}
-          className="relative z-30 text-2xl font-bold touch-manipulation notranslate"
-          lang="en"
-          dir="ltr"
-          translate="no"
+          className="relative z-30 text-xl sm:text-2xl font-bold touch-manipulation"
         >
-          <GradientText>&lt;Abdelrahman /&gt;</GradientText>
+          <GradientText>{dictionary.brand}</GradientText>
         </motion.button>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6 xl:gap-8">
           {navItems.map((item) => (
             <motion.button
-              key={item.name}
+              key={item.href}
               type="button"
               onClick={() => scrollToSection(item.href)}
               whileHover={{ scale: 1.1 }}
@@ -147,15 +149,20 @@ export function Navigation() {
               )}
             </motion.button>
           ))}
+          <LanguageToggle />
         </div>
 
-        <button
-          type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          className="relative z-30 md:hidden text-white p-2 touch-manipulation"
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-2 lg:hidden">
+          <LanguageToggle />
+          <button
+            type="button"
+            onClick={() => setIsOpen(!isOpen)}
+            className="relative z-30 text-white p-2 touch-manipulation"
+            aria-expanded={isOpen}
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       <motion.div
@@ -165,7 +172,7 @@ export function Navigation() {
           opacity: isOpen ? 1 : 0,
         }}
         transition={{ duration: 0.22, ease: 'easeInOut' }}
-        className={`relative z-30 md:hidden ${
+        className={`relative z-30 lg:hidden ${
           isOpen
             ? 'pointer-events-auto max-h-[min(72dvh,calc(100dvh-5.5rem))] overflow-y-auto overflow-x-hidden'
             : 'pointer-events-none overflow-hidden'
@@ -175,9 +182,11 @@ export function Navigation() {
           {navItems.map((item) => (
             <button
               type="button"
-              key={item.name}
+              key={item.href}
               onClick={() => scrollToSection(item.href)}
-              className={`relative z-10 block w-full text-left px-4 py-3 rounded-lg text-base transition-colors touch-manipulation ${
+              className={`relative z-10 block w-full px-4 py-3 rounded-lg text-base transition-colors touch-manipulation ${
+                dir === 'rtl' ? 'text-right' : 'text-left'
+              } ${
                 activeSection === item.href.slice(1)
                   ? 'bg-white/10 text-white'
                   : 'text-gray-400 hover:bg-white/5 hover:text-white active:bg-white/10'

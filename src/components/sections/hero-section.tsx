@@ -4,18 +4,18 @@ import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { Github, Linkedin, Mail, Download, ChevronDown, ExternalLink, Sparkles, Send } from 'lucide-react';
 import { FloatingElement, FadeIn, TypewriterEffect } from '../ui-custom/animations';
 import { GlassButton } from '../ui-custom/glass-card';
-import { ENGLISH_LITERAL_ATTRS, englishLiteralClassName, tokenizeDisplayName } from '@/lib/locale-guard';
-import profile from '../../../content/profile.json';
+import { useLocale } from '@/lib/i18n/locale-provider';
 
-type ProfileHero = typeof profile & { heroLead?: string; heroStack?: string };
-
-/** Stable list — must not be recreated each render (breaks typewriter effect deps). */
-const HERO_TYPEWRITER_WORDS = [
-  'AI products',
-  'ERP chatbots',
-  'data dashboards',
-  'cloud-ready apps',
-] as const;
+type ProfileHero = {
+  name: string;
+  title: string;
+  shortBio: string;
+  heroLead?: string;
+  heroStack?: string;
+  resume: string;
+  email: string;
+  social: { github: string; linkedin: string };
+};
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 26 },
@@ -47,28 +47,6 @@ const socialStagger: Variants = {
   },
 };
 
-const nameContainer: Variants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.045, delayChildren: 0.18 },
-  },
-};
-
-const nameLetter: Variants = {
-  // Avoid animating CSS `filter` — it crashes some Android Chrome GPUs.
-  hidden: {
-    opacity: 0,
-    y: 44,
-    rotateX: -80,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    rotateX: 0,
-    transition: { type: 'spring', stiffness: 420, damping: 24 },
-  },
-};
-
 const ctaItem: Variants = {
   hidden: { opacity: 0, y: 18, scale: 0.96 },
   visible: {
@@ -88,87 +66,45 @@ const floatingBadges = [
   { label: 'LLMs', className: 'right-[24%] top-[15%]', duration: 7.2, delay: 1.35 },
 ];
 
-function AnimatedName({ name }: { name: string }) {
+/**
+ * Whole-name animation keeps one text node so Arabic/English translation
+ * (or locale switch) renders correctly — never letter-split Latin names.
+ */
+function AnimatedName({ name, locale }: { name: string; locale: string }) {
   const prefersReducedMotion = useReducedMotion();
-  // Word-level tokens keep Latin names intact under RTL browsers / translate plugins.
-  const tokens = tokenizeDisplayName(name);
 
   return (
     <motion.h1
-      {...ENGLISH_LITERAL_ATTRS}
-      variants={nameContainer}
-      initial="hidden"
-      animate="visible"
-      className={englishLiteralClassName(
-        'relative mx-auto mb-5 inline-flex max-w-5xl flex-wrap justify-center gap-x-2 text-5xl font-bold tracking-tight sm:text-6xl md:mb-6 md:text-7xl lg:text-8xl'
-      )}
-      style={{ direction: 'ltr', unicodeBidi: 'isolate' }}
+      key={`${locale}-${name}`}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 36, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ type: 'spring', stiffness: 320, damping: 24, delay: 0.18 }}
+      className="relative mx-auto mb-5 max-w-5xl text-5xl font-bold tracking-tight sm:text-6xl md:mb-6 md:text-7xl lg:text-8xl"
     >
-      <span className="sr-only">{name}</span>
       <motion.span
         aria-hidden="true"
         animate={prefersReducedMotion ? undefined : { scale: [1, 1.035, 1], opacity: [0.35, 0.8, 0.35] }}
         transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
         className="absolute -inset-x-6 top-1/2 h-20 -translate-y-1/2 rounded-full bg-gradient-to-r from-purple-500/20 via-cyan-400/20 to-fuchsia-500/20 blur-3xl"
       />
-      <span
-        aria-hidden="true"
-        className="relative inline-flex flex-wrap justify-center gap-x-1.5 [perspective:900px]"
-        style={{ direction: 'ltr', unicodeBidi: 'isolate' }}
+      <motion.span
+        animate={prefersReducedMotion ? undefined : { y: [0, -4, 0] }}
+        transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
+        className="relative inline-block bg-gradient-to-r from-purple-300 via-cyan-300 to-fuchsia-300 bg-[length:220%_auto] bg-clip-text text-transparent animate-gradient text-glow drop-shadow-[0_0_18px_rgba(34,211,238,0.2)]"
       >
-        {tokens.map((token, tokenIndex) => {
-          const isSpace = /^\s+$/.test(token);
-
-          if (isSpace) {
-            return (
-              <span key={`space-${tokenIndex}`} className="inline-block w-4 sm:w-5 md:w-7">
-                {'\u00A0'}
-              </span>
-            );
-          }
-
-          return (
-            <span key={`${token}-${tokenIndex}`} className="inline-flex">
-              {Array.from(token).map((letter, letterIndex) => {
-                const index = tokenIndex * 32 + letterIndex;
-
-                return (
-                  <motion.span
-                    key={`${token}-${letterIndex}`}
-                    variants={nameLetter}
-                    whileHover={
-                      prefersReducedMotion ? undefined : { y: -12, rotate: [-2, 2, 0], scale: 1.08 }
-                    }
-                    className="inline-block"
-                  >
-                    <motion.span
-                      animate={prefersReducedMotion ? undefined : { y: [0, -5, 0] }}
-                      transition={{
-                        duration: 2.4 + (index % 5) * 0.18,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                        delay: index * 0.04,
-                      }}
-                      className="inline-block bg-gradient-to-r from-purple-300 via-cyan-300 to-fuchsia-300 bg-[length:220%_auto] bg-clip-text text-transparent animate-gradient text-glow drop-shadow-[0_0_18px_rgba(34,211,238,0.2)]"
-                    >
-                      {letter}
-                    </motion.span>
-                  </motion.span>
-                );
-              })}
-            </span>
-          );
-        })}
-      </span>
+        {name}
+      </motion.span>
     </motion.h1>
   );
 }
 
 export function HeroSection() {
+  const { dictionary, profile, locale } = useLocale();
   const p = profile as ProfileHero;
   const prefersReducedMotion = useReducedMotion();
   const heroLead = p.heroLead ?? p.shortBio;
   const heroStack = p.heroStack ?? 'Next.js · React · Python · SQL · cloud';
+  const typewriterWords = dictionary.hero.typewriter;
 
   const scrollToAbout = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' });
@@ -179,13 +115,9 @@ export function HeroSection() {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-950" />
-      
-      {/* Radial gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.15),transparent_50%)]" />
 
-      {/* Animated Orbs */}
       <motion.div
         animate={{ x: [0, 40, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
         transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
@@ -220,7 +152,6 @@ export function HeroSection() {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 text-center">
         <FadeIn delay={0.1}>
-          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -234,25 +165,23 @@ export function HeroSection() {
             >
               <Sparkles size={14} className="text-purple-400" />
             </motion.span>
-            Internships · remote roles · freelance
+            {dictionary.hero.badge}
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
           </motion.div>
         </FadeIn>
 
         <FadeIn delay={0.3}>
-          {/* Greeting */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="text-purple-300 text-lg sm:text-xl mb-3 font-medium"
           >
-            Hello, I&apos;m
+            {dictionary.hero.greeting}
           </motion.p>
         </FadeIn>
 
-        {/* Name */}
-        <AnimatedName name={profile.name} />
+        <AnimatedName name={p.name} locale={locale} />
 
         <motion.div
           className="max-w-3xl mx-auto mb-8 md:mb-10 space-y-3 md:space-y-4"
@@ -266,7 +195,7 @@ export function HeroSection() {
           <motion.p variants={fadeUp} className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed">
             {heroLead}
           </motion.p>
-          <motion.p variants={fadeUp} className="text-xs sm:text-sm md:text-base text-gray-300 tracking-wide">
+          <motion.p variants={fadeUp} className="text-xs sm:text-sm md:text-base text-gray-300 tracking-wide" dir="ltr">
             {heroStack}
           </motion.p>
           <motion.div
@@ -274,9 +203,10 @@ export function HeroSection() {
             className="mx-auto inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-100 shadow-[0_0_28px_rgba(34,211,238,0.12)]"
           >
             <span className="h-2 w-2 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.9)]" />
-            <span className="shrink-0 text-gray-300">I build</span>
+            <span className="shrink-0 text-gray-300">{dictionary.hero.iBuild}</span>
             <TypewriterEffect
-              words={HERO_TYPEWRITER_WORDS}
+              key={locale}
+              words={typewriterWords}
               typingSpeed={75}
               deletingSpeed={36}
               pauseDuration={1300}
@@ -305,28 +235,28 @@ export function HeroSection() {
             className="cursor-pointer inline-flex items-center justify-center gap-2 min-h-[48px] px-8 py-3.5 rounded-xl text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-cyan-600 shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/35 transition-shadow duration-300 border border-white/10"
           >
             <Send className="shrink-0" size={20} />
-            Contact me
+            {dictionary.hero.contactMe}
           </motion.a>
           <motion.div variants={ctaItem}>
             <GlassButton
               className="inline-flex min-h-[48px] items-center justify-center"
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <ExternalLink className="inline-block mr-2 h-4 w-4" />
-              View case studies
+              <ExternalLink className={`inline-block h-4 w-4 ${locale === 'ar' ? 'ml-2' : 'mr-2'}`} />
+              {dictionary.hero.viewCaseStudies}
             </GlassButton>
           </motion.div>
           <motion.div variants={ctaItem}>
             <motion.a
-              href={profile.social.github}
+              href={p.social.github}
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="cursor-pointer inline-flex items-center justify-center min-h-[48px] px-6 py-3 rounded-xl font-medium bg-white/10 border border-white/25 text-white hover:bg-white/15 transition-all duration-300"
             >
-              <Github className="inline-block mr-2 h-4 w-4" />
-              GitHub Profile
+              <Github className={`inline-block h-4 w-4 ${locale === 'ar' ? 'ml-2' : 'mr-2'}`} />
+              {dictionary.hero.githubProfile}
             </motion.a>
           </motion.div>
           <motion.div variants={ctaItem}>
@@ -334,10 +264,10 @@ export function HeroSection() {
               variant="outline"
               hoverShapeMorph
               className="inline-flex min-h-[48px] items-center justify-center"
-              onClick={() => window.open(profile.resume, '_blank')}
+              onClick={() => window.open(p.resume, '_blank')}
             >
-              <Download className="inline-block mr-2 h-4 w-4" />
-              Download CV
+              <Download className={`inline-block h-4 w-4 ${locale === 'ar' ? 'ml-2' : 'mr-2'}`} />
+              {dictionary.hero.downloadCv}
             </GlassButton>
           </motion.div>
         </motion.div>
@@ -351,10 +281,10 @@ export function HeroSection() {
           >
             <motion.a
               variants={ctaItem}
-              href={profile.social.github}
+              href={p.social.github}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="GitHub profile"
+              aria-label="GitHub"
               whileHover={{ scale: 1.15, y: -4 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-purple-500/50 transition-colors"
@@ -363,10 +293,10 @@ export function HeroSection() {
             </motion.a>
             <motion.a
               variants={ctaItem}
-              href={profile.social.linkedin}
+              href={p.social.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="LinkedIn profile"
+              aria-label="LinkedIn"
               whileHover={{ scale: 1.15, y: -4 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-cyan-500/50 transition-colors"
@@ -375,8 +305,8 @@ export function HeroSection() {
             </motion.a>
             <motion.a
               variants={ctaItem}
-              href={`mailto:${profile.email}`}
-              aria-label="Send email"
+              href={`mailto:${p.email}`}
+              aria-label="Email"
               whileHover={{ scale: 1.15, y: -4 }}
               whileTap={{ scale: 0.95 }}
               className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-purple-500/50 transition-colors"
@@ -386,11 +316,10 @@ export function HeroSection() {
           </motion.div>
         </FadeIn>
 
-        {/* Scroll indicator */}
         <FloatingElement duration={2} distance={8}>
           <motion.button
             type="button"
-            aria-label="Scroll to about section"
+            aria-label={dictionary.hero.scrollToAbout}
             onClick={scrollToAbout}
             className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gray-300 hover:text-white transition-colors"
           >
