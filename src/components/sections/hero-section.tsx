@@ -4,9 +4,18 @@ import { motion, useReducedMotion, type Variants } from 'framer-motion';
 import { Github, Linkedin, Mail, Download, ChevronDown, ExternalLink, Sparkles, Send } from 'lucide-react';
 import { FloatingElement, FadeIn, TypewriterEffect } from '../ui-custom/animations';
 import { GlassButton } from '../ui-custom/glass-card';
+import { ENGLISH_LITERAL_ATTRS, englishLiteralClassName, tokenizeDisplayName } from '@/lib/locale-guard';
 import profile from '../../../content/profile.json';
 
 type ProfileHero = typeof profile & { heroLead?: string; heroStack?: string };
+
+/** Stable list — must not be recreated each render (breaks typewriter effect deps). */
+const HERO_TYPEWRITER_WORDS = [
+  'AI products',
+  'ERP chatbots',
+  'data dashboards',
+  'cloud-ready apps',
+] as const;
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 26 },
@@ -46,17 +55,16 @@ const nameContainer: Variants = {
 };
 
 const nameLetter: Variants = {
+  // Avoid animating CSS `filter` — it crashes some Android Chrome GPUs.
   hidden: {
     opacity: 0,
     y: 44,
     rotateX: -80,
-    filter: 'blur(10px)',
   },
   visible: {
     opacity: 1,
     y: 0,
     rotateX: 0,
-    filter: 'blur(0px)',
     transition: { type: 'spring', stiffness: 420, damping: 24 },
   },
 };
@@ -82,13 +90,19 @@ const floatingBadges = [
 
 function AnimatedName({ name }: { name: string }) {
   const prefersReducedMotion = useReducedMotion();
+  // Word-level tokens keep Latin names intact under RTL browsers / translate plugins.
+  const tokens = tokenizeDisplayName(name);
 
   return (
     <motion.h1
+      {...ENGLISH_LITERAL_ATTRS}
       variants={nameContainer}
       initial="hidden"
       animate="visible"
-      className="relative mx-auto mb-5 inline-flex max-w-5xl flex-wrap justify-center gap-x-2 text-5xl font-bold tracking-tight sm:text-6xl md:mb-6 md:text-7xl lg:text-8xl"
+      className={englishLiteralClassName(
+        'relative mx-auto mb-5 inline-flex max-w-5xl flex-wrap justify-center gap-x-2 text-5xl font-bold tracking-tight sm:text-6xl md:mb-6 md:text-7xl lg:text-8xl'
+      )}
+      style={{ direction: 'ltr', unicodeBidi: 'isolate' }}
     >
       <span className="sr-only">{name}</span>
       <motion.span
@@ -97,34 +111,52 @@ function AnimatedName({ name }: { name: string }) {
         transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
         className="absolute -inset-x-6 top-1/2 h-20 -translate-y-1/2 rounded-full bg-gradient-to-r from-purple-500/20 via-cyan-400/20 to-fuchsia-500/20 blur-3xl"
       />
-      <span aria-hidden="true" className="relative inline-flex flex-wrap justify-center gap-x-1.5 [perspective:900px]">
-        {name.split('').map((letter, index) => {
-          const isSpace = letter === ' ';
+      <span
+        aria-hidden="true"
+        className="relative inline-flex flex-wrap justify-center gap-x-1.5 [perspective:900px]"
+        style={{ direction: 'ltr', unicodeBidi: 'isolate' }}
+      >
+        {tokens.map((token, tokenIndex) => {
+          const isSpace = /^\s+$/.test(token);
+
+          if (isSpace) {
+            return (
+              <span key={`space-${tokenIndex}`} className="inline-block w-4 sm:w-5 md:w-7">
+                {'\u00A0'}
+              </span>
+            );
+          }
 
           return (
-            <motion.span
-              key={`${letter}-${index}`}
-              variants={nameLetter}
-              whileHover={prefersReducedMotion ? undefined : { y: -12, rotate: [-2, 2, 0], scale: 1.08 }}
-              className={`inline-block ${isSpace ? 'w-4 sm:w-5 md:w-7' : ''}`}
-            >
-              {isSpace ? (
-                '\u00A0'
-              ) : (
-                <motion.span
-                  animate={prefersReducedMotion ? undefined : { y: [0, -5, 0] }}
-                  transition={{
-                    duration: 2.4 + (index % 5) * 0.18,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                    delay: index * 0.04,
-                  }}
-                  className="inline-block bg-gradient-to-r from-purple-300 via-cyan-300 to-fuchsia-300 bg-[length:220%_auto] bg-clip-text text-transparent animate-gradient text-glow drop-shadow-[0_0_18px_rgba(34,211,238,0.2)]"
-                >
-                  {letter}
-                </motion.span>
-              )}
-            </motion.span>
+            <span key={`${token}-${tokenIndex}`} className="inline-flex">
+              {Array.from(token).map((letter, letterIndex) => {
+                const index = tokenIndex * 32 + letterIndex;
+
+                return (
+                  <motion.span
+                    key={`${token}-${letterIndex}`}
+                    variants={nameLetter}
+                    whileHover={
+                      prefersReducedMotion ? undefined : { y: -12, rotate: [-2, 2, 0], scale: 1.08 }
+                    }
+                    className="inline-block"
+                  >
+                    <motion.span
+                      animate={prefersReducedMotion ? undefined : { y: [0, -5, 0] }}
+                      transition={{
+                        duration: 2.4 + (index % 5) * 0.18,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                        delay: index * 0.04,
+                      }}
+                      className="inline-block bg-gradient-to-r from-purple-300 via-cyan-300 to-fuchsia-300 bg-[length:220%_auto] bg-clip-text text-transparent animate-gradient text-glow drop-shadow-[0_0_18px_rgba(34,211,238,0.2)]"
+                    >
+                      {letter}
+                    </motion.span>
+                  </motion.span>
+                );
+              })}
+            </span>
           );
         })}
       </span>
@@ -244,7 +276,7 @@ export function HeroSection() {
             <span className="h-2 w-2 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.9)]" />
             <span className="shrink-0 text-gray-300">I build</span>
             <TypewriterEffect
-              words={['AI products', 'ERP chatbots', 'data dashboards', 'cloud-ready apps']}
+              words={HERO_TYPEWRITER_WORDS}
               typingSpeed={75}
               deletingSpeed={36}
               pauseDuration={1300}

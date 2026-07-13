@@ -59,6 +59,11 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  // Keep the English portfolio literal — Chrome auto-translate (common on
+  // Arabic-locale phones) rewrites React text nodes and crashes the client.
+  other: {
+    google: "notranslate",
+  },
 };
 
 export default function RootLayout({
@@ -67,9 +72,16 @@ export default function RootLayout({
   children: ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
+    <html
+      lang="en"
+      dir="ltr"
+      translate="no"
+      suppressHydrationWarning
+      className="dark notranslate"
+    >
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-950 text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} notranslate antialiased bg-slate-950 text-white`}
+        style={{ direction: "ltr", unicodeBidi: "isolate" }}
       >
         <a href="#main-content" className="skip-link">
           Skip to main content

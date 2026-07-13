@@ -117,7 +117,10 @@ export function Navigation() {
           type="button"
           onClick={() => scrollToSection('#home')}
           whileHover={{ scale: 1.05 }}
-          className="relative z-30 text-2xl font-bold touch-manipulation"
+          className="relative z-30 text-2xl font-bold touch-manipulation notranslate"
+          lang="en"
+          dir="ltr"
+          translate="no"
         >
           <GradientText>&lt;Abdelrahman /&gt;</GradientText>
         </motion.button>

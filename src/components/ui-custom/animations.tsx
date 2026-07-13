@@ -1,7 +1,8 @@
 'use client';
 
-import { motion, useInView, Variants } from 'framer-motion';
-import { useRef, ReactNode } from 'react';
+import { motion, useInView, type Variants } from 'framer-motion';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { getNextTypewriterStep } from '@/lib/locale-guard';
 
 interface FadeInProps {
   children: ReactNode;
@@ -217,7 +218,7 @@ export function SectionHeading({ eyebrow, title, description, className = '' }: 
 }
 
 interface TypewriterEffectProps {
-  words: string[];
+  words: readonly string[];
   className?: string;
   typingSpeed?: number;
   deletingSpeed?: number;
@@ -234,43 +235,39 @@ export function TypewriterEffect({
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
+  const wordsKey = words.join('\0');
 
   useEffect(() => {
-    const currentWord = words[currentWordIndex];
-
-    const timeout = setTimeout(
-      () => {
-        if (!isDeleting) {
-          if (currentText.length < currentWord.length) {
-            setCurrentText(currentWord.slice(0, currentText.length + 1));
-          } else {
-            setTimeout(() => setIsDeleting(true), pauseDuration);
-          }
-        } else {
-          if (currentText.length > 0) {
-            setCurrentText(currentText.slice(0, -1));
-          } else {
-            setIsDeleting(false);
-            setCurrentWordIndex((prev) => (prev + 1) % words.length);
-          }
-        }
-      },
-      isDeleting ? deletingSpeed : typingSpeed
+    const step = getNextTypewriterStep(
+      { words, currentWordIndex, currentText, isDeleting },
+      { typingSpeed, deletingSpeed, pauseDuration }
     );
+    if (!step) return;
 
-    return () => clearTimeout(timeout);
+    const timeoutId = setTimeout(() => {
+      setCurrentText(step.nextText);
+      setCurrentWordIndex(step.nextWordIndex);
+      setIsDeleting(step.nextIsDeleting);
+    }, step.delay);
+
+    return () => clearTimeout(timeoutId);
   }, [
     currentText,
     isDeleting,
     currentWordIndex,
     words,
+    wordsKey,
     typingSpeed,
     deletingSpeed,
     pauseDuration,
   ]);
 
+  if (words.length === 0) {
+    return <span className={className} />;
+  }
+
   return (
-    <span className={className}>
+    <span className={className} lang="en" translate="no">
       {currentText}
       <motion.span
         animate={{ opacity: [1, 0] }}
@@ -280,8 +277,6 @@ export function TypewriterEffect({
     </span>
   );
 }
-
-import { useEffect, useState } from 'react';
 
 interface FloatingElementProps {
   children: ReactNode;
