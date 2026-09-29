@@ -2,6 +2,7 @@
   "name": "Abdelrahman Alaa Eldeen",
   "fullName": "Abdelrahman Alaa Eldeen Ezz Eldeen",
   "title": "AI & Software Engineer",
+  "positioning": "AI & Software Engineer",
   "heroLead": "I design and ship intelligent data systems — LLM assistants over ERP/SQL, Java data-governance platforms, and full-stack products teams can run in production.",
   "heroStack": "Next.js · React · Python · Java · LLMs · SQL · AWS · Azure",
   "roles": [
@@ -13,7 +14,7 @@
     "Full-Stack Developer"
   ],
   "location": "Egypt",
-  "phones": ["+201114493323", "+201125120118"],
+  "phones": ["+201114493323"],
   "email": "abdelrahman.ae.de@gmail.com",
   "social": {
     "linkedin": "https://linkedin.com/in/elmezo",

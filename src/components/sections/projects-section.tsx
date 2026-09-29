@@ -26,7 +26,7 @@ type Project = {
   impact?: string;
 };
 
-const projectList = projects.projects as Project[];
+  const projectList = (projects.projects as Project[]).filter((p) => p.featured);
 
 function getProjectIcon(title: string) {
   if (title.includes('Diabetes')) return '🩺';
@@ -75,7 +75,7 @@ export function ProjectsSection() {
                 <GlassCard
                   className={`h-full overflow-hidden group cursor-pointer ${
                     project.featured
-                      ? 'ring-2 ring-purple-400/40 ring-offset-2 ring-offset-slate-950'
+                      ? 'ring-2 ring-emerald-400/40 ring-offset-2 ring-offset-slate-950'
                       : ''
                   }`}
                   hover={false}
@@ -93,7 +93,7 @@ export function ProjectsSection() {
                     ) : null}
                     
                     {/* Gradient placeholder always visible if image missing */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-cyan-600/20 flex items-center justify-center">
+                    <div className="absolute inset-0 bg-emerald-600/10 flex items-center justify-center">
                       <div className="text-6xl opacity-30 group-hover:opacity-50 transition-opacity duration-300">
                         {getProjectIcon(project.title)}
                       </div>
@@ -121,12 +121,12 @@ export function ProjectsSection() {
 
                     {/* Hover overlay with more info */}
                     <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/80 to-slate-950/20 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out flex flex-col justify-end p-6 translate-y-4 group-hover:translate-y-0">
-                      <p className="text-cyan-300 font-semibold text-sm mb-2">{project.role}</p>
+                      <p className="text-emerald-300 font-semibold text-sm mb-2">{project.role}</p>
                       <p className="text-gray-200 text-sm line-clamp-2 mb-4">
                         {project.challenge}
                       </p>
                       <span className="text-white text-sm font-semibold flex items-center gap-2 self-start bg-white/10 px-4 py-2 rounded-lg border border-white/20 hover:bg-white/20 transition-colors">
-                        <ImageIcon size={16} className="text-cyan-400" />
+                        <ImageIcon size={16} className="text-emerald-400" />
                         Open Project Page
                       </span>
                     </div>
@@ -134,7 +134,7 @@ export function ProjectsSection() {
 
                   {/* Content */}
                   <div className="p-6">
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-purple-300 transition-colors">
+                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
                       {project.title}
                     </h3>
                     <p className="text-gray-200 text-sm mb-2 line-clamp-3 leading-relaxed">
@@ -173,7 +173,7 @@ export function ProjectsSection() {
                           aria-label={`View source code for ${project.title} on GitHub`}
                           whileHover={{ scale: 1.1 }}
                           onClick={(event) => event.stopPropagation()}
-                          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-white/5 border border-white/15 text-gray-300 hover:text-white hover:border-purple-500/50 transition-colors"
+                          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-white/5 border border-white/15 text-gray-300 hover:text-white hover:border-emerald-500/50 transition-colors"
                         >
                           <Github size={18} />
                         </motion.a>
@@ -186,7 +186,7 @@ export function ProjectsSection() {
                           aria-label={`Open external page for ${project.title}`}
                           whileHover={{ scale: 1.1 }}
                           onClick={(event) => event.stopPropagation()}
-                          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-white/5 border border-white/15 text-gray-300 hover:text-white hover:border-cyan-500/50 transition-colors"
+                          className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-white/5 border border-white/15 text-gray-300 hover:text-white hover:border-emerald-500/50 transition-colors"
                         >
                           <ExternalLink size={18} />
                         </motion.a>
@@ -198,7 +198,7 @@ export function ProjectsSection() {
                           event.stopPropagation();
                           openProject(project.slug);
                         }}
-                        className="ml-auto inline-flex items-center gap-1.5 text-xs text-purple-400 hover:text-purple-300 transition-colors font-medium"
+                        className="ml-auto inline-flex items-center gap-1.5 text-xs text-emerald-400 hover:text-emerald-300 transition-colors font-medium"
                       >
                         Project Page
                         <ArrowRight size={14} />
@@ -219,7 +219,7 @@ export function ProjectsSection() {
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-purple-500/50 transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-emerald-500/50 transition-colors"
             >
               <Github size={18} />
               View More on GitHub

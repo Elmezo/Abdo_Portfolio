@@ -24,13 +24,13 @@ const notoArabic = Noto_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://abdo-portfolio.vercel.app'),
   title: "Abdelrahman Alaa | AI & Software Engineer",
   description:
-    "AI and software engineer with 2 years building ERP LLM assistants (Python), enterprise data governance (BUDG / Java, Elasticsearch), and modern frontends with Next.js and React. AWS, Azure, SQL.",
+    "AI & Software Engineer building ERP LLM assistants, enterprise data governance platforms, and full-stack products. Python, Java, Next.js, React, AWS, Azure.",
   keywords: [
     "AI Engineer",
     "Software Engineer",
-    "Data Scientist",
     "AI Developer",
     "Python",
     "LLM",
@@ -45,7 +45,6 @@ export const metadata: Metadata = {
     "AWS",
     "Azure",
     "Full-Stack Developer",
-    "UAE",
     "عبدالرحمن",
     "مهندس ذكاء اصطناعي",
   ],
@@ -57,8 +56,8 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Abdelrahman Alaa | AI & Software Engineer",
-    description: "Intelligent data systems, LLM assistants, and production backends.",
-    url: "https://abdelrahman-alaa.dev",
+    description: "AI & Software Engineer building ERP LLM assistants, enterprise data governance platforms, and full-stack products.",
+    url: "https://abdo-portfolio.vercel.app",
     siteName: "Abdelrahman Alaa Portfolio",
     type: "website",
     locale: "en_US",
@@ -67,7 +66,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Abdelrahman Alaa | AI & Software Engineer",
-    description: "Intelligent data systems, LLM assistants, and production backends.",
+    description: "AI & Software Engineer building ERP LLM assistants, enterprise data governance platforms, and full-stack products.",
   },
   robots: {
     index: true,

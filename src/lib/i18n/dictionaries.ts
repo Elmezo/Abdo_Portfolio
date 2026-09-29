@@ -87,7 +87,7 @@ export const dictionaries: Record<Locale, UiDictionary> = {
       ar: 'ع',
     },
     hero: {
-      badge: 'Internships · remote roles · freelance',
+      badge: 'Open to remote roles & freelance',
       greeting: "Hello, I'm",
       iBuild: 'I build',
       contactMe: 'Contact me',
@@ -126,7 +126,7 @@ export const dictionaries: Record<Locale, UiDictionary> = {
     },
     footer: {
       blurb:
-        'Backend & Data Engineer building intelligent systems, analytics platforms, and automation tools.',
+        'AI & Software Engineer building intelligent data systems, LLM assistants, and full-stack products.',
       quickLinks: 'Quick Links',
       connect: 'Connect',
       madeWith: 'Made with',
@@ -161,7 +161,7 @@ export const dictionaries: Record<Locale, UiDictionary> = {
       ar: 'ع',
     },
     hero: {
-      badge: 'تدريب · عمل عن بُعد · فريلانس',
+      badge: 'متاح لعمل عن بُعد وفريلانس',
       greeting: 'مرحباً، أنا',
       iBuild: 'أبني',
       contactMe: 'تواصل معي',
@@ -197,7 +197,7 @@ export const dictionaries: Record<Locale, UiDictionary> = {
     },
     footer: {
       blurb:
-        'مهندس خلفية وبيانات يبني أنظمة ذكية ومنصات تحليل وأدوات أتمتة.',
+        'مهندس ذكاء اصطناعي وبرمجيات يبني أنظمة بيانات ذكية ومساعدات LLM ومنصات Full-Stack.',
       quickLinks: 'روابط سريعة',
       connect: 'تواصل',
       madeWith: 'صُنع بـ',

@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { StaggerContainer, StaggerItem, SectionHeading } from '../ui-custom/animations';
 import { GlassCard, GradientText } from '../ui-custom/glass-card';
-import { Quote, User } from 'lucide-react';
+import { Quote, User, Linkedin } from 'lucide-react';
 import testimonialsData from '../../../content/testimonials.json';
 import { useLocale } from '@/lib/i18n/locale-provider';
 
@@ -11,13 +11,8 @@ export function TestimonialsSection() {
   const { dictionary } = useLocale();
 
   return (
-    <section id="testimonials" className="relative py-24 md:py-32 bg-slate-950">
-      {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 -right-1/4 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl opacity-50" />
-      </div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-4">
+    <section id="testimonials" className="relative py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-4">
         <SectionHeading
           title={<GradientText>{dictionary.sections.testimonials}</GradientText>}
           description={
@@ -30,26 +25,35 @@ export function TestimonialsSection() {
         <StaggerContainer staggerDelay={0.2} className="grid md:grid-cols-2 gap-8">
           {testimonialsData.testimonials.map((testimonial) => (
             <StaggerItem key={testimonial.id}>
-              <motion.div whileHover={{ y: -5 }} className="h-full">
+              <motion.div whileHover={{ y: -4 }} className="h-full">
                 <GlassCard className="h-full p-8 relative" hover={true}>
-                  <Quote className="absolute top-6 right-6 text-purple-500/20" size={64} />
-                  
+                  <Quote className="absolute top-6 right-6 text-emerald-500/20" size={64} />
+
                   <div className="mb-6 relative z-10">
-                    <p className="text-gray-300 text-lg leading-relaxed italic border-l-2 border-cyan-500/50 pl-4 py-1">
-                      "{testimonial.content}"
+                    <p className="text-gray-300 text-lg leading-relaxed italic border-l-2 border-emerald-500/50 pl-4 py-1">
+                      &ldquo;{testimonial.content}&rdquo;
                     </p>
                   </div>
 
                   <div className="flex items-center gap-4 mt-auto">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-600 to-cyan-600 flex items-center justify-center p-[2px]">
-                      <div className="w-full h-full rounded-full bg-slate-900 flex items-center justify-center border-2 border-transparent relative overflow-hidden">
-                        <User className="text-purple-400" size={24} />
-                      </div>
+                    <div className="w-12 h-12 rounded-full bg-emerald-600/20 flex items-center justify-center">
+                      <User className="text-emerald-400" size={24} />
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <h4 className="text-white font-semibold text-lg">{testimonial.name}</h4>
-                      <p className="text-cyan-400 text-sm">{testimonial.role}</p>
+                      <p className="text-emerald-400 text-sm">{testimonial.role}</p>
                     </div>
+                    {testimonial.linkedin && (
+                      <a
+                        href={testimonial.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`LinkedIn profile of ${testimonial.name}`}
+                        className="p-2 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:border-emerald-500/50 transition-colors"
+                      >
+                        <Linkedin size={18} />
+                      </a>
+                    )}
                   </div>
                 </GlassCard>
               </motion.div>

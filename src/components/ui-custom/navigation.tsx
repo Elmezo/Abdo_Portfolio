@@ -17,14 +17,10 @@ export function Navigation() {
 
   const navItems = useMemo(
     () => [
-      { name: dictionary.nav.home, href: '#home' },
       { name: dictionary.nav.about, href: '#about' },
       { name: dictionary.nav.skills, href: '#skills' },
-      { name: dictionary.nav.experience, href: '#experience' },
       { name: dictionary.nav.projects, href: '#projects' },
       { name: dictionary.nav.testimonials, href: '#testimonials' },
-      { name: dictionary.nav.caseStudies, href: '#case-studies' },
-      { name: dictionary.nav.github, href: '#github' },
       { name: dictionary.nav.contact, href: '#contact' },
     ],
     [dictionary]

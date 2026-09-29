@@ -17,7 +17,6 @@ export function Footer() {
     { label: dictionary.nav.about, id: 'about' },
     { label: dictionary.nav.skills, id: 'skills' },
     { label: dictionary.nav.projects, id: 'projects' },
-    { label: dictionary.nav.caseStudies, id: 'case-studies' },
     { label: dictionary.nav.contact, id: 'contact' },
   ];
 
@@ -101,9 +100,7 @@ export function Footer() {
 
         <div className="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-gray-500 text-sm flex items-center gap-1.5 flex-wrap justify-center">
-            © {currentYear} {profile.name}. {dictionary.footer.madeWith}
-            <Heart className="text-red-500 animate-pulse" size={13} />
-            {dictionary.footer.in} {profile.location}
+            © {currentYear} {profile.name}. Made in {profile.location}
           </p>
 
           <motion.button

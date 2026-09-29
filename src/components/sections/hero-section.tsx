@@ -90,7 +90,7 @@ function AnimatedName({ name, locale }: { name: string; locale: string }) {
       <motion.span
         animate={prefersReducedMotion ? undefined : { y: [0, -4, 0] }}
         transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-        className="relative inline-block bg-gradient-to-r from-purple-300 via-cyan-300 to-fuchsia-300 bg-[length:220%_auto] bg-clip-text text-transparent animate-gradient text-glow drop-shadow-[0_0_18px_rgba(34,211,238,0.2)]"
+        className="relative inline-block text-emerald-400"
       >
         {name}
       </motion.span>
@@ -115,19 +115,7 @@ export function HeroSection() {
       id="home"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-purple-950/20 to-slate-950" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(139,92,246,0.15),transparent_50%)]" />
-
-      <motion.div
-        animate={{ x: [0, 40, 0], y: [0, -30, 0], scale: [1, 1.1, 1] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-purple-600/10 blur-3xl pointer-events-none"
-      />
-      <motion.div
-        animate={{ x: [0, -50, 0], y: [0, 40, 0], scale: [1, 1.15, 1] }}
-        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-cyan-600/10 blur-3xl pointer-events-none"
-      />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 to-slate-950" />
 
       <div aria-hidden="true" className="absolute inset-0 hidden md:block">
         {floatingBadges.map((badge) => (
@@ -143,7 +131,7 @@ export function HeroSection() {
                   }
             }
             transition={{ duration: badge.duration, repeat: Infinity, ease: 'easeInOut', delay: badge.delay }}
-            className={`absolute rounded-full border border-white/15 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-cyan-100 shadow-[0_0_30px_rgba(34,211,238,0.16)] backdrop-blur-md ${badge.className}`}
+            className={`absolute rounded-full border border-white/15 bg-white/[0.08] px-4 py-2 text-sm font-semibold text-emerald-100 backdrop-blur-md ${badge.className}`}
           >
             {badge.label}
           </motion.div>
@@ -156,7 +144,7 @@ export function HeroSection() {
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ type: 'spring', stiffness: 400, damping: 22, delay: 0.15 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-300 text-sm font-medium mb-8"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm font-medium mb-8"
           >
             <motion.span
               animate={{ rotate: [0, 14, -10, 0] }}
@@ -175,7 +163,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-purple-300 text-lg sm:text-xl mb-3 font-medium"
+            className="text-emerald-300 text-lg sm:text-xl mb-3 font-medium"
           >
             {dictionary.hero.greeting}
           </motion.p>
@@ -200,7 +188,7 @@ export function HeroSection() {
           </motion.p>
           <motion.div
             variants={fadeUp}
-            className="mx-auto inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm text-cyan-100 shadow-[0_0_28px_rgba(34,211,238,0.12)]"
+            className="mx-auto inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm text-emerald-100"
           >
             <span className="h-2 w-2 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.9)]" />
             <span className="shrink-0 text-gray-300">{dictionary.hero.iBuild}</span>
@@ -232,7 +220,7 @@ export function HeroSection() {
             href="#contact"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}
-            className="cursor-pointer inline-flex items-center justify-center gap-2 min-h-[48px] px-8 py-3.5 rounded-xl text-base font-semibold text-white bg-gradient-to-r from-purple-600 to-cyan-600 shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/35 transition-shadow duration-300 border border-white/10"
+            className="cursor-pointer inline-flex items-center justify-center gap-2 min-h-[48px] px-8 py-3.5 rounded-xl text-base font-semibold text-white bg-emerald-600 hover:bg-emerald-500 transition-colors duration-300"
           >
             <Send className="shrink-0" size={20} />
             {dictionary.hero.contactMe}
@@ -287,7 +275,7 @@ export function HeroSection() {
               aria-label="GitHub"
               whileHover={{ scale: 1.15, y: -4 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-purple-500/50 transition-colors"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-emerald-500/50 transition-colors"
             >
               <Github size={24} />
             </motion.a>
@@ -299,7 +287,7 @@ export function HeroSection() {
               aria-label="LinkedIn"
               whileHover={{ scale: 1.15, y: -4 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-cyan-500/50 transition-colors"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-emerald-500/50 transition-colors"
             >
               <Linkedin size={24} />
             </motion.a>
@@ -309,7 +297,7 @@ export function HeroSection() {
               aria-label="Email"
               whileHover={{ scale: 1.15, y: -4 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-purple-500/50 transition-colors"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-white/5 border border-white/10 text-gray-300 hover:text-white hover:border-emerald-500/50 transition-colors"
             >
               <Mail size={24} />
             </motion.a>

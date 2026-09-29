@@ -14,6 +14,10 @@ function useCounter(end: number, duration = 1500, start = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (!start) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setCount(end);
+      return;
+    }
     let startTime: number | null = null;
     const step = (timestamp: number) => {
       if (!startTime) startTime = timestamp;

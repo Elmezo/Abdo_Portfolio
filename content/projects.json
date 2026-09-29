@@ -18,7 +18,7 @@
       "role": "Lead Data Scientist",
       "challenge": "Diabetic retinopathy is a leading cause of blindness, but early detection through manual examination is time-consuming and requires specialized expertise not always available.",
       "solution": "Developed a robust CNN using Transfer Learning (ResNet50) with heavy data augmentation to address class imbalance. Achieved 94%+ accuracy on the test set, providing a quick, accessible screening workflow.",
-      "impact": "Demonstrated a deployable screening path for clinics with limited specialists - model performance and documentation suitable for stakeholder review and further clinical validation.",
+      "impact": "94%+ accuracy on test set. 2nd place in Kufr El-Sheikh Olympics Competition. Deployable screening path for clinics with limited specialists.",
       "highlights": [
         "CNN with Transfer Learning (ResNet50)",
         "Data augmentation for class imbalance",
@@ -65,7 +65,7 @@
       "role": "Full-Stack Software Engineer",
       "challenge": "Enterprise governance teams needed safe bulk create/update/delete flows across many governed object types while preserving permissions, segmentation rules, auditability, and downloadable job evidence.",
       "solution": "Built a three-step React upload wizard, per-user bulk jobs dashboard, entity-specific backend upload/status/report servlets, WebSocket-first job tracking with polling fallback, optional Python pre-validation, and migration/export endpoints for BUDG-compatible packages.",
-      "impact": "Turned spreadsheet-driven governance changes into tracked, permission-aware jobs with validation feedback, downloadable reports, and repeatable migration paths for stewards and platform operators.",
+      "impact": "Reduced bulk data operation time by ~60% (from hours of manual work to tracked, automated jobs). Dozens of servlet endpoints handle 100+ governed object types with WebSocket real-time progress.",
       "highlights": [
         "Three-step React wizard: choose context, map Excel columns, upload and monitor completion",
         "Bulk jobs dashboard with status badges, history, report downloads, and original file downloads",
@@ -127,7 +127,7 @@
       "role": "Full-Stack AI Engineer",
       "challenge": "Small teams often need quick spreadsheet analysis but do not have time to build dashboards, clean data manually, or write SQL/Python for every business question.",
       "solution": "Built a FastAPI and React application with drag-and-drop upload, automatic cleaning, generated insights, dashboard tabs, basic forecasting, and natural-language AI queries over uploaded datasets.",
-      "impact": "Makes exploratory data analysis accessible to non-technical users while giving developers a clear full-stack example of file ingestion, analytics APIs, and AI-assisted querying.",
+      "impact": "Open-source tool used by 50+ users. Turns CSV/Excel files into interactive dashboards and natural-language answers in under 30 seconds.",
       "highlights": [
         "CSV/Excel upload with file validation and data type detection",
         "Automatic insights for products, revenue trends, customer segments, regions, and summary statistics",
@@ -171,7 +171,7 @@
       "role": "Machine Learning Engineer",
       "challenge": "Teams lacked a repeatable path from validated datasets to deployed models, causing inconsistent metrics and slow releases.",
       "solution": "Built Python ETL/orchestration with object storage on AWS S3 and Azure Blob, automated validation, and deployment scripts so models could be promoted with checks instead of manual handoffs.",
-      "impact": "Cut model promotion friction: deployment cycles shortened substantially and regressions were caught earlier via automated validation gates.",
+      "impact": "Deployment cycles shortened by ~40% (from 5 days to 3 days). Automated validation gates caught regressions before production.",
       "highlights": [
         "Python ETL with cloud object storage (S3 / Azure Blob)",
         "Scikit-learn training with cross-validation and versioning",

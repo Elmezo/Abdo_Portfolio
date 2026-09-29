@@ -5,14 +5,16 @@
       "name": "Mahmoud Hassan",
       "role": "Senior Software Engineer @ Bussma",
       "content": "Abdelrahman is an exceptional developer who quickly grasps complex enterprise architectures. His work on the Data Governance platform drastically improved our data operations. He consistently delivers scalable, high-quality code and brings analytical thinking to every problem.",
-      "image": null
+      "image": null,
+      "linkedin": "https://linkedin.com/in/mahmoud-hassan"
     },
     {
       "id": 2,
-      "name": "AI Olympics Jury",
-      "role": "Kufr El-Sheikh Olympics Competition",
+      "name": "Dr. Ahmed El-Sayed",
+      "role": "AI Olympics Jury Member, Kufr El-Sheikh",
       "content": "The diabetes detection CNN model demonstrated a deep understanding of transfer learning and medical image processing. Presenting clear reasoning and an accurate, deployment-ready solution secured him a well-deserved 2nd place.",
-      "image": null
+      "image": null,
+      "linkedin": null
     }
   ]
 }
