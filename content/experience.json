@@ -3,9 +3,23 @@
     {
       "id": 1,
       "title": "AI Developer",
+      "company": "IDC",
+      "location": "Egypt",
+      "period": "2026 - Present",
+      "type": "Full-time",
+      "description": "Building LLM-powered solutions, continuing work on ERP AI agents and retrieval-grounded assistants.",
+      "achievements": [
+        "Shipping LLM features backed by public work (ERP agent, HAQ-Agent-Lite)",
+        "Python services for retrieval, orchestration, and LLM integration"
+      ],
+      "technologies": ["Python", "LLMs", "LangGraph", "Ollama", "RAG", "SQL"]
+    },
+    {
+      "id": 2,
+      "title": "AI Developer",
       "company": "Bussma (Jadara Solutions)",
       "location": "Remote",
-      "period": "2025 - Present",
+      "period": "2025 - 2026",
       "type": "Full-time",
       "description": "Building an LLM-powered chatbot on top of an ERP system: users ask business questions in natural language and get answers grounded in live database content via a Python backend and modern model integrations.",
       "achievements": [
@@ -16,7 +30,7 @@
       "technologies": ["Python", "LLMs", "SQL", "REST APIs", "ERP", "RAG"]
     },
     {
-      "id": 2,
+      "id": 3,
       "title": "Software Engineer",
       "company": "Bussma (Jadara Solutions)",
       "location": "Remote",
@@ -42,7 +56,7 @@
       ]
     },
     {
-      "id": 3,
+      "id": 4,
       "title": "Programmer Intern",
       "company": "Gomla Market",
       "location": "Egypt",
