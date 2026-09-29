@@ -24,7 +24,7 @@ const notoArabic = Noto_Sans_Arabic({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://abdo-portfolio.vercel.app'),
+  metadataBase: new URL('https://abdo-portfolio-eta.vercel.app'),
   title: "Abdelrahman Alaa | AI & Software Engineer",
   description:
     "AI & Software Engineer building ERP LLM assistants, enterprise data governance platforms, and full-stack products. Python, Java, Next.js, React, AWS, Azure.",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Abdelrahman Alaa | AI & Software Engineer",
     description: "AI & Software Engineer building ERP LLM assistants, enterprise data governance platforms, and full-stack products.",
-    url: "https://abdo-portfolio.vercel.app",
+    url: "https://abdo-portfolio-eta.vercel.app",
     siteName: "Abdelrahman Alaa Portfolio",
     type: "website",
     locale: "en_US",

@@ -156,35 +156,72 @@
     },
     {
       "id": 4,
-      "slug": "ml-analytics-pipeline",
-      "title": "ML Analytics Pipeline",
-      "description": "End-to-end ML analytics pipeline for validation, training hooks, and cloud-backed storage - built for repeatable deployments.",
-      "longDescription": "Analytics pipeline for large-scale processing and ML workflows with automated validation and deployment hooks across AWS and Azure.",
-      "oneLinePitch": "Repeatable ML pipeline pattern for dataset validation, cloud storage, model training hooks, and safer deployment handoffs.",
+      "slug": "ai-agent-for-erp-system",
+      "title": "AI Agent for ERP System",
+      "description": "Production-oriented terminal AI agent answering natural-language questions over a dynamic ERP API catalog (LangGraph + Ollama).",
+      "longDescription": "A terminal-based AI agent that plans structured execution steps over a dynamic ERP API catalog: resolves entities to IDs, calls APIs through a swappable adapter, resolves foreign keys into readable names, validates outcomes, and replies in the user's language. LLM runs locally via Ollama; includes a FastAPI mock backend, SQLite memory, and pytest suite.",
+      "oneLinePitch": "LangGraph + Ollama agent that turns plain-language business questions into grounded ERP answers.",
       "image": "/projects/ml-pipeline.png",
       "screenshots": ["/projects/ml-pipeline.png"],
-      "technologies": ["Python", "AWS", "Azure", "Scikit-learn", "Data Pipelines"],
-      "github": "https://github.com/elmezo/ml-analytics",
+      "technologies": ["Python", "LangGraph", "Ollama", "FastAPI", "SQLite", "Pydantic", "pytest"],
+      "github": "https://github.com/Elmezo/AI-agent-for-ERP-System",
       "demo": null,
-      "featured": false,
-      "year": "2024",
-      "role": "Machine Learning Engineer",
-      "challenge": "Teams lacked a repeatable path from validated datasets to deployed models, causing inconsistent metrics and slow releases.",
-      "solution": "Built Python ETL/orchestration with object storage on AWS S3 and Azure Blob, automated validation, and deployment scripts so models could be promoted with checks instead of manual handoffs.",
-      "impact": "Deployment cycles shortened by ~40% (from 5 days to 3 days). Automated validation gates caught regressions before production.",
+      "featured": true,
+      "achievement": "Open-source ERP AI agent",
+      "year": "2026",
+      "role": "AI Developer",
+      "challenge": "Business users need answers from ERP data but cannot write queries; keyword search over APIs returns raw IDs and unreadable foreign keys.",
+      "solution": "Built a LangGraph agent with entity-to-ID resolution, multi-hop foreign-key resolution, result compaction, outcome validation, and a mock/real adapter with caching and retries.",
+      "impact": "Natural-language ERP Q&A with validated, readable answers; full Arabic project guide so any developer can extend the agent.",
       "highlights": [
-        "Python ETL with cloud object storage (S3 / Azure Blob)",
-        "Scikit-learn training with cross-validation and versioning",
-        "Automated validation before promotion",
-        "Deployment workflow tuned for faster iteration"
+        "LangGraph 1.x orchestration with SQLite checkpointing",
+        "Entity resolution and cycle-safe multi-hop FK expansion",
+        "FastAPI mock backend + swappable real-API adapter",
+        "pytest suite with respx HTTP mocking"
+      ],
+      "detailSections": [
+        {
+          "title": "Agent strengths",
+          "items": [
+            "Structured planning over a dynamic ERP API catalog.",
+            "Local-first LLM via Ollama with optional Tavily web search.",
+            "Pydantic-validated config and tenacity retries on HTTP."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "slug": "haq-agent-lite",
+      "title": "HAQ-Agent-Lite",
+      "description": "LLM-guided hardware-aware quantization pipeline (OPRO-style, no RL) - CPU-first, outputs an OpenAI-compatible local inference container.",
+      "longDescription": "Replaces classic RL-based hardware-aware quantization (100s-1000s of trials) with an LLM that proposes each per-layer bit-width trial from the running trial log, hardware profile, and sensitivity ranking. CPU-first pipeline: profiler, sensitivity analysis, LLM-optimizer loop, winner quantization plus uniform-4-bit baseline, benchmark, and report. Serves via an OpenAI-compatible endpoint and ships as a Docker container.",
+      "oneLinePitch": "LLM proposes quantization trials instead of RL - 8-15 trials to a deployable GGUF container.",
+      "image": "/projects/ml-pipeline.png",
+      "screenshots": ["/projects/ml-pipeline.png"],
+      "technologies": ["Python", "Ollama", "GGUF", "Docker", "TinyLlama", "FastAPI"],
+      "github": "https://github.com/Elmezo/HAQ-Agent-Lite",
+      "demo": null,
+      "featured": true,
+      "achievement": "Open-source LLM quantization research",
+      "year": "2026",
+      "role": "AI Engineer",
+      "challenge": "Classic HAQ needs DDPG/PPO reinforcement learning with hundreds of trials and GPU clusters - out of reach for laptop-scale deployment.",
+      "solution": "An OPRO-style loop where a local Ollama model proposes each trial from prior results; one-command CPU run (TRIAL_BUDGET=6) ends with a benchmarked winner and an OpenAI-compatible serve endpoint.",
+      "impact": "Target 8-15 trials instead of 100s-1000s; full pipeline runs on a laptop CPU in ~30-60 min with a Dockerized inference container as output.",
+      "highlights": [
+        "LLM-proposed bit-width policy, no RL training",
+        "TinyLlama-1.1B GGUF backend, CPU-first",
+        "One-command run: ./run_all.sh with benchmark report",
+        "OpenAI-compatible serving + Docker image"
       ],
       "detailSections": [
         {
           "title": "Pipeline strengths",
           "items": [
-            "Standardized data validation before model promotion.",
-            "Object-storage-friendly workflow for cloud deployments.",
-            "Deployment checks that reduce manual release mistakes."
+            "Hardware profile + sensitivity ranking guide every trial.",
+            "Uniform-4-bit baseline for honest comparison.",
+            "Cross-platform runners: run_all.sh and run_all.bat."
           ]
         }
       ]
