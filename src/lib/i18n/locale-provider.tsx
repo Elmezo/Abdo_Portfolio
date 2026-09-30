@@ -93,7 +93,7 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   return (
     <LocaleContext.Provider value={value}>
       {/* Remount on locale change so React does not surgically patch Translate-mutated text nodes. */}
-      <div key={ready ? locale : 'boot'} lang={locale} dir={localeDirection(locale)}>
+      <div key={ready ? locale : 'boot'} lang={locale} dir={localeDirection(locale)} className="w-full max-w-full min-w-0 overflow-x-clip">
         {children}
       </div>
     </LocaleContext.Provider>

@@ -82,8 +82,27 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html,
+  body {
+    max-width: 100%;
+    overflow-x: clip;
+  }
   body {
     @apply bg-background text-foreground;
+    position: relative;
+    min-height: 100dvh;
+  }
+  img,
+  video,
+  canvas,
+  svg {
+    max-width: 100%;
+  }
+  pre,
+  code {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-wrap: anywhere;
   }
   html {
     scroll-behavior: smooth;

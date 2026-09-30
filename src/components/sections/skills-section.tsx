@@ -19,9 +19,9 @@ export function SkillsSection() {
   return (
     <section
       id="skills"
-      className="relative py-24 md:py-32"
+      className="relative overflow-x-clip py-24 md:py-32"
     >
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 min-w-0">
         <SectionHeading
           title={<GradientText>{dictionary.sections.skills}</GradientText>}
           description={

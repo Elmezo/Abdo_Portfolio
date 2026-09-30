@@ -11,8 +11,8 @@ export function TestimonialsSection() {
   const { dictionary } = useLocale();
 
   return (
-    <section id="testimonials" className="relative py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-4">
+    <section id="testimonials" className="relative overflow-x-clip py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-4 min-w-0">
         <SectionHeading
           title={<GradientText>{dictionary.sections.testimonials}</GradientText>}
           description={

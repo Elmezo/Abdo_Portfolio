@@ -11,8 +11,8 @@ export function ExperienceSection() {
   const { dictionary } = useLocale();
 
   return (
-    <section id="experience" className="relative py-24 md:py-32">
-      <div className="max-w-5xl mx-auto px-4">
+    <section id="experience" className="relative overflow-x-clip py-24 md:py-32">
+      <div className="max-w-5xl mx-auto px-4 min-w-0">
         <SectionHeading
           title={<GradientText>{dictionary.sections.experience}</GradientText>}
           description={
@@ -31,7 +31,7 @@ export function ExperienceSection() {
             viewport={{ once: true }}
             transition={{ duration: 1.2, ease: 'easeInOut' }}
             style={{ originY: 0 }}
-            className="absolute left-0 md:left-1/2 transform md:-translate-x-px h-full w-0.5 bg-gradient-to-b from-purple-500 via-cyan-500 to-purple-500"
+            className="absolute left-3 md:left-1/2 transform md:-translate-x-px h-full w-0.5 bg-gradient-to-b from-purple-500 via-cyan-500 to-purple-500"
           />
 
           <StaggerContainer className="space-y-12">
@@ -48,7 +48,7 @@ export function ExperienceSection() {
                     whileInView={{ scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ type: 'spring', stiffness: 300, delay: 0.2 }}
-                    className="absolute left-0 md:left-1/2 transform -translate-x-1/2 z-10"
+                    className="absolute left-3 md:left-1/2 transform -translate-x-1/2 z-10"
                   >
                     <div className="w-5 h-5 bg-gradient-to-br from-purple-500 to-cyan-500 rounded-full border-4 border-slate-950 shadow-lg shadow-purple-500/30" />
                     <div className="absolute inset-0 rounded-full bg-purple-500/30 animate-ping" />
@@ -60,7 +60,7 @@ export function ExperienceSection() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true, margin: '-80px' }}
                     transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
-                    className={`w-full md:w-[calc(50%-2rem)] ml-8 md:ml-0 ${
+                    className={`w-full min-w-0 md:w-[calc(50%-2rem)] ml-10 md:ml-0 ${
                       index % 2 === 0 ? 'md:mr-auto md:pr-8' : 'md:ml-auto md:pl-8'
                     }`}
                   >

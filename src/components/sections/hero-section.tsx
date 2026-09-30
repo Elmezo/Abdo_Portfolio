@@ -79,18 +79,18 @@ function AnimatedName({ name, locale }: { name: string; locale: string }) {
       initial={prefersReducedMotion ? false : { opacity: 0, y: 36, scale: 0.96 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ type: 'spring', stiffness: 320, damping: 24, delay: 0.18 }}
-      className="relative mx-auto mb-5 max-w-5xl text-5xl font-bold tracking-tight sm:text-6xl md:mb-6 md:text-7xl lg:text-8xl"
+      className="relative mx-auto mb-5 w-full max-w-full md:mb-6 px-2 text-4xl font-bold tracking-tight break-words leading-[1.15] sm:px-4 sm:text-6xl md:text-7xl lg:text-8xl"
     >
       <motion.span
         aria-hidden="true"
         animate={prefersReducedMotion ? undefined : { scale: [1, 1.035, 1], opacity: [0.35, 0.8, 0.35] }}
         transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -inset-x-6 top-1/2 h-20 -translate-y-1/2 rounded-full bg-gradient-to-r from-purple-500/20 via-cyan-400/20 to-fuchsia-500/20 blur-3xl"
+        className="absolute inset-x-0 top-1/2 mx-auto h-20 max-w-full -translate-y-1/2 rounded-full bg-gradient-to-r from-purple-500/20 via-cyan-400/20 to-fuchsia-500/20 blur-3xl"
       />
       <motion.span
         animate={prefersReducedMotion ? undefined : { y: [0, -4, 0] }}
         transition={{ duration: 3.2, repeat: Infinity, ease: 'easeInOut' }}
-        className="relative inline-block text-emerald-400"
+        className="relative inline-block max-w-full break-words text-emerald-400"
       >
         {name}
       </motion.span>
@@ -138,7 +138,7 @@ export function HeroSection() {
         ))}
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 text-center">
+      <div className="relative z-10 mx-auto w-full max-w-7xl min-w-0 px-4 py-20 text-center overflow-x-clip">
         <FadeIn delay={0.1}>
           <motion.div
             initial={{ opacity: 0, scale: 0.92 }}
@@ -172,23 +172,23 @@ export function HeroSection() {
         <AnimatedName name={p.name} locale={locale} />
 
         <motion.div
-          className="max-w-3xl mx-auto mb-8 md:mb-10 space-y-3 md:space-y-4"
+          className="max-w-3xl mx-auto mb-8 md:mb-10 space-y-3 md:space-y-4 min-w-0 px-1"
           variants={staggerWrap}
           initial="hidden"
           animate="visible"
         >
-          <motion.p variants={fadeUp} className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-white leading-snug tracking-tight">
+          <motion.p variants={fadeUp} className="text-xl sm:text-3xl md:text-4xl lg:text-[2.5rem] font-semibold text-white leading-snug tracking-tight break-words">
             {p.title}
           </motion.p>
-          <motion.p variants={fadeUp} className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed">
+          <motion.p variants={fadeUp} className="text-base sm:text-lg md:text-xl text-gray-200 leading-relaxed break-words">
             {heroLead}
           </motion.p>
-          <motion.p variants={fadeUp} className="text-xs sm:text-sm md:text-base text-gray-300 tracking-wide" dir="ltr">
+          <motion.p variants={fadeUp} className="text-xs sm:text-sm md:text-base text-gray-300 tracking-wide break-words" dir="ltr">
             {heroStack}
           </motion.p>
           <motion.div
             variants={fadeUp}
-            className="mx-auto inline-flex max-w-full items-center gap-2 overflow-hidden rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-sm text-emerald-100"
+            className="mx-auto flex max-w-full min-w-0 flex-wrap items-center justify-center gap-x-2 gap-y-1 rounded-3xl sm:rounded-full border border-emerald-400/20 bg-emerald-400/10 px-4 py-2 text-center text-sm break-words text-emerald-100"
           >
             <span className="h-2 w-2 shrink-0 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.9)]" />
             <span className="shrink-0 text-gray-300">{dictionary.hero.iBuild}</span>
@@ -198,7 +198,7 @@ export function HeroSection() {
               typingSpeed={75}
               deletingSpeed={36}
               pauseDuration={1300}
-              className="font-semibold text-white"
+              className="min-w-0 max-w-full break-words font-semibold text-white"
             />
           </motion.div>
         </motion.div>
@@ -210,7 +210,7 @@ export function HeroSection() {
         </FadeIn>
 
         <motion.div
-          className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-12 md:mb-14"
+          className="flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 mb-12 md:mb-14 min-w-0"
           variants={ctaStagger}
           initial="hidden"
           animate="visible"
@@ -220,12 +220,12 @@ export function HeroSection() {
             href="#contact"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}
-            className="cursor-pointer inline-flex items-center justify-center gap-2 min-h-[48px] px-8 py-3.5 rounded-xl text-base font-semibold text-white bg-emerald-600 hover:bg-emerald-500 transition-colors duration-300"
+            className="cursor-pointer inline-flex w-full sm:w-auto items-center justify-center gap-2 min-h-[48px] px-8 py-3.5 rounded-xl text-base font-semibold text-white bg-emerald-600 hover:bg-emerald-500 transition-colors duration-300"
           >
             <Send className="shrink-0" size={20} />
             {dictionary.hero.contactMe}
           </motion.a>
-          <motion.div variants={ctaItem}>
+          <motion.div variants={ctaItem} className="w-full sm:w-auto [&>*]:w-full sm:[&>*]:w-auto">
             <GlassButton
               className="inline-flex min-h-[48px] items-center justify-center"
               onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
@@ -234,20 +234,20 @@ export function HeroSection() {
               {dictionary.hero.viewCaseStudies}
             </GlassButton>
           </motion.div>
-          <motion.div variants={ctaItem}>
+          <motion.div variants={ctaItem} className="w-full sm:w-auto">
             <motion.a
               href={p.social.github}
               target="_blank"
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="cursor-pointer inline-flex items-center justify-center min-h-[48px] px-6 py-3 rounded-xl font-medium bg-white/10 border border-white/25 text-white hover:bg-white/15 transition-all duration-300"
+              className="cursor-pointer flex w-full sm:w-auto items-center justify-center min-h-[48px] px-6 py-3 rounded-xl font-medium bg-white/10 border border-white/25 text-white hover:bg-white/15 transition-all duration-300"
             >
               <Github className={`inline-block h-4 w-4 ${locale === 'ar' ? 'ml-2' : 'mr-2'}`} />
               {dictionary.hero.githubProfile}
             </motion.a>
           </motion.div>
-          <motion.div variants={ctaItem}>
+          <motion.div variants={ctaItem} className="w-full sm:w-auto [&>*]:w-full sm:[&>*]:w-auto">
             <GlassButton
               variant="outline"
               hoverShapeMorph

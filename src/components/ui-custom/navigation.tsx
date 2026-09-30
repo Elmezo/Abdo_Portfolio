@@ -113,12 +113,12 @@ export function Navigation() {
         className="pointer-events-none absolute inset-0 z-0 bg-slate-950/80 border-b border-white/10"
       />
 
-      <div className="relative z-20 max-w-7xl mx-auto flex items-center justify-between gap-3">
+      <div className="relative z-20 max-w-7xl mx-auto flex items-center justify-between gap-3 min-w-0">
         <motion.button
           type="button"
           onClick={() => scrollToSection('#home')}
           whileHover={{ scale: 1.05 }}
-          className="relative z-30 text-xl sm:text-2xl font-bold touch-manipulation"
+          className="relative z-30 min-w-0 max-w-[60vw] truncate text-xl sm:text-2xl font-bold touch-manipulation"
         >
           <GradientText>{dictionary.brand}</GradientText>
         </motion.button>

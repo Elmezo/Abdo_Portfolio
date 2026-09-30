@@ -68,8 +68,8 @@ export function AboutSection() {
   const phones = getProfilePhoneList(profile);
 
   return (
-    <section id="about" className="relative py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-4">
+    <section id="about" className="relative overflow-x-clip py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-4 min-w-0">
         <SectionHeading
           title={
             <>

@@ -44,8 +44,8 @@ export function ProjectsSection() {
   };
 
   return (
-    <section id="projects" className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
-      <div className="max-w-7xl mx-auto px-4 sm:px-5">
+    <section id="projects" className="relative overflow-x-clip py-24 md:py-32 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
+      <div className="max-w-7xl mx-auto px-4 sm:px-5 min-w-0">
         <SectionHeading
           title={<GradientText>{dictionary.sections.projects}</GradientText>}
           description={

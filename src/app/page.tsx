@@ -13,7 +13,7 @@ import { Footer } from '@/components/sections/footer';
 
 export default function Home() {
   return (
-    <main id="main-content" className="relative min-h-screen bg-slate-950">
+    <main id="main-content" className="relative min-h-screen w-full max-w-full overflow-x-clip bg-slate-950">
       <Navigation />
 
       <HeroSection />

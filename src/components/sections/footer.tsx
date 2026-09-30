@@ -92,7 +92,7 @@ export function Footer() {
                 <Mail size={18} />
               </motion.a>
             </div>
-            <p className="text-gray-500 text-xs mt-4" dir="ltr">
+            <p className="text-gray-500 text-xs mt-4 break-all" dir="ltr">
               {profile.email}
             </p>
           </div>

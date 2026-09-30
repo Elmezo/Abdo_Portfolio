@@ -68,8 +68,8 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative py-24 md:py-32 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
-      <div className="max-w-6xl mx-auto px-4">
+    <section id="contact" className="relative overflow-x-clip py-24 md:py-32 bg-gradient-to-b from-transparent via-purple-950/10 to-transparent">
+      <div className="max-w-6xl mx-auto px-4 min-w-0">
         <SectionHeading
           title={<GradientText>{dictionary.sections.contact}</GradientText>}
           description={
@@ -95,9 +95,9 @@ export function ContactSection() {
                       <div className="p-3 rounded-xl bg-purple-500/20 group-hover:bg-purple-500/30 transition-colors">
                         <Mail className="text-purple-400" size={24} />
                       </div>
-                      <div>
+                      <div className="min-w-0 flex-1">
                         <p className="text-gray-400 text-sm">Email</p>
-                        <p className="text-white">{profile.email}</p>
+                        <p className="text-white break-all overflow-wrap-anywhere">{profile.email}</p>
                       </div>
                     </a>
                   </StaggerItem>

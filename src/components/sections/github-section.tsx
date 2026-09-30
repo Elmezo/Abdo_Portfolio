@@ -54,8 +54,8 @@ export function GitHubSection() {
   const langsFallback = githubTopLangsCardUrl(GITHUB_README_STATS_FALLBACK, githubUsername);
 
   return (
-    <section id="github" className="relative py-24 md:py-32">
-      <div className="max-w-5xl mx-auto px-4">
+    <section id="github" className="relative overflow-x-clip py-24 md:py-32">
+      <div className="max-w-5xl mx-auto px-4 min-w-0">
         <SectionHeading
           title={<GradientText>{dictionary.sections.github}</GradientText>}
           description={
